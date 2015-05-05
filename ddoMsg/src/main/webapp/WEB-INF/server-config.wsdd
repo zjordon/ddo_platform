@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+ <globalConfiguration>
+  <parameter name="sendMultiRefs" value="true"/>
+  <parameter name="disablePrettyXML" value="true"/>
+  <parameter name="adminPassword" value="admin"/>
+  <!-- 
+  <parameter name="attachments.Directory" value="D:/soft/kxms6/webapps/kxms/WEB-INF/attachments"/>
+   -->
+  <parameter name="attachments.Directory" value="/data1/tomcat/attachments"/>
+  <parameter name="dotNetSoapEncFix" value="true"/>
+  <parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <parameter name="sendXMLDeclaration" value="true"/>
+  <parameter name="sendXsiTypes" value="true"/>
+  <parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <requestFlow>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="session"/>
+   </handler>
+   <handler type="java:org.apache.axis.handlers.JWSHandler">
+    <parameter name="scope" value="request"/>
+    <parameter name="extension" value=".jwr"/>
+   </handler>
+  </requestFlow>
+ </globalConfiguration>
+ <handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <service name="HrmsServicesPort" provider="java:RPC" style="document" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://hrmsservices.ib.sdp.huawei.com"/>
+      <parameter name="wsdlServiceElement" value="HrmsServicesService"/>
+      <parameter name="schemaQualified" value="http://schema.ib.sdp.huawei.com"/>
+      <parameter name="schemaUnqualified" value="http://response.hrmsservices.ib.sdp.huawei.com,http://request.hrmsservices.ib.sdp.huawei.com"/>
+      <parameter name="wsdlServicePort" value="HrmsServicesPort"/>
+      <parameter name="className" value="com.huawei.sdp.ib.hrmsservices.HrmsServicesBindingImpl"/>
+      <parameter name="wsdlPortType" value="HrmsServices"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="rdoChargeResultNotify" qname="rdoChargeResultNotify" returnQName="retNS:RdoChargeResultNotifyRsp" xmlns:retNS="http://response.hrmsservices.ib.sdp.huawei.com" returnType="rtns:>RdoChargeResultNotifyRsp" xmlns:rtns="http://response.hrmsservices.ib.sdp.huawei.com" soapAction="" >
+        <parameter qname="pns:RdoChargeResultNotifyReq" xmlns:pns="http://request.hrmsservices.ib.sdp.huawei.com" type="tns:>RdoChargeResultNotifyReq" xmlns:tns="http://request.hrmsservices.ib.sdp.huawei.com"/>
+      </operation>
+      <operation name="ddoChargeNotify" qname="ddoChargeNotify" returnQName="retNS:DdoChargeNotifyRsp" xmlns:retNS="http://response.hrmsservices.ib.sdp.huawei.com" returnType="rtns:>DdoChargeNotifyRsp" xmlns:rtns="http://response.hrmsservices.ib.sdp.huawei.com" soapAction="" >
+        <parameter qname="pns:DdoChargeNotifyReq" xmlns:pns="http://request.hrmsservices.ib.sdp.huawei.com" type="tns:>DdoChargeNotifyReq" xmlns:tns="http://request.hrmsservices.ib.sdp.huawei.com"/>
+      </operation>
+      <parameter name="allowedMethods" value="rdoChargeResultNotify ddoChargeNotify"/>
+
+      <typeMapping
+        xmlns:ns="http://schema.ib.sdp.huawei.com"
+        qname="ns:NamedParameter"
+        type="java:com.huawei.sdp.ib.schema.NamedParameter"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://request.hrmsservices.ib.sdp.huawei.com"
+        qname="ns:>RdoChargeResultNotifyReq"
+        type="java:com.huawei.sdp.ib.hrmsservices.request.RdoChargeResultNotifyReq"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://schema.ib.sdp.huawei.com"
+        qname="ns:Result"
+        type="java:com.huawei.sdp.ib.schema.Result"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://request.hrmsservices.ib.sdp.huawei.com"
+        qname="ns:>DdoChargeNotifyReq"
+        type="java:com.huawei.sdp.ib.hrmsservices.request.DdoChargeNotifyReq"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://response.hrmsservices.ib.sdp.huawei.com"
+        qname="ns:>RdoChargeResultNotifyRsp"
+        type="java:com.huawei.sdp.ib.hrmsservices.response.RdoChargeResultNotifyRsp"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://response.hrmsservices.ib.sdp.huawei.com"
+        qname="ns:>DdoChargeNotifyRsp"
+        type="java:com.huawei.sdp.ib.hrmsservices.response.DdoChargeNotifyRsp"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://schema.ib.sdp.huawei.com"
+        qname="ns:ArrayOf_tns3_NamedParameter"
+        type="java:com.huawei.sdp.ib.schema.NamedParameter[]"
+        innerType="cmp-ns:NamedParameter" xmlns:cmp-ns="http://schema.ib.sdp.huawei.com"
+        encodingStyle=""
+      />
+  </service>
+ <transport name="http">
+  <requestFlow>
+   <handler type="URLMapper"/>
+   <handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </requestFlow>
+  <parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </transport>
+ <transport name="local">
+  <responseFlow>
+   <handler type="LocalResponder"/>
+  </responseFlow>
+ </transport>
+</deployment>
+
