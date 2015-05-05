@@ -1,8 +1,5 @@
 package com.jason.ddoMsg.bean.blacklist;
 
-import java.math.BigDecimal;
-import java.util.Date;
-
 /**   
  * @Title: Entity
  * @Description: 黑名单
