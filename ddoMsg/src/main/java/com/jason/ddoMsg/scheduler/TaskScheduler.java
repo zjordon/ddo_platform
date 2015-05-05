@@ -79,20 +79,29 @@ public class TaskScheduler {
 		this.startAllTask();
 	}
 
-	public void startAllTask() {
+    public void startAllTask() {
 		ThreadUCExceptionHandler exceptionHandler = new ThreadUCExceptionHandler();
+		normalRequestTaskThread.start();
 		Thread normalRequestTaskThreadWrapper = new Thread(normalRequestTaskThread);
 		normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		normalRequestTaskThreadWrapper.start();
+		
+		normalBillReportTaskThread.start();
 		Thread normalBillReportTaskThreadWrapper = new Thread(normalBillReportTaskThread);
 		normalBillReportTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		normalBillReportTaskThreadWrapper.start();
+		
+		otherRequestTaskThread.start();
 		Thread otherRequestTaskThreadWrapper = new Thread(otherRequestTaskThread);
 		otherRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		otherRequestTaskThreadWrapper.start();
+		
+		repeatTaskThread.start();
 		Thread repeatTaskThreadWrapper = new Thread(repeatTaskThread);
 		repeatTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		repeatTaskThreadWrapper.start();
+		
+		otherTaskThread.start();
 		Thread otherTaskThreadWrapper = new Thread(otherTaskThread);
 		otherTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		otherTaskThreadWrapper.start();
@@ -104,6 +113,12 @@ public class TaskScheduler {
 		this.otherRequestTaskThread.stop();
 		this.repeatTaskThread.stop();
 		this.otherTaskThread.stop();
+		
+//		this.normalRequestTaskThread = null;
+//		this.normalBillReportTaskThread = null;
+//		this.otherRequestTaskThread = null;
+//		this.repeatTaskThread = null;
+//		this.otherTaskThread = null;
 	}
 
 	public void startTask(String taskName) {

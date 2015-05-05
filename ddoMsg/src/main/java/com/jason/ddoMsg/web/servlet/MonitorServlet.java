@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jason.ddoMsg.cache.CacheManager;
 import com.jason.ddoMsg.queue.BillReportQueue;
 import com.jason.ddoMsg.queue.ChannelRequestQueue;
 import com.jason.ddoMsg.queue.StatisticsQueue;
@@ -31,10 +32,12 @@ public class MonitorServlet extends HttpServlet {
 		int requestQueueSize = ChannelRequestQueue.getInstance().getSize();
 		int billReportQueueSize = BillReportQueue.getInstnace().getSize();
 		int statisticsQueueSize = StatisticsQueue.getInstance().getSize();
+		boolean status = CacheManager.getInstance().getConfigCache().isStopAll();
 		StringBuilder builder = new StringBuilder();
 		builder.append("requestQueueSize is ").append(requestQueueSize);
-		builder.append("\r\nbillReportQueueSize is ").append(billReportQueueSize);
-		builder.append("\r\nstatisticsQueueSize is ").append(statisticsQueueSize);
+		builder.append("<br>billReportQueueSize is ").append(billReportQueueSize);
+		builder.append("<br>statisticsQueueSize is ").append(statisticsQueueSize);
+		builder.append("<br>running status is ").append(status ? "stop" : "running");
 		response.getOutputStream().write(builder.toString().getBytes());
 	}
 

@@ -44,6 +44,16 @@
 		<description>监测引擎的运行情况</description>
 		<servlet-class>com.jason.ddoMsg.web.servlet.MonitorServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>StopServiceServlet</servlet-name>
+		<display-name>StopServiceServlet</display-name>
+		<description>停止收发引擎</description>
+		<servlet-class>com.jason.ddoMsg.web.servlet.StopServiceServlet</servlet-class>
+		<init-param>  
+	       <param-name>enableIp</param-name>  
+	       <param-value>127.0.0.1,localhost</param-value>  
+	    </init-param>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>AxisServlet</servlet-name>
@@ -71,6 +81,10 @@
 	<servlet-mapping>
 		<servlet-name>MonitorServlet</servlet-name>
 		<url-pattern>/MonitorServlet</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>StopServiceServlet</servlet-name>
+		<url-pattern>/StopServiceServlet</url-pattern>
 	</servlet-mapping>
 	
 	
