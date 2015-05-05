@@ -8,6 +8,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoMsg.bean.msg.BillReport;
+import com.jason.ddoMsg.cache.CacheException;
+import com.jason.ddoMsg.cache.CacheManager;
 import com.jason.ddoMsg.queue.BillReportQueue;
 import com.jason.ddoMsg.task.handler.BillReportHandler;
 
@@ -25,6 +27,12 @@ public class NormalBillReportTask extends AbstractTask {
 		logger.debug("start execute NormalBillReportTask");
 		List<BillReport> billReportList = BillReportQueue.getInstnace().getBillReports(100);
 		if (!billReportList.isEmpty()) {
+			//保存入库
+			try {
+				CacheManager.getInstance().getBillReportCache().saveBillReportList(billReportList);
+			} catch (CacheException e) {
+				logger.error("excpetion when executeTask NormalBillReportTask", e);
+			}
 			BillReportHandler.getInstance().handle(billReportList);
 			nums = billReportList.size();
 			billReportList.clear();
