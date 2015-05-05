@@ -95,4 +95,8 @@ public class StatisticsQueue {
 		return list;
 	}
 	
+	public int getSize() {
+		return (this.sendRecordQueue.size() + this.sendResultRecordQueue.size() + this.billResultRecordQueue.size());
+	}
+	
 }

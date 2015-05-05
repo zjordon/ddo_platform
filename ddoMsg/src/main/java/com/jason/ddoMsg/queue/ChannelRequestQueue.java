@@ -58,4 +58,8 @@ public class ChannelRequestQueue {
 		logger.info("fetch requestList size is " + requestList.size());
 		return requestList;
 	}
+	
+	public int getSize() {
+		return this.queue.size();
+	}
 }

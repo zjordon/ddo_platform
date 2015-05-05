@@ -38,6 +38,12 @@
 		<description>接收渠道的请求</description>
 		<servlet-class>com.jason.ddoMsg.web.servlet.ChannelRequestServlet</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>MonitorServlet</servlet-name>
+		<display-name>MonitorServlet</display-name>
+		<description>监测引擎的运行情况</description>
+		<servlet-class>com.jason.ddoMsg.web.servlet.MonitorServlet</servlet-class>
+	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>AxisServlet</servlet-name>
@@ -61,6 +67,10 @@
 	<servlet-mapping>
 		<servlet-name>ChannelRequestServlet</servlet-name>
 		<url-pattern>/sendXSms.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MonitorServlet</servlet-name>
+		<url-pattern>/MonitorServlet</url-pattern>
 	</servlet-mapping>
 	
 	

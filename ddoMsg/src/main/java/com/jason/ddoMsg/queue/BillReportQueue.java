@@ -52,4 +52,8 @@ public class BillReportQueue {
 		 }
 		 return billReportList;
 	}
+	
+	public int getSize() {
+		return this.queue.size();
+	}
 }
