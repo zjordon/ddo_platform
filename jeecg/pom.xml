@@ -212,23 +212,27 @@
 			<artifactId>thumbnailator</artifactId>
 			<version>${thumbnailator.version}</version>
 		</dependency>
+		<!-- jboss vfs没用到
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-vfs</artifactId>
 			<version>3.1.0.Final</version>
 		</dependency>
-
+         -->
+         <!-- pinyyin4j用在哪里(org.jeecgframework.core.util.PinyinUtil -->
 		<dependency>
 			<groupId>pinyin4j</groupId>
 			<artifactId>pinyin4j</artifactId>
 			<version>${pinyin4j.version}</version>
 		</dependency>
-
+       
+        <!--quartz用在哪里(org.jeecgframework.core.timer.DynamicTask-->
 		<dependency>
 			<groupId>com.springsource</groupId>
 			<artifactId>org.quartz</artifactId>
 			<version>${org.quartz.version}</version>
 		</dependency>
+		
 		<!-- SPRING start -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -285,6 +289,7 @@
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
+		<!-- 工程中用的是阿里巴巴的连接池，应该不需要用到proxool了吧? 
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-proxool</artifactId>
@@ -296,6 +301,7 @@
 					</exclusion>
 			</exclusions>
 		</dependency>
+		-->
 		<dependency>
 			<groupId>org.hibernate.common</groupId>
 			<artifactId>hibernate-commons-annotations</artifactId>
@@ -338,7 +344,7 @@
 			<version>${activiti.version}</version>
 		</dependency>
 		-->
-		<!-- mybatis -->
+		<!-- mybatis 没有用到
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -349,10 +355,10 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>${mybatis-spring.version}</version>
 		</dependency>
-
+       -->
 
 		<!-- 数据库相关依赖包 _start -->
-        <!--proxool start -->
+        <!--proxool start 工程中用的是阿里巴巴的连接池，应该不需要用到proxool了吧?
         <dependency>
             <groupId>com.cloudhopper.proxool</groupId>
             <artifactId>proxool</artifactId>
@@ -363,7 +369,9 @@
             <artifactId>proxool-cglib</artifactId>
             <version>${proxool.version}</version>
         </dependency>
+        -->
         <!-- proxool end-->
+        <!-- 工程中用的是阿里巴巴的连接池，应该不需要用到commons-dbcp了吧(org.jeecgframework.core.util.DynamicDBUtil用到) -->
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
@@ -376,6 +384,7 @@
 			<version>${commons-dbcp.version}</version>
 			<scope>compile</scope>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
@@ -389,7 +398,7 @@
 			<version>${mysql.version}</version>
 			<scope>runtime</scope>
 		</dependency>
-		 <!-- 
+		 <!-- 项目用的是mysql，其它数据库存的jdbc都不需要用到
 		<dependency>
 			<groupId>org.jeecgframework</groupId>
 			<artifactId>jdbc2005</artifactId>
@@ -402,7 +411,7 @@
             <version>${ojdbc14.version}</version>
         </dependency>
         -->
-        <!-- jtds for mssql/db2 
+        <!-- jtds for mssql/db2 项目用的是mysql，其它数据库存的jdbc都不需要用到
 		<dependency>
 			<groupId>net.sourceforge.jtds</groupId>
 			<artifactId>jtds</artifactId>
@@ -410,7 +419,7 @@
 			<scope>runtime</scope>
 		</dependency>
 		-->
-        <!-- h2 
+        <!-- h2 项目用的是mysql，其它数据库存的jdbc都不需要用到
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -418,7 +427,7 @@
             <scope>test</scope>
         </dependency>
         -->
-        <!-- postgresql
+        <!-- postgresql 项目用的是mysql，其它数据库存的jdbc都不需要用到
         <dependency>
             <groupId>org.jeecgframework</groupId>
             <artifactId>postgresql</artifactId>
@@ -498,7 +507,7 @@
         <!-- 辅助依赖包 _end -->
 
 		<!-- 工具包 -->
-		<!-- JSON begin -->
+		<!-- JSON begin-->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
@@ -530,6 +539,7 @@
             <artifactId>gson</artifactId>
             <version>${gson.version}</version>
         </dependency>
+         
 		<!-- JSON end -->
 		<!-- dom4j -->
 		<dependency>
@@ -728,18 +738,20 @@
             <version>${jodconverter.version}</version>
         </dependency>
         <!-- openoffice end -->
+        <!-- struts的jar包应该不要用到吧 （用在org.jeecgframework.core.common.hibernate.qbc类中)-->
         <dependency>
             <groupId>com.opensymphony</groupId>
             <artifactId>xwork-core</artifactId>
             <version>${xwork-core.version}</version>
         </dependency>
-
+        
 		<!-- TEST begin -->
 		<!-- junit -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
         <!-- hamcrest -->
         <!--<dependency>

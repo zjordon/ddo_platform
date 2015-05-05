@@ -9,7 +9,9 @@ String langurl = "plug-in/mutiLang/" + lang +".js";
 <html>
 <head>
 <title></title>
+<%-- 
 <link rel="shortcut icon" href="resources/fc/images/icon/favicon.ico">
+--%>
 <script src=<%=langurl%> type="text/javascript"></script>
 <!--[if lt IE 9]>
    <script src="plug-in/login/js/html5.js"></script>
