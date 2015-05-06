@@ -146,7 +146,6 @@ public class Bootstrap {
     public static void main(String[] args) {
 //    	args = new String[] {"start"};
 //    	System.setProperty("catalina.home", "D:\\SmgpAppService");
-    	
     	if (daemon == null) {
     		daemon = new Bootstrap();
     		try {

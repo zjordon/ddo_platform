@@ -6,7 +6,6 @@ package com.jason.ddoMsg.util;
 import java.io.IOException;
 //import java.io.InputStreamReader;
 //import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 //import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -17,6 +16,7 @@ import java.util.Map;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -59,6 +59,9 @@ public class HttpHelper {
 			params.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
 		}
 		HttpPost httppost = new HttpPost(httpUrl);
+		//设置超时时间为5秒
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(5000).setConnectTimeout(5000).setSocketTimeout(5000).build();
+		httppost.setConfig(requestConfig);
 		httppost.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
 		CloseableHttpResponse response = null;
 		try {
@@ -88,6 +91,9 @@ public class HttpHelper {
 			urlBuilder.setParameter(entry.getKey(), entry.getValue());
 		}
 		HttpGet httpget = new HttpGet(urlBuilder.build());
+		//设置超时时间为5秒
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(5000).setConnectTimeout(5000).setSocketTimeout(5000).build();
+		httpget.setConfig(requestConfig);
 		CloseableHttpResponse response = null;
 		try {
 			// 提交数据
