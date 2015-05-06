@@ -90,7 +90,8 @@ public class MonitorController {
 		AjaxJson j = new AjaxJson();
 		String postUrl = ResourceUtil.getConfigByName("ddoMsg.url") + ResourceUtil.getConfigByName("ddoMsg.stopServicePath");
 		Map<String, String> paramMap = new HashMap<String, String>();
-		paramMap.put("command", "control");
+		
+		paramMap.put("command", request.getParameter("command"));
 		String resp = null;
 		try {
 			resp = HttpUtils.post(postUrl, paramMap);

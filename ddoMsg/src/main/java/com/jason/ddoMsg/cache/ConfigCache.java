@@ -23,6 +23,8 @@ public class ConfigCache {
 	
 	private boolean stopAll;
 	
+	private boolean stopAllTask;
+	
 	private String ddoUrl;
 	
 	private String ddoUsername;
@@ -40,6 +42,10 @@ public class ConfigCache {
 			String temp = props.getProperty("stopAll");
 			if (StringUtils.isNotBlank(temp)) {
 				this.stopAll = Boolean.parseBoolean(temp);
+			}
+			temp = props.getProperty("stopAllTask");
+			if (StringUtils.isNotBlank(temp)) {
+				this.stopAllTask = Boolean.parseBoolean(temp);
 			}
 			this.ddoUrl = props.getProperty("ddoUrl");
 			this.ddoUsername =  props.getProperty("ddoUsername");
@@ -59,6 +65,15 @@ public class ConfigCache {
 	public void setStopAll(boolean stopAll) throws CacheException {
 		this.stopAll = stopAll;
 		this.syncFile("stopAll", Boolean.toString(stopAll));
+	}
+
+	public boolean isStopAllTask() {
+		return stopAllTask;
+	}
+
+	public void setStopAllTask(boolean stopAllTask) throws CacheException {
+		this.stopAllTask = stopAllTask;
+		this.syncFile("stopAllTask", Boolean.toString(stopAllTask));
 	}
 
 	public String getDdoUrl() {

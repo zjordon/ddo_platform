@@ -9,15 +9,18 @@
 		text-align:center;
 		width:auto;
 		height:400px;
+		margin:5px;
 	}
 	.status #status-msg {
 		width:auto;
 		height:50%;
+		margin:5px;
 	}
 	.control {
 		text-align:center;
 		width:auto;
 		height:100px;
+		margin:5px;
 	}
 </STYLE>
  </head>
@@ -29,6 +32,7 @@
 </div>
 <div class="control">
 	<div><input id="control-ddomsg" type="button" value="停止/启动收发引擎"></div>
+	<div><input id="control-ddomsg-task" type="button" value="停止/启动定时任务"></div>
 </div>
 </body>
 <script type="text/javascript">
@@ -39,7 +43,15 @@ $(function() {
 				});
 	});
 	$("#control-ddomsg").click(function(){
-		$.ajax({ url: "monitorController.do?controlDdoMsg", success: function(){
+		$.ajax({ url: "monitorController.do?controlDdoMsg&command=controlStopRequest", success: function(){
+		    alert("操作成功");
+		    $.getJSON("monitorController.do?ddoMsgStatus", function(data){
+				  $("#status-msg").html(data.msg);
+				});
+		}});
+	});
+	$("#control-ddomsg-task").click(function(){
+		$.ajax({ url: "monitorController.do?controlDdoMsg&command=controlStopTask", success: function(){
 		    alert("操作成功");
 		    $.getJSON("monitorController.do?ddoMsgStatus", function(data){
 				  $("#status-msg").html(data.msg);

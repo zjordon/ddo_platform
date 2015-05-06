@@ -60,12 +60,22 @@ public class StopServiceServlet extends HttpServlet {
 		if (this.isEnableIp(fromIp)) {
 			String command = request.getParameter("command");
 			String respMsg = null;
-			if ("control".equals(command)) {
+			if ("controlStopRequest".equals(command)) {
 				//把全局变量设置为停止或启动状态
 				boolean runStatus = !CacheManager.getInstance().getConfigCache().isStopAll();
 				logger.info("control the service " + (runStatus ? "stop" : "start"));
 				try {
 					CacheManager.getInstance().getConfigCache().setStopAll(runStatus);
+				} catch (CacheException e) {
+					e.printStackTrace();
+				}
+				
+				respMsg = "success";
+			} else if ("controlStopTask".equals(command)) {
+				boolean runStatus = !CacheManager.getInstance().getConfigCache().isStopAllTask();
+				logger.info("control the task " + (runStatus ? "stop" : "start"));
+				try {
+					CacheManager.getInstance().getConfigCache().setStopAllTask(runStatus);
 				} catch (CacheException e) {
 					e.printStackTrace();
 				}

@@ -77,8 +77,8 @@ public class TaskScheduler {
 		otherTaskThread.addTask(eventTask);
 		otherTaskThread.addTask(statisticsTask);
 
-		if (!CacheManager.getInstance().getConfigCache().isStopAll()) {
-			//如果处于全网关停状态则不启动任务
+		if (!CacheManager.getInstance().getConfigCache().isStopAllTask()) {
+			//如果启动任务状态为不启动则不启动任务
 			this.startAllTask();
 		}
 	}
