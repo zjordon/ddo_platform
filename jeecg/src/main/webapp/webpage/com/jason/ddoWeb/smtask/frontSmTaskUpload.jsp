@@ -26,10 +26,24 @@
       function close(){
           frameElement.api.close();
       }
+      
+      function check(curform) {
+   	   var channelIdInput = curform.find("input[name='channelId']");
+   	   var businessIdInput = curform.find("input[name='billBusinessId']");
+   	   if (channelIdInput.val() == "") {
+   		   alert("渠道必须选择");
+   		   return false;
+   	   }
+   	   if (businessIdInput.val() == "") {
+   		   alert("计费业务必须选择");
+   		   return false;
+   	   }
+   	   return true;
+      }
   </script>
  </head>
  <body style="overflow-y: hidden" scroll="no">
-  <t:formvalid formid="formobj" dialog="true" layout="table" action="frontSmTaskController.do?save" callback="@Override uploadFile">
+  <t:formvalid formid="formobj" dialog="true" layout="table" action="frontSmTaskController.do?save" beforeSubmit="check" callback="@Override uploadFile">
   	<input type="hidden" id="taskId" name="taskId" value=""/>
 			<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
 				<tr>

@@ -42,8 +42,8 @@
 					</td>
 					<td class="value">
 					    <c:choose>
-						<c:when test="${channelUserPage.id!=null}">
-							<t:dictSelect field="state" typeGroupCode="state" hasLabel="false" defaultVal="${channelUserPage.state}" type="radio"></t:dictSelect>
+						<c:when test="${channelPage.id!=null}">
+							<t:dictSelect field="state" typeGroupCode="state" hasLabel="false" defaultVal="${channelPage.state}" type="radio"></t:dictSelect>
 						</c:when>
 						<c:otherwise>
 							<t:dictSelect field="state" typeGroupCode="state" hasLabel="false" defaultVal="1" type="radio"></t:dictSelect>
@@ -84,8 +84,8 @@
 					</td>
 					<td class="value">
 					     <c:choose>
-						<c:when test="${channelUserPage.id!=null}">
-							 <t:dictSelect field="closeState" typeGroupCode="closeState" hasLabel="false" defaultVal="${channelUserPage.closeState}" type="radio"></t:dictSelect>
+						<c:when test="${channelPage.id!=null}">
+							 <t:dictSelect field="closeState" typeGroupCode="closeState" hasLabel="false" defaultVal="${channelPage.closeState}" type="radio"></t:dictSelect>
 						</c:when>
 						<c:otherwise>
 							 <t:dictSelect field="closeState" typeGroupCode="closeState" hasLabel="false" defaultVal="0" type="radio"></t:dictSelect>

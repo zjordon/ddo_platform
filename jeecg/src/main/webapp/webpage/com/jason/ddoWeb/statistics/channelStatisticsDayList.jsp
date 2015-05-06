@@ -84,7 +84,7 @@ function viewDetail(channelId, sumDate){
 	//alert(date);
 	var queryDate = year + "-" + toString(month) + "-" + toString(date);
 	//alert(queryDate);
-	var url = "ddoMsgController.do?ddoMsg&amp;selectedParams=" + encodeURIComponent("{\"channelId\":" + channelId + ",\"createDate_begin\":\"" + queryDate + "\",\"createDate_end\":\"" + queryDate + "\"}");
+	var url = "ddoMsgController.do?ddoMsg&amp;selectedParams=" + encodeURIComponent("{\"channelId\":\"" + channelId + "\",\"createDate_begin\":\"" + queryDate + "\",\"createDate_end\":\"" + queryDate + "\"}");
    window.parent.goToTab('流水统计',url,'default')
    //alert(window.parent.goToTabWithHref);
    //window.parent.goToTabWithHref('流水统计','ddoMsgController.do?ddoMsg&amp;clickFunctionId=402848814ce57137014ce574685a0007','default');

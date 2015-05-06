@@ -47,7 +47,7 @@ public class ChannelRequestQueue {
 	public List<ChannelRequest> getRequests(int nums) {
 		List<ChannelRequest> requestList = new ArrayList<ChannelRequest>(nums);
 		//些处加入多线程同步的控制
-		synchronized(this) {
+		//synchronized(this) {
 			for (int i=0; i<nums; i++) {
 				ChannelRequest request = this.queue.poll();
 				if (request != null) {
@@ -57,7 +57,7 @@ public class ChannelRequestQueue {
 				}
 				
 			}
-		}
+		//}
 		logger.info("fetch requestList size is " + requestList.size());
 		return requestList;
 	}

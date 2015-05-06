@@ -5,9 +5,24 @@
  <head>
   <title>短信任务</title>
   <t:base type="jquery,easyui,tools,DatePicker"></t:base>
+   <script type="text/javascript">
+   function check(curform) {
+	   var channelIdInput = curform.find("input[name='channelId']");
+	   var businessIdInput = curform.find("input[name='billBusinessId']");
+	   if (channelIdInput.val() == "") {
+		   alert("渠道必须选择");
+		   return false;
+	   }
+	   if (businessIdInput.val() == "") {
+		   alert("计费业务必须选择");
+		   return false;
+	   }
+	   return true;
+   }
+   </script>
  </head>
  <body style="overflow-y: hidden" scroll="no">
-  <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" action="smTaskController.do?save">
+  <t:formvalid formid="formobj" dialog="true" usePlugin="password" layout="table" beforeSubmit="check" action="smTaskController.do?save">
 			<input id="id" name="id" type="hidden" value="${smTaskPage.id }">
 			<table style="width: 600px;" cellpadding="0" cellspacing="1" class="formtable">
 				<tr>

@@ -87,11 +87,11 @@ public class TaskScheduler {
 		ThreadUCExceptionHandler exceptionHandler = new ThreadUCExceptionHandler();
 		normalRequestTaskThread.start();
 		//启动多个线程来处理请求
-		for (int i=0;i<2;i++) {
+		//for (int i=0;i<2;i++) {
 			Thread normalRequestTaskThreadWrapper = new Thread(normalRequestTaskThread);
 			normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 			normalRequestTaskThreadWrapper.start();
-		}
+		//}
 		
 		
 		
