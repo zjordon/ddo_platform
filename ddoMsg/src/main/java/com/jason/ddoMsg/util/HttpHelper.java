@@ -37,10 +37,10 @@ public class HttpHelper {
 
 	private final static HttpHelper instance = new HttpHelper();
 
-	private CloseableHttpClient httpclient;
+	//private CloseableHttpClient httpclient;
 
 	private HttpHelper() {
-		httpclient = HttpClients.createDefault();
+		//httpclient = HttpClients.createDefault();
 	}
 
 	public final static HttpHelper getInstnace() {
@@ -67,7 +67,9 @@ public class HttpHelper {
 		try {
 			// 提交数据
 			ResponseHandler<DeliverResponse> rh = new DeliverResponseHandler();
-			deliverResponse = this.httpclient.execute(httppost, rh);
+			CloseableHttpClient httpclient= HttpClients.createDefault();
+			deliverResponse = httpclient.execute(httppost, rh);
+			httpclient.close();
 		} finally {
 			if (response != null) {
 				try {
@@ -98,7 +100,9 @@ public class HttpHelper {
 		try {
 			// 提交数据
 			ResponseHandler<DeliverResponse> rh = new DeliverResponseHandler();
-			deliverResponse = this.httpclient.execute(httpget, rh);
+			CloseableHttpClient httpclient= HttpClients.createDefault();
+			deliverResponse = httpclient.execute(httpget, rh);
+			httpclient.close();
 		} finally {
 			if (response != null) {
 				try {

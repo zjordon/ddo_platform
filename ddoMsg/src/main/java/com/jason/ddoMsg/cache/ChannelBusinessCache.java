@@ -62,6 +62,7 @@ public class ChannelBusinessCache {
 		if (this.channelBusinessMap.get(channelBusiness.getId()) != null) {
 			throw new ElementExistsException("channelBusiness is already exists with id " + channelBusiness.getId());
 		}
+		this.businessChannelMap.put(channelBusiness.getBillBusinessId() + channelBusiness.getChannelId(), channelBusiness.getId());
 		this.channelBusinessMap.put(channelBusiness.getId(), channelBusiness);
 		this.instructMap.put(channelBusiness.getInstruct(), channelBusiness.getId());
 	}

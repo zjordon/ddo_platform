@@ -3,6 +3,7 @@
  */
 package com.jason.ddoMsg.scheduler;
 
+import com.jason.ddoMsg.cache.CacheManager;
 import com.jason.ddoMsg.task.EventTask;
 import com.jason.ddoMsg.task.NormalBillReportTask;
 import com.jason.ddoMsg.task.NormalRequestTask;
@@ -76,15 +77,23 @@ public class TaskScheduler {
 		otherTaskThread.addTask(eventTask);
 		otherTaskThread.addTask(statisticsTask);
 
-		this.startAllTask();
+		if (!CacheManager.getInstance().getConfigCache().isStopAll()) {
+			//如果处于全网关停状态则不启动任务
+			this.startAllTask();
+		}
 	}
 
     public void startAllTask() {
 		ThreadUCExceptionHandler exceptionHandler = new ThreadUCExceptionHandler();
 		normalRequestTaskThread.start();
-		Thread normalRequestTaskThreadWrapper = new Thread(normalRequestTaskThread);
-		normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
-		normalRequestTaskThreadWrapper.start();
+		//启动多个线程来处理请求
+		for (int i=0;i<2;i++) {
+			Thread normalRequestTaskThreadWrapper = new Thread(normalRequestTaskThread);
+			normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
+			normalRequestTaskThreadWrapper.start();
+		}
+		
+		
 		
 		normalBillReportTaskThread.start();
 		Thread normalBillReportTaskThreadWrapper = new Thread(normalBillReportTaskThread);

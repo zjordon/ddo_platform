@@ -38,10 +38,10 @@ public class HttpHelper {
 
 	private final static HttpHelper instance = new HttpHelper();
 
-	private CloseableHttpClient httpclient;
+	//private CloseableHttpClient httpclient;
 
 	private HttpHelper() {
-		httpclient = HttpClients.createDefault();
+		//httpclient = HttpClients.createDefault();
 		//设置超时时间为5秒
 		//httpclient.getParams().setParameter(CoreConnectionPNames.CONNECTION_TIMEOUT,60000);
 	}
@@ -70,7 +70,9 @@ public class HttpHelper {
 		try {
 			// 提交数据
 			ResponseHandler<HttpRequestResponse> rh = new HttpResponseHandler();
-			httpResponse = this.httpclient.execute(httppost, rh);
+			CloseableHttpClient httpclient = HttpClients.createDefault();
+			httpResponse = httpclient.execute(httppost, rh);
+			httpclient.close();
 		} finally {
 			if (response != null) {
 				try {
@@ -101,7 +103,9 @@ public class HttpHelper {
 		try {
 			// 提交数据
 			ResponseHandler<HttpRequestResponse> rh = new HttpResponseHandler();
-			httpResponse = this.httpclient.execute(httpget, rh);
+			CloseableHttpClient httpclient = HttpClients.createDefault();
+			httpResponse = httpclient.execute(httpget, rh);
+			httpclient.close();
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

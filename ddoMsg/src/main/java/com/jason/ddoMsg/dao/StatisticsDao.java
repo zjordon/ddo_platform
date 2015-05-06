@@ -23,12 +23,12 @@ public class StatisticsDao extends BaseDao {
 
 	private static final Logger logger = Logger.getLogger(StatisticsDao.class);
 	
-	private final static String INSERT_SEND_RECORD = "insert into ddo_send_record(id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date)"
-			+ " values(?, ?, ?, ?, ?, ?)";
-	private final static String INSERT_SEND_RESULT_RECORD = "insert into ddo_send_result_record(id, ddo_msg_id,send_result)"
-			+ " values(?, ?, ?)";
-	private final static String INSERT_BILL_RESULT_RECORD = "insert into ddo_bill_result_record(id, ddo_msg_id,bill_result)"
-			+ " values(?, ?, ?)";
+	private final static String INSERT_SEND_RECORD = "insert into ddo_send_record(id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date, state)"
+			+ " values(?, ?, ?, ?, ?, ?, 0)";
+	private final static String INSERT_SEND_RESULT_RECORD = "insert into ddo_send_result_record(id, ddo_msg_id,send_result,state)"
+			+ " values(?, ?, ?,0)";
+	private final static String INSERT_BILL_RESULT_RECORD = "insert into ddo_bill_result_record(id, ddo_msg_id,bill_result,state)"
+			+ " values(?, ?, ?,0)";
 	
 	/**
 	 * 保存发送列表

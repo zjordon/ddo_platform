@@ -38,7 +38,7 @@ public class UpdateChannelInfoEvent extends AbstractEvent {
 		super.validState(closeState);
 		String id = paramMap.get("id");
 		try {
-			CacheManager.getInstance().getChannelCache().updateChannelState(id, closeState);
+			CacheManager.getInstance().getChannelCache().updateChannelState(id, state);
 			CacheManager.getInstance().getChannelCache().updateChannelCloseState(id, closeState);
 		} catch (ElementNotFoundException e) {
 			logger.error("exception when process UpdateChannelInfoEvent", e);

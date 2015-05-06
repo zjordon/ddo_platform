@@ -46,14 +46,17 @@ public class ChannelRequestQueue {
 	 */
 	public List<ChannelRequest> getRequests(int nums) {
 		List<ChannelRequest> requestList = new ArrayList<ChannelRequest>(nums);
-		for (int i=0; i<nums; i++) {
-			ChannelRequest request = this.queue.poll();
-			if (request != null) {
-				requestList.add(request);
-			} else {
-				break;
+		//些处加入多线程同步的控制
+		synchronized(this) {
+			for (int i=0; i<nums; i++) {
+				ChannelRequest request = this.queue.poll();
+				if (request != null) {
+					requestList.add(request);
+				} else {
+					break;
+				}
+				
 			}
-			
 		}
 		logger.info("fetch requestList size is " + requestList.size());
 		return requestList;
