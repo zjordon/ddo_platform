@@ -3,8 +3,8 @@ INSERT INTO `t_s_function` (`ID`, `functioniframe`, `functionlevel`, `functionna
 INSERT INTO `t_s_function` (`ID`, `functioniframe`, `functionlevel`, `functionname`, `functionorder`, `functionurl`, `parentfunctionid`, `iconid`, `desk_iconid`, `functiontype`) VALUES ('402848814d1c8e30014d1c9191020005', NULL, 1, '全量预警', '2', 'fullComplaintController.do?fullComplaint', '402848814d1c8e30014d1c904bb80001', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', 0);
 INSERT INTO `t_s_function` (`ID`, `functioniframe`, `functionlevel`, `functionname`, `functionorder`, `functionurl`, `parentfunctionid`, `iconid`, `desk_iconid`, `functiontype`) VALUES ('402848814d1c8e30014d1c91e8d80007', NULL, 1, '省份启停', '3', 'proviceCloseStateController.do?proviceCloseState', '402848814d1c8e30014d1c904bb80001', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', 0);
 truncate table t_s_document;
-truncate table t_s_type;
-truncate table t_s_typegroup;
+delete from t_s_type;
+delete from t_s_typegroup;
 INSERT INTO `t_s_typegroup` (`ID`, `typegroupcode`, `typegroupname`) VALUES ('297e201047e95ee30147e9ba56ce0009', 'orgtype', 'common.org.type');
 INSERT INTO `t_s_typegroup` (`ID`, `typegroupcode`, `typegroupname`) VALUES ('402848814cb6974b014cb69ab2120001', 'state', '状态');
 INSERT INTO `t_s_typegroup` (`ID`, `typegroupcode`, `typegroupname`) VALUES ('402848814cb6974b014cb69b1edb0003', 'closeState', '关停状态');
