@@ -31,6 +31,7 @@
 	<!-- 配置数据源1 -->
 	<bean name="dataSource_jeecg" class="com.alibaba.druid.pool.DruidDataSource"
 		init-method="init" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
 		<property name="url" value="${jdbc.url.jeecg}" />
 		<property name="username" value="${jdbc.username.jeecg}" />
 		<property name="password" value="${jdbc.password.jeecg}" />
@@ -73,18 +74,35 @@
 			</props>
 		</property>
 	</bean>
-
+	
+	<!-- 测试用使用p6datasource
+	<bean id="dataSourceTarget" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="url" value="${jdbc.url.jeecg}" />
+		<property name="username" value="${jdbc.username.jeecg}" />
+		<property name="password" value="${jdbc.password.jeecg}" />
+	</bean>
+	<bean id="p6dataSource" class="com.p6spy.engine.spy.P6DataSource">
+		<constructor-arg ref="dataSourceTarget"></constructor-arg>
+	</bean>
+ -->
 	<!-- 数据源集合 -->
 	<bean id="dataSource"
 		class="org.jeecgframework.core.extend.datasource.DynamicDataSource">
 		<property name="targetDataSources">
 			<map key-type="org.jeecgframework.core.extend.datasource.DataSourceType">
 				<entry key="dataSource_jeecg" value-ref="dataSource_jeecg" />
-				<!-- <entry key="mapdataSource" value-ref="mapdataSource" /> -->
+				<!--<entry key="dataSource_p6" value-ref="p6dataSource" />-->
 			</map>
 		</property>
+		
 		<property name="defaultTargetDataSource" ref="dataSource_jeecg" />
+		<!--
+		<property name="defaultTargetDataSource" ref="dataSource_p6" />
+		-->
 	</bean>
+	
+	
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
