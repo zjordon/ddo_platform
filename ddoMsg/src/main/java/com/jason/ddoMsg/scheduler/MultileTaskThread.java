@@ -56,14 +56,14 @@ public class MultileTaskThread extends AbstractTaskThread {
 				if (allExecuteNums == 0) {
 					logger.info("all execute nums is 0 sleep 5 second");
 					try {
-						Thread.sleep(50000);
+						Thread.sleep(10000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 				} else {
 					logger.info("all execute nums is " + allExecuteNums);
 					try {
-						Thread.sleep(100000);
+						Thread.sleep(50000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
