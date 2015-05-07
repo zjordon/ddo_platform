@@ -172,4 +172,12 @@ public class FullStatisticsDay implements java.io.Serializable {
 	public void setPersistenceState(short persistenceState) {
 		this.persistenceState = persistenceState;
 	}
+	
+	public void increaseMsisdnNum() {
+		this.msisdnNum = new Integer(this.msisdnNum + 1);
+	}
+	
+	public void increaseMsgNum() {
+		this.msgNum = new Integer(this.msgNum + 1);
+	}
 }
