@@ -11,7 +11,7 @@ import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
 import com.jason.ddoTimingTask.task.handler.HandlerException;
-import com.jason.ddoTimingTask.task.handler.SendRecordStatisticsHandler;
+import com.jason.ddoTimingTask.task.handler.SRSHandlerChain;
 
 /**
  * 发送量统计任务
@@ -36,7 +36,8 @@ public class SendRecordStatisticsTask extends AbstractTask {
 		if (todoList != null && !todoList.isEmpty()) {
 			for (SendRecord sendRecord : todoList) {
 				try {
-					SendRecordStatisticsHandler.getInstacne().handle(sendRecord);
+					//SendRecordStatisticsHandler.getInstacne().handle(sendRecord);
+					SRSHandlerChain.getInstance().doHandler(sendRecord);
 				} catch (HandlerException e) {
 					logger.error("exception when executeTask SendRecordStatisticsTask", e);
 				}

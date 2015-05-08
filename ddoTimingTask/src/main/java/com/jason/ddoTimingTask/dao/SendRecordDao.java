@@ -117,6 +117,7 @@ public class SendRecordDao extends BaseDao {
 		sendRecord.setChannelId(rs.getString(4));
 		sendRecord.setBillingBusinessId(rs.getString(5));
 		sendRecord.setSendDate(new Integer(rs.getInt(6)));
+		sendRecord.calcuateSendMonth();
 		sendRecord.setState(rs.getInt(7));
 	}
 }

@@ -1,5 +1,7 @@
 package com.jason.ddoTimingTask.bean;
 
+import com.jason.ddoTimingTask.util.DateUtil;
+
 /**   
  * @Title: Entity
  * @Description: 发送记录
@@ -21,6 +23,8 @@ public class SendRecord implements java.io.Serializable {
 	private java.lang.String billingBusinessId;
 	/**发送日期*/
 	private java.lang.Integer sendDate;
+	
+	private Integer sendMonth;
 	
 	private int state;
 	
@@ -113,6 +117,14 @@ public class SendRecord implements java.io.Serializable {
 	 */
 	public void setSendDate(java.lang.Integer sendDate){
 		this.sendDate = sendDate;
+	}
+
+	public Integer getSendMonth() {
+		return sendMonth;
+	}
+
+	public void calcuateSendMonth() {
+		this.sendMonth = this.sendDate/100;
 	}
 
 	public int getState() {

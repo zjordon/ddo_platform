@@ -1,35 +1,35 @@
 /**
  * 
  */
-package com.jason.ddoTimingTask.task.handler;
+package com.jason.ddoTimingTask.task.handler.sendRecord;
 
 import org.apache.log4j.Logger;
 
-import com.jason.ddoTimingTask.bean.FullStatisticsDay;
-import com.jason.ddoTimingTask.bean.FullStatisticsMsisdn;
+
+
+
+import com.jason.ddoTimingTask.bean.FullStatisticsMonth;
+import com.jason.ddoTimingTask.bean.FSMsisdnMonth;
 import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
+import com.jason.ddoTimingTask.task.handler.HandlerException;
 import com.jason.ddoTimingTask.util.UUIDGenerator;
 
 /**
- * 按日统计全量发送量流程
- * 
+ *  按月统计全量发送量流程
  * @author jasonzhang
  *
  */
-public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
+public class SRFullStatisMonthHandler extends AbstractSRStatisHandler {
 	private static final Logger logger = Logger
-			.getLogger(SRFullStatisDayHandler.class);
+			.getLogger(SRFullStatisMonthHandler.class);
+	
+	private FullStatisticsMonth fsmRecord;
+	private FSMsisdnMonth fsMsisdn;
 
-	private FullStatisticsDay fsdRecord;
-	private FullStatisticsMsisdn fsMsisdn;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#commit()
+	/* (non-Javadoc)
+	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#commit()
 	 */
 	@Override
 	public void commit() throws HandlerException {
@@ -38,19 +38,22 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 
 				DaoManager
 						.getInstance()
-						.getFullStatisticsDayDao()
+						.getFullStatisticsMonthDao()
 						.saveMsisdn(this.fsMsisdn.getMsisdn(),
-								this.fsMsisdn.getSumDate());
+								this.fsMsisdn.getSumMonth());
 
 			} else {
-				DaoManager.getInstance().getFullStatisticsDayDao()
-						.addMsgNum(fsdRecord.getId(), 1);
+				DaoManager.getInstance().getFullStatisticsMonthDao()
+						.addMsgNum(fsmRecord.getId(), 1);
+			}
+			if (this.fsmRecord.getPersistenceState() == 0) {
+				DaoManager.getInstance().getFullStatisticsMonthDao().saveFullStatisticsMonth(this.fsmRecord);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
-		this.fsdRecord = null;
+		this.fsmRecord = null;
 		this.fsMsisdn = null;
 
 	}
@@ -64,12 +67,12 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	@Override
 	protected boolean isExistStatisRecord(SendRecord sendRecord)
 			throws HandlerException {
-		FullStatisticsDay record = this.getFullStatisticsDay(sendRecord
-				.getSendDate());
+		FullStatisticsMonth record = this.getFullStatisticsMonth(sendRecord
+				.getSendMonth());
 		if (record != null) {
-			this.fsdRecord = record;
+			this.fsmRecord = record;
 			// 设置持久化状态为已存在
-			this.fsdRecord.setPersistenceState((short) 1);
+			this.fsmRecord.setPersistenceState((short) 1);
 		}
 		return (record != null);
 	}
@@ -84,7 +87,7 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	@Override
 	protected void addStatisRecord(SendRecord sendRecord)
 			throws HandlerException {
-		this.initFsdRecord(sendRecord.getSendDate());
+		this.initFsdRecord(sendRecord.getSendMonth());
 
 	}
 
@@ -102,8 +105,8 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 		try {
 			exist = DaoManager
 					.getInstance()
-					.getFullStatisticsDayDao()
-					.isMsisdnExist(sendRecord.getSendDate(),
+					.getFullStatisticsMonthDao()
+					.isMsisdnExist(sendRecord.getSendMonth(),
 							sendRecord.getMsisdn());
 		} catch (DaoException e) {
 			logger.error("exception when isExistFSMsisdn", e);
@@ -122,9 +125,9 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	@Override
 	protected void addMsisdnRecord(SendRecord sendRecord)
 			throws HandlerException {
-		this.fsMsisdn = new FullStatisticsMsisdn();
+		this.fsMsisdn = new FSMsisdnMonth();
 		this.fsMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
-		this.fsMsisdn.setSumDate(sendRecord.getSendDate().intValue());
+		this.fsMsisdn.setSumMonth(sendRecord.getSendMonth().intValue());
 
 	}
 
@@ -136,7 +139,7 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	 */
 	@Override
 	protected void increaseMsisdnNum() throws HandlerException {
-		this.fsdRecord.increaseMsisdnNum();
+		this.fsmRecord.increaseMsisdnNum();
 
 	}
 
@@ -149,18 +152,18 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	 */
 	@Override
 	protected void increaseMsgNum() throws HandlerException {
-		this.fsdRecord.increaseMsgNum();
+		this.fsmRecord.increaseMsgNum();
 
 	}
 
-	private FullStatisticsDay getFullStatisticsDay(int date)
+	private FullStatisticsMonth getFullStatisticsMonth(int date)
 			throws HandlerException {
-		FullStatisticsDay record = null;
+		FullStatisticsMonth record = null;
 		try {
-			record = DaoManager.getInstance().getFullStatisticsDayDao()
-					.getFullStatisticsDay(date);
+			record = DaoManager.getInstance().getFullStatisticsMonthDao()
+					.getFullStatisticsMonth(date);
 		} catch (DaoException e) {
-			logger.error("exception when getFullStatisticsDay", e);
+			logger.error("exception when getFullStatisticsMonth", e);
 			throw new HandlerException(e.getMessage());
 		}
 
@@ -168,18 +171,18 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	}
 
 	private void initFsdRecord(int sumDate) {
-		this.fsdRecord = new FullStatisticsDay();
-		fsdRecord.setId((new UUIDGenerator()).generate());
-		fsdRecord.setMsgNum(new Integer(0));
-		fsdRecord.setMsisdnNum(new Integer(0));
-		fsdRecord.setSendSuccessNum(new Integer(0));
-		fsdRecord.setSendFailNum(new Integer(0));
-		fsdRecord.setBillSuccessNum(new Integer(0));
-		fsdRecord.setBillFailNum(new Integer(0));
-		fsdRecord.setSumAmount(new Double(0));
-		fsdRecord.setSumDate(sumDate);
+		this.fsmRecord = new FullStatisticsMonth();
+		fsmRecord.setId((new UUIDGenerator()).generate());
+		fsmRecord.setMsgNum(new Integer(0));
+		fsmRecord.setMsisdnNum(new Integer(0));
+		fsmRecord.setSendSuccessNum(new Integer(0));
+		fsmRecord.setSendFailNum(new Integer(0));
+		fsmRecord.setBillSuccessNum(new Integer(0));
+		fsmRecord.setBillFailNum(new Integer(0));
+		fsmRecord.setSumAmount(new Double(0));
+		fsmRecord.setSumMonth(sumDate);
 		// 新增记录，设置持久化状态为新增
-		fsdRecord.setPersistenceState((short) 0);
+		fsmRecord.setPersistenceState((short) 0);
 	}
 
 }

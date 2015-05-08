@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import com.jason.ddoTimingTask.bean.BillResultRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
-import com.jason.ddoTimingTask.task.handler.BillResultRecordStatHandler;
+import com.jason.ddoTimingTask.task.handler.BRRSHandlerChain;
 import com.jason.ddoTimingTask.task.handler.HandlerException;
 
 /**
@@ -36,7 +36,8 @@ public class BillResultRecordStatTask extends AbstractTask {
 		if (todoList != null && !todoList.isEmpty()) {
 			for (BillResultRecord billResultRecord : todoList) {
 				try {
-					BillResultRecordStatHandler.getInstacne().handle(billResultRecord);
+					//BillResultRecordStatHandler.getInstacne().handle(billResultRecord);
+					BRRSHandlerChain.getInstance().doHandler(billResultRecord);
 				} catch (HandlerException e) {
 					logger.error("exception when executeTask BillResultRecordStatTask", e);
 				}

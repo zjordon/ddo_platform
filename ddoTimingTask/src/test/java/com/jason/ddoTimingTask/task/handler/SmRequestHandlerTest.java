@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.jason.ddoTimingTask.bean.SmTask;
 import com.jason.ddoTimingTask.task.BaseTaskTest;
+import com.jason.ddoTimingTask.task.handler.smTask.SmRequestHandler;
 import com.jason.ddoTimingTask.bean.SmMsisdnList;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.jason.ddoTimingTask.task.handler;
+package com.jason.ddoTimingTask.task.handler.smTask;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +14,7 @@ import com.jason.ddoTimingTask.bean.SmMsisdnList;
 import com.jason.ddoTimingTask.bean.SmTask;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
+import com.jason.ddoTimingTask.task.handler.HandlerException;
 
 /**
  * 短信任务处理器

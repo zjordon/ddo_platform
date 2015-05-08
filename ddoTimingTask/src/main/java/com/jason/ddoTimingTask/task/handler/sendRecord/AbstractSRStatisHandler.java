@@ -1,9 +1,10 @@
 /**
  * 
  */
-package com.jason.ddoTimingTask.task.handler;
+package com.jason.ddoTimingTask.task.handler.sendRecord;
 
 import com.jason.ddoTimingTask.bean.SendRecord;
+import com.jason.ddoTimingTask.task.handler.HandlerException;
 
 /**
  * 统计发送量的抽象类，定义了统计的抽象流程
@@ -16,7 +17,6 @@ public abstract class AbstractSRStatisHandler {
 		if (!this.isExistStatisRecord(sendRecord)) {
 			this.addStatisRecord(sendRecord);
 		}
-		this.addStatisRecord(sendRecord);
 		if (!this.isExistMsisdn(sendRecord)) {
 			this.addMsisdnRecord(sendRecord);
 			this.increaseMsisdnNum();

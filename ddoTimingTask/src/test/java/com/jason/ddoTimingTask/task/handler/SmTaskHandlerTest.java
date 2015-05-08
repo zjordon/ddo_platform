@@ -2,6 +2,7 @@ package com.jason.ddoTimingTask.task.handler;
 
 import com.jason.ddoTimingTask.bean.SmTask;
 import com.jason.ddoTimingTask.task.BaseTaskTest;
+import com.jason.ddoTimingTask.task.handler.smTask.SmTaskHandler;
 
 public class SmTaskHandlerTest extends BaseTaskTest {
 

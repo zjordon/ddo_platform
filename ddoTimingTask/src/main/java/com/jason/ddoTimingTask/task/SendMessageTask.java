@@ -12,7 +12,7 @@ import com.jason.ddoTimingTask.bean.SmTask;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
 import com.jason.ddoTimingTask.task.handler.HandlerException;
-import com.jason.ddoTimingTask.task.handler.SmTaskHandler;
+import com.jason.ddoTimingTask.task.handler.smTask.SmTaskHandler;
 
 /**
  * @author jasonzhang

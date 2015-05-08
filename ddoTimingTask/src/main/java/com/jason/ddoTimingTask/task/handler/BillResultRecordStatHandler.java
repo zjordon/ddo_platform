@@ -57,7 +57,7 @@ public class BillResultRecordStatHandler extends BaseStaticsHandler {
 										DaoManager.getInstance().getFullStatisticsDayDao().addBillSuccessNum(fsdRecord.getId(), 1, price);
 										DaoManager.getInstance().getChannelStatisticsDayDao().addBillSuccessNum(csdRecord.getId(), 1, price);
 									} else {
-										//计费成功则增加计费失败数目
+										//计费失败则增加计费失败数目
 										DaoManager.getInstance().getFullStatisticsDayDao().addBillFailNum(fsdRecord.getId(), 1);
 										DaoManager.getInstance().getChannelStatisticsDayDao().addBillFailNum(csdRecord.getId(), 1);
 									}
