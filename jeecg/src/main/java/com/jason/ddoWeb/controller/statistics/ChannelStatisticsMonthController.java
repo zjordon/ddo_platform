@@ -161,7 +161,7 @@ public class ChannelStatisticsMonthController extends BaseController {
 		
 		CriteriaQuery cq = new CriteriaQuery(ChannelStatisticsMonthEntity.class, dataGrid);
 		//设置默认的排序及排序字雄姿英发
-		cq.addOrder("sumMonth", SortDirection.asc);
+		cq.addOrder("sumMonth", SortDirection.desc);
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
 				channelStatisticsMonth, request.getParameterMap());
 		List<ChannelStatisticsMonthEntity> channelStatisticsMonthList = this.channelStatisticsMonthService
