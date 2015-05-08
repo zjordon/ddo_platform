@@ -42,12 +42,12 @@ public class SRFullStatisMonthHandler extends AbstractSRStatisHandler {
 						.saveMsisdn(this.fsMsisdn.getMsisdn(),
 								this.fsMsisdn.getSumMonth());
 
-			} else {
-				DaoManager.getInstance().getFullStatisticsMonthDao()
-						.addMsgNum(fsmRecord.getId(), 1);
 			}
 			if (this.fsmRecord.getPersistenceState() == 0) {
 				DaoManager.getInstance().getFullStatisticsMonthDao().saveFullStatisticsMonth(this.fsmRecord);
+			} else {
+				DaoManager.getInstance().getFullStatisticsMonthDao()
+				.addMsgNum(fsmRecord.getId(), 1);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
