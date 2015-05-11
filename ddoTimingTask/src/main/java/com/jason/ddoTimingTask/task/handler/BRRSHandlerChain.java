@@ -16,6 +16,7 @@ import com.jason.ddoTimingTask.dao.DaoManager;
 import com.jason.ddoTimingTask.task.handler.billResultRecord.AbstractBRRStatisHandler;
 import com.jason.ddoTimingTask.task.handler.billResultRecord.BRRChannelStatisMonthHandler;
 import com.jason.ddoTimingTask.task.handler.billResultRecord.BRRFullStatisMonthHandler;
+import com.jason.ddoTimingTask.task.handler.billResultRecord.BRRProvinceStatisMonthHandler;
 
 /**
  * 计费结果统计处理链，主要是调用各个处理器进行处理
@@ -40,6 +41,7 @@ public class BRRSHandlerChain {
 		this.handlerList = new ArrayList<AbstractBRRStatisHandler>(2);
 		this.handlerList.add(new BRRFullStatisMonthHandler());
 		this.handlerList.add(new BRRChannelStatisMonthHandler());
+		this.handlerList.add(new BRRProvinceStatisMonthHandler());
 	}
 	
 	public void doHandler(BillResultRecord resultRecord) throws HandlerException {

@@ -22,8 +22,8 @@ import com.jason.ddoTimingTask.bean.SendRecord;
 public class SendRecordDao extends BaseDao {
 	
 	private static final Logger logger = Logger.getLogger(SendRecordDao.class);
-	private final static String GET_SEND_RECORDS = "select id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date, state from ddo_send_record where state = 0 limit 0, ?";
-	private final static String GET_SEND_RECORD = "select id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date, state from ddo_send_record where ddo_msg_id = ?";
+	private final static String GET_SEND_RECORDS = "select id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date, state, msisdn_province_code from ddo_send_record where state = 0 limit 0, ?";
+	private final static String GET_SEND_RECORD = "select id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date, state, msisdn_province_code from ddo_send_record where ddo_msg_id = ?";
 	private final static String UPDATE_STATE_PROCESSED = "update ddo_send_record set state = 1 where id = ?";
 
 	/**
@@ -119,5 +119,6 @@ public class SendRecordDao extends BaseDao {
 		sendRecord.setSendDate(new Integer(rs.getInt(6)));
 		sendRecord.calcuateSendMonth();
 		sendRecord.setState(rs.getInt(7));
+		sendRecord.setProvinceCode(rs.getString(8) == null ? "-1" : rs.getString(8));
 	}
 }

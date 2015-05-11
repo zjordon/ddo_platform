@@ -28,6 +28,8 @@ public class SendRecord implements java.io.Serializable {
 	
 	private int state;
 	
+	private String provinceCode;
+	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  唯一标识
@@ -133,5 +135,13 @@ public class SendRecord implements java.io.Serializable {
 
 	public void setState(int state) {
 		this.state = state;
+	}
+
+	public String getProvinceCode() {
+		return provinceCode;
+	}
+
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
 	}
 }

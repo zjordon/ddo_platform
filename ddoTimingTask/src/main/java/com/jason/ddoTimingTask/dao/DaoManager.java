@@ -27,6 +27,7 @@ public class DaoManager {
 	private FullStatisticsDayDao fullStatisticsDayDao;
 	private ChannelStatisticsMonthDao channelStatisticsMonthDao;
 	private FullStatisticsMonthDao fullStatisticsMonthDao;
+	private ProvinceStatisticsMonthDao provinceStatisticsMonthDao;
 	private SendRecordDao sendRecordDao;
 	private SendResultRecordDao sendResultRecordDao;
 	private SmMsisdnListDao smMsisdnListDao;
@@ -46,6 +47,8 @@ public class DaoManager {
 		this.fullStatisticsDayDao.setDataSource(dataSource);
 		this.channelStatisticsMonthDao = new ChannelStatisticsMonthDao();
 		this.channelStatisticsMonthDao.setDataSource(dataSource);
+		this.provinceStatisticsMonthDao = new ProvinceStatisticsMonthDao();
+		this.provinceStatisticsMonthDao.setDataSource(dataSource);
 		this.sendRecordDao = new SendRecordDao();
 		this.sendRecordDao.setDataSource(dataSource);
 		this.sendResultRecordDao = new SendResultRecordDao();
@@ -78,6 +81,10 @@ public class DaoManager {
 
 	public FullStatisticsMonthDao getFullStatisticsMonthDao() {
 		return fullStatisticsMonthDao;
+	}
+
+	public ProvinceStatisticsMonthDao getProvinceStatisticsMonthDao() {
+		return provinceStatisticsMonthDao;
 	}
 
 	public SendRecordDao getSendRecordDao() {

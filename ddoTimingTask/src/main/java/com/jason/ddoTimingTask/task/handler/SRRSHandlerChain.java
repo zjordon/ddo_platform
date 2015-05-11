@@ -15,6 +15,7 @@ import com.jason.ddoTimingTask.dao.DaoManager;
 import com.jason.ddoTimingTask.task.handler.sendResultRecord.AbstractSRRStatisHandler;
 import com.jason.ddoTimingTask.task.handler.sendResultRecord.SRRChannelStatisMonthHandler;
 import com.jason.ddoTimingTask.task.handler.sendResultRecord.SRRFullStatisMonthHandler;
+import com.jason.ddoTimingTask.task.handler.sendResultRecord.SRRProvinceStatisMonthHandler;
 
 /**
  * 发送结果统计处理链，主要是调用各个处理器进行处理
@@ -35,9 +36,10 @@ public class SRRSHandlerChain {
 	private List<AbstractSRRStatisHandler> handlerList;
 	
 	private SRRSHandlerChain() {
-		this.handlerList = new ArrayList<AbstractSRRStatisHandler>(2);
+		this.handlerList = new ArrayList<AbstractSRRStatisHandler>(3);
 		this.handlerList.add(new SRRFullStatisMonthHandler());
 		this.handlerList.add(new SRRChannelStatisMonthHandler());
+		this.handlerList.add(new SRRProvinceStatisMonthHandler());
 	}
 	
 	public void doHandler(SendResultRecord resultRecord) throws HandlerException {
