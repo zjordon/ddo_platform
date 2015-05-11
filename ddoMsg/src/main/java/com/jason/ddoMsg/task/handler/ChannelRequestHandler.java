@@ -327,6 +327,8 @@ public class ChannelRequestHandler {
 			sendRecord.setChannelId(ddoMsg.getChannelId());
 			sendRecord.setBillingBusinessId(ddoMsg.getBillingBusinessId());
 			sendRecord.setSendDate(DateUtil.getDateIntNum(ddoMsg.getCreateDate()));
+			//统计增加手机号码归属省份字段20150511
+			sendRecord.setMsisdnProvinceCode(ddoMsg.getMsisdnProvinceCode());
 			StatisticsQueue.getInstance().addSendRecord(sendRecord);
 			ddoMsgHandler.handle(ddoMsg, channel, instruct, channelRequest.getSourceType().intValue());
 		}

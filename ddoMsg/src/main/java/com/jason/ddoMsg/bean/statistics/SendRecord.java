@@ -21,6 +21,8 @@ public class SendRecord implements java.io.Serializable {
 	private java.lang.String billingBusinessId;
 	/**发送日期*/
 	private java.lang.Integer sendDate;
+	/**手机号码归属省份*/
+	private String msisdnProvinceCode;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -111,5 +113,13 @@ public class SendRecord implements java.io.Serializable {
 	 */
 	public void setSendDate(java.lang.Integer sendDate){
 		this.sendDate = sendDate;
+	}
+
+	public String getMsisdnProvinceCode() {
+		return msisdnProvinceCode;
+	}
+
+	public void setMsisdnProvinceCode(String msisdnProvinceCode) {
+		this.msisdnProvinceCode = msisdnProvinceCode;
 	}
 }

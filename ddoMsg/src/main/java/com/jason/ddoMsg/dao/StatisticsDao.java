@@ -23,7 +23,7 @@ public class StatisticsDao extends BaseDao {
 
 	private static final Logger logger = Logger.getLogger(StatisticsDao.class);
 	
-	private final static String INSERT_SEND_RECORD = "insert into ddo_send_record(id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date, state)"
+	private final static String INSERT_SEND_RECORD = "insert into ddo_send_record(id, ddo_msg_id, msisdn, channel_id, billing_business_id, send_date, state, msisdn_province_code)"
 			+ " values(?, ?, ?, ?, ?, ?, 0)";
 	private final static String INSERT_SEND_RESULT_RECORD = "insert into ddo_send_result_record(id, ddo_msg_id,send_result,state)"
 			+ " values(?, ?, ?,0)";
@@ -47,6 +47,7 @@ public class StatisticsDao extends BaseDao {
 				pstmt.setString(4, record.getChannelId());
 				pstmt.setString(5, record.getBillingBusinessId());
 				pstmt.setInt(6, record.getSendDate().intValue());
+				pstmt.setString(7, record.getMsisdnProvinceCode());
 				pstmt.addBatch();
 			}
 			pstmt.executeBatch();
