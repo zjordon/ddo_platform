@@ -101,7 +101,7 @@ FROM
 				`t1`.`sum_month` = `t2`.`sum_month`
 			)
 		)
-	)
+	);
 --
 -- ER/Studio 8.0 SQL Code Generation
 -- Company :      Lenovo
@@ -169,6 +169,6 @@ FROM
 				)
 			)
 		)
-	)
+	);
 update t_s_function t set t.functionurl = 'cComplaintMonthViewController.do?cComplaintMonthView' where id = '402848814d1c8e30014d1c9122b10003';
 update t_s_function t set t.functionurl = 'fComplaintMonthViewController.do?fComplaintMonthView' where id = '402848814d1c8e30014d1c9191020005';

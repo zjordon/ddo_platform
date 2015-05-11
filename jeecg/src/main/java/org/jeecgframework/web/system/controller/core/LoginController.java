@@ -369,7 +369,9 @@ public class LoginController extends BaseController{
      * @param role 角色实体
      */
     private void assembleFunctionsByRole(Map<String, TSFunction> loginActionlist, TSRole role) {
+    	//System.out.println("fuck here " + role.getRoleName());
         List<TSRoleFunction> roleFunctionList = systemService.findByProperty(TSRoleFunction.class, "TSRole.id", role.getId());
+        //StringBuilder builder = new StringBuilder();
         for (TSRoleFunction roleFunction : roleFunctionList) {
             TSFunction function = roleFunction.getTSFunction();
           //update-begin--Author:anchao  Date:20140822 for：[bugfree号]字段级权限（表单，列表）--------------------
@@ -379,7 +381,9 @@ public class LoginController extends BaseController{
 			}
           //update-end--Author:anchao  Date:20140822 for：[bugfree号]字段级权限（表单，列表）--------------------
             loginActionlist.put(function.getId(), function);
+            //builder.append(function.getFunctionName()).append(',');
         }
+       //System.out.println(builder.toString());
     }
 //    update-end--Author:zhangguoming  Date:20140821 for：抽取方法，获取角色下的权限列表
 
