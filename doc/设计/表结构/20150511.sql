@@ -43,4 +43,6 @@ CREATE TABLE ddo_province_statistics_month(
 )ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_unicode_ci
 COMMENT='分省统计'
 ;
+update t_s_function t set t.functionorder = 4 where t.id = '402848814ce57137014ce574685a0007';
+INSERT INTO `t_s_function` (`ID`, `functioniframe`, `functionlevel`, `functionname`, `functionorder`, `functionurl`, `parentfunctionid`, `iconid`, `desk_iconid`, `functiontype`) VALUES ('402848814d41829e014d41850cd30001', NULL, 1, '分省统计', '3', 'provinceStatisticsMonthController.do?provinceStatisticsMonth', '402848814ce57137014ce572d7320001', '8a8ab0b246dc81120146dc8180460000', '8a8ab0b246dc81120146dc8180dd001e', 0);
 
