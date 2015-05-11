@@ -17,7 +17,7 @@ function ddoMsgListExportXls() {
    --%>
     <t:dgCol title="创建时间" field="createDate" formatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="group"></t:dgCol>
    <t:dgCol title="用户手机号码" field="msisdn" query="true"></t:dgCol>
-   <t:dgCol title="号码归属省份" field="msisdnProvinceCode" dictionary="t_s_territory where territorylevel = 1,territorycode,territoryname"></t:dgCol>
+   <t:dgCol title="号码归属省份" field="msisdnProvinceCode" dictionary="t_s_territory where territorylevel = 1,territorycode,territoryname" query="true"></t:dgCol>
    <t:dgCol title="号码归属地市" field="msisdnCityCode" dictionary="t_s_territory where territorylevel = 2,territorycode,territoryname"></t:dgCol>
    <t:dgCol title="价格" field="billingBusinessId" dictionary="ddo_bill_business,id,price" customFormatter="formatToDouble"></t:dgCol>
   <t:dgCol title="发送结果" field="returnMsgCode" dictionary="retMsgCode"></t:dgCol>
