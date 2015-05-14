@@ -31,7 +31,7 @@ public class ReDeliverReportTask extends AbstractTask {
 			logger.error("excpetion when execute bill ReDeliverReportTask", e);
 		}
 		if (records != null && !records.isEmpty()) {
-			BillReportHandler.getInstance().handle(records);
+			BillReportHandler.getInstance().handle(records, false);
 			nums = records.size();
 		}
 		logger.debug("end execute ReDeliverReportTask");

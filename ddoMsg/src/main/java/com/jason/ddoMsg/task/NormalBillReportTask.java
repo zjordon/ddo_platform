@@ -33,7 +33,7 @@ public class NormalBillReportTask extends AbstractTask {
 			} catch (CacheException e) {
 				logger.error("excpetion when executeTask NormalBillReportTask", e);
 			}
-			BillReportHandler.getInstance().handle(billReportList);
+			BillReportHandler.getInstance().handle(billReportList, true);
 			nums = billReportList.size();
 			billReportList.clear();
 		}

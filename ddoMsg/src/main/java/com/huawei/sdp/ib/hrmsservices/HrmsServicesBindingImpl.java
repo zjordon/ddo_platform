@@ -23,6 +23,7 @@ public class HrmsServicesBindingImpl implements
 			_resp = new RdoChargeResultNotifyRsp();
 			String transationId = parameters.getTransationId();
 			String resultCode = parameters.getChargeResult().getResultCode();
+			System.out.println("transationId is " + transationId + ",resultCode is " + resultCode);
 			String ret = BillReportInterface.getInstance().receiveBillReport(transationId, resultCode);
 			Result result = new Result();
 			result.setResultCode(ret);

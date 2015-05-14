@@ -34,7 +34,7 @@ public class DeliverResponseHandler implements ResponseHandler<DeliverResponse> 
 			// InputStreamReader(entity.getContent(), charset);
 			// reader.close();
 			String responsContent = EntityUtils.toString(entity);
-			deliverResponse.setMsg(responsContent);
+			deliverResponse.setMsg(responsContent != null ? responsContent.trim() : responsContent);
 		}
 
 		return deliverResponse;

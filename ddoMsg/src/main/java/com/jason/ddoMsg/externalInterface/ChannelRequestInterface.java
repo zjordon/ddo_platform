@@ -115,8 +115,8 @@ public class ChannelRequestInterface {
 											billBusiness = this.getBillBusinessById(channelBusiness.getBillBusinessId());
 											if (billBusiness == null) {
 												//根据指令可以找到渠道业务，但找不到计费业务，系统有问题，返回系统内部错误
-												retState = 500;
-												ret = "500";
+												retState = 501;
+												ret = "501";
 												processResult = 7;
 											} else {
 												//回填渠道计费业务编码
@@ -129,8 +129,8 @@ public class ChannelRequestInterface {
 										ChannelMonthLimit channelMonthLimit = this.getChannelMonthLimit(channelUser.getChannelId());
 										if (channelMonthLimit == null) {
 											//根据渠道id找不到对应的月限额，系统应该出错了，返回内部错误
-											retState = 500;
-											ret = "500";
+											retState = 502;
+											ret = "502";
 											processResult = 4;
 										} else {
 											//计算本次的费用
@@ -144,8 +144,8 @@ public class ChannelRequestInterface {
 												ChannelDayLimit channelDayLimit = this.getChannelDayLimit(channelUser.getChannelId());
 												if (channelDayLimit == null) {
 													//根据渠道id找不到对应的日限额，系统应该出错了，返回内部错误
-													retState = 500;
-													ret = "500";
+													retState = 503;
+													ret = "503";
 													processResult = 5;
 												} else {
 													if (this.isExceedDayLimit(totalPrice, channelDayLimit)) {
@@ -159,8 +159,8 @@ public class ChannelRequestInterface {
 															this.deductCost(totalPrice, channelUser.getChannelId(), channelRequest.getId(), currentDate);
 														} catch (CacheException e) {
 															//扣除费用时了出错，系统应该有问题，返回内部错误
-															retState = 500;
-															ret = "500";
+															retState = 504;
+															ret = "504";
 															processResult = 6;
 														}
 													}

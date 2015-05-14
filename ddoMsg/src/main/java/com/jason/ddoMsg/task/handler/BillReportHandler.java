@@ -41,7 +41,9 @@ public class BillReportHandler {
 	public final static BillReportHandler getInstance() {
 		return instance;
 	}
-	public void handle(List<BillReport> billReportList) {
+	
+	
+	public void handle(List<BillReport> billReportList, boolean needStatistics) {
 		//从数据库中获取对应的ddo消息
 		Map<String, DdoMsg> ddoMsgMap = this.getDdoMsgMap(billReportList);
 		DdoMsgCache ddoMsgCache = CacheManager.getInstance().getDdoMsgCache();
@@ -59,16 +61,19 @@ public class BillReportHandler {
 				} catch (CacheException e) {
 					logger.error("excpetion when handle bill report", e);
 				}
-				//加入统计队列 20150423
-				BillResultRecord billResultRecord = new BillResultRecord();
-				billResultRecord.setId((new UUIDGenerator()).generate());
-				billResultRecord.setDdoMsgId(ddoMsg.getId());
-				if ("00000000".equals(billReport.getBillStateCode())) {
-					billResultRecord.setBillResult(new Integer(1));
-				} else {
-					billResultRecord.setBillResult(new Integer(0));
+				if (needStatistics) {
+					//加入统计队列 20150423
+					BillResultRecord billResultRecord = new BillResultRecord();
+					billResultRecord.setId((new UUIDGenerator()).generate());
+					billResultRecord.setDdoMsgId(ddoMsg.getId());
+					if ("00000000".equals(billReport.getBillStateCode())) {
+						billResultRecord.setBillResult(new Integer(1));
+					} else {
+						billResultRecord.setBillResult(new Integer(0));
+					}
+					StatisticsQueue.getInstance().addBillResultRecord(billResultRecord);
 				}
-				StatisticsQueue.getInstance().addBillResultRecord(billResultRecord);
+				
 				//判断是否需要下发状态报告
 				Channel channel = null;
 				try {

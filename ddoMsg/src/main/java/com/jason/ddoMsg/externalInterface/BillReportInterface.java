@@ -3,6 +3,8 @@
  */
 package com.jason.ddoMsg.externalInterface;
 
+import java.util.Date;
+
 import com.jason.ddoMsg.bean.msg.BillReport;
 import com.jason.ddoMsg.cache.CacheManager;
 import com.jason.ddoMsg.queue.BillReportQueue;
@@ -38,6 +40,7 @@ public class BillReportInterface {
 			report.setTransationId(transationId);
 			report.setBillStateCode(chargeResultCode);
 			report.setState(new Integer(1));
+			report.setCreateDate(new Date());
 			BillReportQueue.getInstnace().addBillReport(report);
 			ret = "00000000";
 		}

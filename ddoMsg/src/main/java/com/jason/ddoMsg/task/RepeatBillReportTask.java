@@ -44,7 +44,7 @@ public class RepeatBillReportTask extends AbstractTask {
 			logger.error("excpetion when execute bill RepeatBillReportTask", e);
 		}
 		if (!billReportList.isEmpty()) {
-			BillReportHandler.getInstance().handle(billReportList);
+			BillReportHandler.getInstance().handle(billReportList, false);
 			nums = billReportList.size();
 		}
 		logger.debug("end execute RepeatBillReportTask");

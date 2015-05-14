@@ -91,7 +91,7 @@ public class BillReportDao extends BaseDao {
 			pstmt.setShort(4, repeat ? (short) 1 : (short) 0);
 			pstmt.setTimestamp(5, sendTimestamp);
 			pstmt.setTimestamp(6, responseTimestamp);
-			pstmt.setString(5, id);
+			pstmt.setString(7, id);
 			pstmt.executeUpdate();
 			super.closePstmt(pstmt);
 			if (repeat) {

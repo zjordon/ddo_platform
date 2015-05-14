@@ -6,7 +6,6 @@ package com.jason.ddoMsg.externalInterface;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.Date;
 
 import javax.xml.rpc.ServiceException;
 
@@ -75,6 +74,7 @@ public class DdoMsgInterface {
 					String authenticatorSource = sourceDeviceCode + passwd + timestamp;
 					String spId = configCache.getDdoSpId();
 					String asyncNotifyURL = configCache.getDdoAsyncNotifyURL();
+					System.out.println("asyncNotifyURL is " + asyncNotifyURL);
 					String mobile = Long.toString(ddoMsg.getMsisdn().longValue());
 
 					authenticatorSource = DigestUtils.sha256Hex(authenticatorSource);

@@ -53,7 +53,7 @@ public class BillReportHandlerTest extends BaseTaskTest {
 		billReport.setTransationId("124");
 		billReport.setState(new Integer(1));
 		reportList.add(billReport);
-		this.billReportHandler.handle(reportList);
+		this.billReportHandler.handle(reportList, true);
 	}
 
 }
