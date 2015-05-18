@@ -16,6 +16,7 @@ import com.jason.ddoWeb.util.StringUtils;
 
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
+import org.jeecgframework.core.util.DynamicDBUtil;
 
 @Service("channelBusinessService")
 @Transactional
@@ -27,6 +28,7 @@ public class ChannelBusinessServiceImpl extends CommonServiceImpl implements
 	// "select count(*) from ddo_channel_business where bill_business_id = ? and channel_id = ?";
 	private final static String GET_COUNT_BY_INSTRUCT = "select count(*) from ddo_channel_business where instruct = ?";
 	private final static String GET_BUSINESS = "select state, instruct from ddo_channel_business where id = ?";
+	private final static String INSERT_EVENT = "insert into sm_event(id, event_id, create_date, param) values(?, ?, ?, ?)";
 
 	@Override
 	public void saveChannelBusinessesByBB(String billBusinessId,
@@ -106,6 +108,7 @@ public class ChannelBusinessServiceImpl extends CommonServiceImpl implements
 				.append(",channelId:").append(channelBusiness.getChannelId());
 		event.setParam(builder.toString());
 		super.save(event);
+		this.createEventToSm(event);
 	}
 
 	@Override
@@ -142,6 +145,7 @@ public class ChannelBusinessServiceImpl extends CommonServiceImpl implements
 			builder.append("id:").append(((ChannelBusinessEntity)entity).getId()).append(",instruct:").append(channelBusiness.getInstruct());
 			event.setParam(builder.toString());
 			super.save(event);
+			this.createEventToSm(event);
 		}
 		super.saveOrUpdate(entity);
 	}
@@ -155,7 +159,12 @@ public class ChannelBusinessServiceImpl extends CommonServiceImpl implements
 		builder.append("id:").append(((ChannelBusinessEntity)entity).getId());
 		event.setParam(builder.toString());
 		super.save(event);
+		this.createEventToSm(event);
 		super.delete(entity);
+	}
+	
+	private void createEventToSm(EventEntity event) {
+		DynamicDBUtil.update("dataSource_sm", INSERT_EVENT, event.getId(), event.getEventId(), event.getCreateDate(), event.getParam());
 	}
 
 }

@@ -9,9 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jason.ddoWeb.entity.channel.ChannelUserEntity;
 import com.jason.ddoWeb.entity.event.EventEntity;
 import com.jason.ddoWeb.service.channel.ChannelUserServiceI;
+import com.jason.ddoWeb.util.UUIDGenerator;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
+import org.jeecgframework.core.util.DynamicDBUtil;
 import org.jeecgframework.core.util.StringUtil;
 
 @Service("channelUserService")
@@ -19,6 +21,7 @@ import org.jeecgframework.core.util.StringUtil;
 public class ChannelUserServiceImpl extends CommonServiceImpl implements
 		ChannelUserServiceI {
 	private final static String GET_CHANNEL_USER = "from ChannelUserEntity obj where obj.username = ? and obj.password = ? and obj.state = 1";
+	private final static String INSERT_EVENT = "insert into sm_event(id, event_id, create_date, param) values(?, ?, ?, ?)";
 
 	@Override
 	public <T> Serializable save(T entity) {
@@ -36,6 +39,8 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 				.append(",channelId:").append(channelUser.getChannelId());
 		event.setParam(builder.toString());
 		super.save(event);
+		//创建到短信平台的事件
+		this.createEventToSm(event);
 		return channelUser.getId();
 	}
 
@@ -62,6 +67,8 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 		builder.append("id:").append(((ChannelUserEntity) entity).getId());
 		event.setParam(builder.toString());
 		super.save(event);
+		//创建到短信平台的事件
+		this.createEventToSm(event);
 		super.delete(entity);
 	}
 
@@ -81,6 +88,8 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 						.append(password);
 				event.setParam(builder.toString());
 				super.save(event);
+				//创建到短信平台的事件
+				this.createEventToSm(event);
 			}
 		}
 	}
@@ -93,6 +102,10 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 			return userList.get(0);
 		}
 		return null;
+	}
+	
+	private void createEventToSm(EventEntity event) {
+		DynamicDBUtil.update("dataSource_sm", INSERT_EVENT, event.getId(), event.getEventId(), event.getCreateDate(), event.getParam());
 	}
 
 }

@@ -6,7 +6,7 @@ package com.jason.ddoMsg.event;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.axis.utils.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author jasonzhang
