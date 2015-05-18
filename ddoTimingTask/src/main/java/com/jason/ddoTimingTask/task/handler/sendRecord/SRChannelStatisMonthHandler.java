@@ -36,8 +36,10 @@ public class SRChannelStatisMonthHandler extends AbstractSRStatisHandler {
 			}
 			if (this.csmRecord.getPersistenceState() == 0) {
 				DaoManager.getInstance().getChannelStatisticsMonthDao().saveChannelStatisticsMonth(this.csmRecord);
-			} else {
+			} else if (this.csMsisdn == null){
 				DaoManager.getInstance().getChannelStatisticsMonthDao().addMsgNum(this.csmRecord.getId(), 1);
+			} else if (this.csMsisdn != null) {
+				DaoManager.getInstance().getChannelStatisticsMonthDao().addMsgAndMsisdnNum(this.csmRecord.getId(), 1, 1);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);

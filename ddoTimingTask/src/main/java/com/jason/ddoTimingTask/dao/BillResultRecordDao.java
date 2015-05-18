@@ -40,9 +40,9 @@ public class BillResultRecordDao extends BaseDao {
 			pstmt.setInt(1, num);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
-				BillResultRecord BillResultRecord = new BillResultRecord();
-				this.setParamToBillResultRecord(BillResultRecord, rs);
-				list.add(BillResultRecord);
+				BillResultRecord billResultRecord = new BillResultRecord();
+				this.setParamToBillResultRecord(billResultRecord, rs);
+				list.add(billResultRecord);
 			}
 
 			super.closeResultSet(rs);

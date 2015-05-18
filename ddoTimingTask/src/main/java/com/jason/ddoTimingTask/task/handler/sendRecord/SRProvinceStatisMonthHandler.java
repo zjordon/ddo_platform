@@ -37,8 +37,10 @@ public class SRProvinceStatisMonthHandler extends AbstractSRStatisHandler {
 			}
 			if (this.psmRecord.getPersistenceState() == 0) {
 				DaoManager.getInstance().getProvinceStatisticsMonthDao().saveProvinceStatisticsMonth(this.psmRecord);
-			} else {
+			} else if (this.psMsisdn == null){
 				DaoManager.getInstance().getProvinceStatisticsMonthDao().addMsgNum(this.psmRecord.getId(), 1);
+			} else if (this.psMsisdn != null) {
+				DaoManager.getInstance().getProvinceStatisticsMonthDao().addMsgAndMsisdnNum(this.psmRecord.getId(), 1, 1);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
