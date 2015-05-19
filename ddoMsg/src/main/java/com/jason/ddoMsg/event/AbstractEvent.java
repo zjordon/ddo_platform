@@ -54,7 +54,7 @@ public abstract class AbstractEvent implements IEvent {
 		}
 	}
 	
-	private boolean isDigital(String s) {
+	protected boolean isDigital(String s) {
 		char[] cs = s.toCharArray();
 		for (char c : cs) {
 			if (!Character.isDigit(c)) {

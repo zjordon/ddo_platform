@@ -28,14 +28,13 @@ public class AddChannelUserEvent extends AbstractEvent {
 	@Override
 	public void processEvent(String param)
 			throws EventException {
-		Map<String, String> paramMap = super.parseNecessaryParam(param, "id", "username", "password", "msisdn", "state", "channelId");
+		Map<String, String> paramMap = super.parseNecessaryParam(param, "id", "username", "password", "state", "channelId");
 		String id = paramMap.get("id");
 		String username = paramMap.get("username");
 		String password = paramMap.get("password");
 		String msisdn = paramMap.get("msisdn");
 		String state = paramMap.get("state");
 		String channelId = paramMap.get("channelId");
-		super.validDigital(msisdn);
 		super.validDigital(state);
 		int stateI = Integer.parseInt(state);
 		super.validState(stateI);
@@ -43,7 +42,9 @@ public class AddChannelUserEvent extends AbstractEvent {
 		channelUser.setId(id);
 		channelUser.setUsername(username);
 		channelUser.setPassword(password);
-		channelUser.setMsisdn(new Long(Long.parseLong(msisdn)));
+		if (super.isDigital(msisdn)) {
+			channelUser.setMsisdn(new Long(Long.parseLong(msisdn)));
+		}
 		channelUser.setState(new Integer(stateI));
 		channelUser.setChannelId(channelId);
 		try {
