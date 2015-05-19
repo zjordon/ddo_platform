@@ -23,7 +23,7 @@ public class SRChannelStatisDayHandler extends AbstractSRStatisHandler {
 			.getLogger(SRChannelStatisDayHandler.class);
 	
 	private ChannelStatisticsDay csdRecord;
-	private ChannelStatisticsMsisdn csMsisdn;
+	//private ChannelStatisticsMsisdn csMsisdn;
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#commit()
@@ -31,17 +31,18 @@ public class SRChannelStatisDayHandler extends AbstractSRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
-			if (this.csMsisdn != null) {
-				DaoManager.getInstance().getChannelStatisticsDayDao().saveMsisdn(this.csMsisdn.getMsisdn(), this.csMsisdn.getSumDate(), this.csMsisdn.getChannelId());
-			} else {
-				DaoManager.getInstance().getChannelStatisticsDayDao().addMsgNum(this.csdRecord.getId(), 1);
-			}
+//			if (this.csMsisdn != null) {
+//				DaoManager.getInstance().getChannelStatisticsDayDao().saveMsisdn(this.csMsisdn.getMsisdn(), this.csMsisdn.getSumDate(), this.csMsisdn.getChannelId());
+//			} else {
+//				DaoManager.getInstance().getChannelStatisticsDayDao().addMsgNum(this.csdRecord.getId(), 1);
+//			}
+			DaoManager.getInstance().getChannelStatisticsDayDao().addMsgNum(this.csdRecord.getId(), 1);
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
 		this.csdRecord = null;
-		this.csMsisdn = null;
+//		this.csMsisdn = null;
 		
 	}
 
@@ -71,40 +72,40 @@ public class SRChannelStatisDayHandler extends AbstractSRStatisHandler {
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#isExistMsisdn(com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected boolean isExistMsisdn(SendRecord sendRecord)
-			throws HandlerException {
-		boolean exist = false;
-		try {
-			exist = DaoManager.getInstance().getChannelStatisticsDayDao().isMsisdnExist(sendRecord.getSendDate(), sendRecord.getMsisdn(), sendRecord.getChannelId());
-		} catch (DaoException e) {
-			logger.error("exception when isExistCSMsisdn", e);
-			throw new HandlerException(e.getMessage());
-		}
-		return exist;
-	}
+//	@Override
+//	protected boolean isExistMsisdn(SendRecord sendRecord)
+//			throws HandlerException {
+//		boolean exist = false;
+//		try {
+//			exist = DaoManager.getInstance().getChannelStatisticsDayDao().isMsisdnExist(sendRecord.getSendDate(), sendRecord.getMsisdn(), sendRecord.getChannelId());
+//		} catch (DaoException e) {
+//			logger.error("exception when isExistCSMsisdn", e);
+//			throw new HandlerException(e.getMessage());
+//		}
+//		return exist;
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#addMsisdnRecord(com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected void addMsisdnRecord(SendRecord sendRecord)
-			throws HandlerException {
-		this.csMsisdn = new ChannelStatisticsMsisdn();
-		this.csMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
-		this.csMsisdn.setSumDate(sendRecord.getSendDate());
-		this.csMsisdn.setChannelId(sendRecord.getChannelId());
-
-	}
+//	@Override
+//	protected void addMsisdnRecord(SendRecord sendRecord)
+//			throws HandlerException {
+//		this.csMsisdn = new ChannelStatisticsMsisdn();
+//		this.csMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+//		this.csMsisdn.setSumDate(sendRecord.getSendDate());
+//		this.csMsisdn.setChannelId(sendRecord.getChannelId());
+//
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#increaseMsisdnNum()
 	 */
-	@Override
-	protected void increaseMsisdnNum() throws HandlerException {
-		this.csdRecord.increaseMsisdnNum();
-
-	}
+//	@Override
+//	protected void increaseMsisdnNum() throws HandlerException {
+//		this.csdRecord.increaseMsisdnNum();
+//
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#increaseMsgNum()

@@ -26,7 +26,7 @@ public class SRFullStatisMonthHandler extends AbstractSRStatisHandler {
 			.getLogger(SRFullStatisMonthHandler.class);
 	
 	private FullStatisticsMonth fsmRecord;
-	private FSMsisdnMonth fsMsisdn;
+//	private FSMsisdnMonth fsMsisdn;
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#commit()
@@ -34,29 +34,35 @@ public class SRFullStatisMonthHandler extends AbstractSRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
-			if (this.fsMsisdn != null) {
-
-				DaoManager
-						.getInstance()
-						.getFullStatisticsMonthDao()
-						.saveMsisdn(this.fsMsisdn.getMsisdn(),
-								this.fsMsisdn.getSumMonth());
-
-			}
+//			if (this.fsMsisdn != null) {
+//
+//				DaoManager
+//						.getInstance()
+//						.getFullStatisticsMonthDao()
+//						.saveMsisdn(this.fsMsisdn.getMsisdn(),
+//								this.fsMsisdn.getSumMonth());
+//
+//			}
+//			if (this.fsmRecord.getPersistenceState() == 0) {
+//				DaoManager.getInstance().getFullStatisticsMonthDao().saveFullStatisticsMonth(this.fsmRecord);
+//			} else if (this.fsMsisdn == null){
+//				DaoManager.getInstance().getFullStatisticsMonthDao()
+//				.addMsgNum(fsmRecord.getId(), 1);
+//			} else if (this.fsMsisdn != null) {
+//				DaoManager.getInstance().getFullStatisticsMonthDao().addMsgAndMsisdnNum(fsmRecord.getId(), 1, 1);
+//			}
 			if (this.fsmRecord.getPersistenceState() == 0) {
 				DaoManager.getInstance().getFullStatisticsMonthDao().saveFullStatisticsMonth(this.fsmRecord);
-			} else if (this.fsMsisdn == null){
+			} else {
 				DaoManager.getInstance().getFullStatisticsMonthDao()
 				.addMsgNum(fsmRecord.getId(), 1);
-			} else if (this.fsMsisdn != null) {
-				DaoManager.getInstance().getFullStatisticsMonthDao().addMsgAndMsisdnNum(fsmRecord.getId(), 1, 1);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
 		this.fsmRecord = null;
-		this.fsMsisdn = null;
+//		this.fsMsisdn = null;
 
 	}
 
@@ -100,22 +106,22 @@ public class SRFullStatisMonthHandler extends AbstractSRStatisHandler {
 	 * com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#isExistMsisdn
 	 * (com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected boolean isExistMsisdn(SendRecord sendRecord)
-			throws HandlerException {
-		boolean exist = false;
-		try {
-			exist = DaoManager
-					.getInstance()
-					.getFullStatisticsMonthDao()
-					.isMsisdnExist(sendRecord.getSendMonth(),
-							sendRecord.getMsisdn());
-		} catch (DaoException e) {
-			logger.error("exception when isExistFSMsisdn", e);
-			throw new HandlerException(e.getMessage());
-		}
-		return exist;
-	}
+//	@Override
+//	protected boolean isExistMsisdn(SendRecord sendRecord)
+//			throws HandlerException {
+//		boolean exist = false;
+//		try {
+//			exist = DaoManager
+//					.getInstance()
+//					.getFullStatisticsMonthDao()
+//					.isMsisdnExist(sendRecord.getSendMonth(),
+//							sendRecord.getMsisdn());
+//		} catch (DaoException e) {
+//			logger.error("exception when isExistFSMsisdn", e);
+//			throw new HandlerException(e.getMessage());
+//		}
+//		return exist;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -124,14 +130,14 @@ public class SRFullStatisMonthHandler extends AbstractSRStatisHandler {
 	 * com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#addMsisdnRecord
 	 * (com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected void addMsisdnRecord(SendRecord sendRecord)
-			throws HandlerException {
-		this.fsMsisdn = new FSMsisdnMonth();
-		this.fsMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
-		this.fsMsisdn.setSumMonth(sendRecord.getSendMonth().intValue());
-
-	}
+//	@Override
+//	protected void addMsisdnRecord(SendRecord sendRecord)
+//			throws HandlerException {
+//		this.fsMsisdn = new FSMsisdnMonth();
+//		this.fsMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+//		this.fsMsisdn.setSumMonth(sendRecord.getSendMonth().intValue());
+//
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -139,11 +145,11 @@ public class SRFullStatisMonthHandler extends AbstractSRStatisHandler {
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#
 	 * increaseMsisdnNum()
 	 */
-	@Override
-	protected void increaseMsisdnNum() throws HandlerException {
-		this.fsmRecord.increaseMsisdnNum();
-
-	}
+//	@Override
+//	protected void increaseMsisdnNum() throws HandlerException {
+//		this.fsmRecord.increaseMsisdnNum();
+//
+//	}
 
 	/*
 	 * (non-Javadoc)

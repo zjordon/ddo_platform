@@ -6,7 +6,7 @@ package com.jason.ddoTimingTask.task.handler.sendRecord;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoTimingTask.bean.ChannelStatisticsMonth;
-import com.jason.ddoTimingTask.bean.CSMsisdnMonth;
+//import com.jason.ddoTimingTask.bean.CSMsisdnMonth;
 import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
@@ -23,7 +23,7 @@ public class SRChannelStatisMonthHandler extends AbstractSRStatisHandler {
 			.getLogger(SRChannelStatisMonthHandler.class);
 	
 	private ChannelStatisticsMonth csmRecord;
-	private CSMsisdnMonth csMsisdn;
+	//private CSMsisdnMonth csMsisdn;
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#commit()
@@ -31,22 +31,27 @@ public class SRChannelStatisMonthHandler extends AbstractSRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
-			if (this.csMsisdn != null) {
-				DaoManager.getInstance().getChannelStatisticsMonthDao().saveMsisdn(this.csMsisdn.getMsisdn(), this.csMsisdn.getSumMonth(), this.csMsisdn.getChannelId());
-			}
+//			if (this.csMsisdn != null) {
+//				DaoManager.getInstance().getChannelStatisticsMonthDao().saveMsisdn(this.csMsisdn.getMsisdn(), this.csMsisdn.getSumMonth(), this.csMsisdn.getChannelId());
+//			}
+//			if (this.csmRecord.getPersistenceState() == 0) {
+//				DaoManager.getInstance().getChannelStatisticsMonthDao().saveChannelStatisticsMonth(this.csmRecord);
+//			} else if (this.csMsisdn == null){
+//				DaoManager.getInstance().getChannelStatisticsMonthDao().addMsgNum(this.csmRecord.getId(), 1);
+//			} else if (this.csMsisdn != null) {
+//				DaoManager.getInstance().getChannelStatisticsMonthDao().addMsgAndMsisdnNum(this.csmRecord.getId(), 1, 1);
+//			}
 			if (this.csmRecord.getPersistenceState() == 0) {
 				DaoManager.getInstance().getChannelStatisticsMonthDao().saveChannelStatisticsMonth(this.csmRecord);
-			} else if (this.csMsisdn == null){
+			} else {
 				DaoManager.getInstance().getChannelStatisticsMonthDao().addMsgNum(this.csmRecord.getId(), 1);
-			} else if (this.csMsisdn != null) {
-				DaoManager.getInstance().getChannelStatisticsMonthDao().addMsgAndMsisdnNum(this.csmRecord.getId(), 1, 1);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
 		this.csmRecord = null;
-		this.csMsisdn = null;
+//		this.csMsisdn = null;
 		
 	}
 
@@ -77,40 +82,40 @@ public class SRChannelStatisMonthHandler extends AbstractSRStatisHandler {
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#isExistMsisdn(com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected boolean isExistMsisdn(SendRecord sendRecord)
-			throws HandlerException {
-		boolean exist = false;
-		try {
-			exist = DaoManager.getInstance().getChannelStatisticsMonthDao().isMsisdnExist(sendRecord.getSendMonth(), sendRecord.getMsisdn(), sendRecord.getChannelId());
-		} catch (DaoException e) {
-			logger.error("exception when isExistCSMsisdn", e);
-			throw new HandlerException(e.getMessage());
-		}
-		return exist;
-	}
+//	@Override
+//	protected boolean isExistMsisdn(SendRecord sendRecord)
+//			throws HandlerException {
+//		boolean exist = false;
+//		try {
+//			exist = DaoManager.getInstance().getChannelStatisticsMonthDao().isMsisdnExist(sendRecord.getSendMonth(), sendRecord.getMsisdn(), sendRecord.getChannelId());
+//		} catch (DaoException e) {
+//			logger.error("exception when isExistCSMsisdn", e);
+//			throw new HandlerException(e.getMessage());
+//		}
+//		return exist;
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#addMsisdnRecord(com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected void addMsisdnRecord(SendRecord sendRecord)
-			throws HandlerException {
-		this.csMsisdn = new CSMsisdnMonth();
-		this.csMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
-		this.csMsisdn.setSumMonth(sendRecord.getSendMonth());
-		this.csMsisdn.setChannelId(sendRecord.getChannelId());
-
-	}
+//	@Override
+//	protected void addMsisdnRecord(SendRecord sendRecord)
+//			throws HandlerException {
+//		this.csMsisdn = new CSMsisdnMonth();
+//		this.csMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+//		this.csMsisdn.setSumMonth(sendRecord.getSendMonth());
+//		this.csMsisdn.setChannelId(sendRecord.getChannelId());
+//
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#increaseMsisdnNum()
 	 */
-	@Override
-	protected void increaseMsisdnNum() throws HandlerException {
-		this.csmRecord.increaseMsisdnNum();
-
-	}
+//	@Override
+//	protected void increaseMsisdnNum() throws HandlerException {
+//		this.csmRecord.increaseMsisdnNum();
+//
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#increaseMsgNum()

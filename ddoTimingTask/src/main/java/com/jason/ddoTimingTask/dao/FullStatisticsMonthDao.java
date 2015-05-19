@@ -31,7 +31,9 @@ public class FullStatisticsMonthDao extends BaseDao {
 	private static String ADD_SEND_SUCCESS_NUM = "update ddo_full_statistics_month set send_success_num = send_success_num + ? where id = ?";
 	private static String ADD_SEND_FAIL_NUM = "update ddo_full_statistics_month set send_fail_num = send_fail_num + ? where id = ?";
 	private static String ADD_BILL_SUCCESS_NUM = "update ddo_full_statistics_month set bill_success_num = bill_success_num + ?, sum_amount = sum_amount + ? where id = ?";
+	private static String ADD_BILL_SUCCESS_AND_MSISDN_NUM = "update ddo_full_statistics_month set bill_success_num = bill_success_num + ?, sum_amount = sum_amount + ?, msisdn_num = msisdn_num + ? where id = ?";
 	private static String ADD_BILL_FAIL_NUM = "update ddo_full_statistics_month set bill_fail_num = bill_fail_num + ? where id = ?";
+	private static String ADD_BILL_FAIL_AND_MSISDN_NUM = "update ddo_full_statistics_month set bill_fail_num = bill_fail_num + ?, msisdn_num = msisdn_num + ? where id = ?";
 	private static String COUNT_EXIST_FULL_MSISDN = "select count(*) from ddo_exist_fmsisdn_month where msisdn = ? and sum_month = ?";
 	private static String INSERT_EXIST_FULL_MSISDN = "insert into ddo_exist_fmsisdn_month(msisdn, sum_month) values(?, ?)";
 
@@ -77,7 +79,7 @@ public class FullStatisticsMonthDao extends BaseDao {
 					.prepareStatement(INSERT_FULL_STATISTICS_MONTH);
 			pstmt.setString(1, record.getId());
 			pstmt.setInt(2, record.getSumMonth().intValue());
-			pstmt.setInt(3, record.getMsgNum().intValue());
+			pstmt.setInt(3, record.getMsisdnNum().intValue());
 			pstmt.setDouble(4, record.getSumAmount().doubleValue());
 			pstmt.setInt(5, record.getMsgNum().intValue());
 			pstmt.setInt(6, record.getSendSuccessNum().intValue());
@@ -157,6 +159,34 @@ public class FullStatisticsMonthDao extends BaseDao {
 	public void addBillFailNum(String id, int num) throws DaoException {
 		this.updateOnlyNum(ADD_BILL_FAIL_NUM, num, id);
 	}
+	
+	/**
+	 * 增加全量统计计费失败消息数和用户数
+	 * 
+	 * @param id
+	 * @param num
+	 * @throws DaoException
+	 */
+	public void addBillFailAndMsisdnNum(String id, int num, int msisdnNum) throws DaoException {
+		Connection conn = null;
+		try {
+			conn = super.getConnection();
+			PreparedStatement pstmt = conn
+					.prepareStatement(ADD_BILL_FAIL_AND_MSISDN_NUM);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2, msisdnNum);
+			pstmt.setString(3, id);
+			pstmt.executeUpdate();
+			super.closePstmt(pstmt);
+			conn.commit();
+		} catch (SQLException e) {
+			super.rollbackConnection(conn);
+			logger.error("exception when addBillSuccessNum", e);
+			throw new DaoException(e.getMessage());
+		} finally {
+			super.closeConnction(conn);
+		}
+	}
 
 	/**
 	 * 增加全量统计失败消息数
@@ -170,7 +200,7 @@ public class FullStatisticsMonthDao extends BaseDao {
 	}
 
 	/**
-	 * 增加全量统计成功消息数
+	 * 增加计费成功消息数
 	 * 
 	 * @param id
 	 * @param num
@@ -186,6 +216,36 @@ public class FullStatisticsMonthDao extends BaseDao {
 			pstmt.setInt(1, num);
 			pstmt.setDouble(2, price);
 			pstmt.setString(3, id);
+			pstmt.executeUpdate();
+			super.closePstmt(pstmt);
+			conn.commit();
+		} catch (SQLException e) {
+			super.rollbackConnection(conn);
+			logger.error("exception when addBillSuccessNum", e);
+			throw new DaoException(e.getMessage());
+		} finally {
+			super.closeConnction(conn);
+		}
+	}
+	
+	/**
+	 * 增加计费成功消息数和用户数
+	 * 
+	 * @param id
+	 * @param num
+	 * @throws DaoException
+	 */
+	public void addBillSuccessAndMsisdnNum(String id, int num, double price, int msisdnNum)
+			throws DaoException {
+		Connection conn = null;
+		try {
+			conn = super.getConnection();
+			PreparedStatement pstmt = conn
+					.prepareStatement(ADD_BILL_SUCCESS_AND_MSISDN_NUM);
+			pstmt.setInt(1, num);
+			pstmt.setDouble(2, price);
+			pstmt.setInt(3, msisdnNum);
+			pstmt.setString(4, id);
 			pstmt.executeUpdate();
 			super.closePstmt(pstmt);
 			conn.commit();

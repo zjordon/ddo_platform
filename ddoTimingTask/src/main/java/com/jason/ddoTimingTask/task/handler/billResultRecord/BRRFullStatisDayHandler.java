@@ -117,4 +117,24 @@ public class BRRFullStatisDayHandler extends AbstractBRRStatisHandler {
 		return record;
 	}
 
+	@Override
+	protected boolean isExistMsisdn(SendRecord sendRecord)
+			throws HandlerException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected void addMsisdnRecord(SendRecord sendRecord)
+			throws HandlerException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void increaseMsisdnNum() throws HandlerException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

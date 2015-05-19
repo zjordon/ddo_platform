@@ -6,6 +6,7 @@ package com.jason.ddoTimingTask.task.handler.billResultRecord;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoTimingTask.bean.BillResultRecord;
+import com.jason.ddoTimingTask.bean.FSMsisdnMonth;
 import com.jason.ddoTimingTask.bean.FullStatisticsMonth;
 import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
@@ -26,6 +27,7 @@ public class BRRFullStatisMonthHandler extends AbstractBRRStatisHandler {
 	private FullStatisticsMonth fsmRecord;
 	private boolean isFail;
 	private String billBusinessId;
+	private FSMsisdnMonth fsMsisdn;
 
 	/*
 	 * (non-Javadoc)
@@ -36,21 +38,43 @@ public class BRRFullStatisMonthHandler extends AbstractBRRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
-			if (this.isFail) {
+			if (this.fsMsisdn != null) {
 
-				DaoManager.getInstance().getFullStatisticsMonthDao()
-						.addBillFailNum(this.fsmRecord.getId(), 1);
+				DaoManager
+						.getInstance()
+						.getFullStatisticsMonthDao()
+						.saveMsisdn(this.fsMsisdn.getMsisdn(),
+								this.fsMsisdn.getSumMonth());
+
+			}
+			if (this.isFail) {
+				if (this.fsMsisdn != null) {
+					DaoManager.getInstance().getFullStatisticsMonthDao()
+					.addBillFailAndMsisdnNum(this.fsmRecord.getId(), 1, 1);
+				} else {
+					DaoManager.getInstance().getFullStatisticsMonthDao()
+					.addBillFailNum(this.fsmRecord.getId(), 1);
+				}
+				
 
 			} else {
 				double price = DaoManager.getInstance().getBillBusinessDao()
 						.getPrice(this.billBusinessId);
-				DaoManager.getInstance().getFullStatisticsMonthDao()
-						.addBillSuccessNum(this.fsmRecord.getId(), 1, price);
+				if (this.fsMsisdn != null) {
+					DaoManager.getInstance().getFullStatisticsMonthDao()
+					.addBillSuccessAndMsisdnNum(this.fsmRecord.getId(), 1, price, 1);
+				} else {
+					DaoManager.getInstance().getFullStatisticsMonthDao()
+					.addBillSuccessNum(this.fsmRecord.getId(), 1, price);
+				}
+				
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
+		this.fsmRecord = null;
+		this.fsMsisdn = null;
 	}
 
 	/*
@@ -117,6 +141,38 @@ public class BRRFullStatisMonthHandler extends AbstractBRRStatisHandler {
 		}
 
 		return record;
+	}
+
+	@Override
+	protected boolean isExistMsisdn(SendRecord sendRecord)
+			throws HandlerException {
+		boolean exist = false;
+		try {
+			exist = DaoManager
+					.getInstance()
+					.getFullStatisticsMonthDao()
+					.isMsisdnExist(sendRecord.getSendMonth(),
+							sendRecord.getMsisdn());
+		} catch (DaoException e) {
+			logger.error("exception when isExistFSMsisdn", e);
+			throw new HandlerException(e.getMessage());
+		}
+		return exist;
+	}
+
+	@Override
+	protected void addMsisdnRecord(SendRecord sendRecord)
+			throws HandlerException {
+		this.fsMsisdn = new FSMsisdnMonth();
+		this.fsMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+		this.fsMsisdn.setSumMonth(sendRecord.getSendMonth().intValue());
+		
+	}
+
+	@Override
+	protected void increaseMsisdnNum() throws HandlerException {
+		this.fsmRecord.increaseMsgNum();
+		
 	}
 
 }

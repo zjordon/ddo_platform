@@ -17,10 +17,10 @@ public abstract class AbstractSRStatisHandler {
 		if (!this.isExistStatisRecord(sendRecord)) {
 			this.addStatisRecord(sendRecord);
 		}
-		if (!this.isExistMsisdn(sendRecord)) {
-			this.addMsisdnRecord(sendRecord);
-			this.increaseMsisdnNum();
-		}
+//		if (!this.isExistMsisdn(sendRecord)) {
+//			this.addMsisdnRecord(sendRecord);
+//			this.increaseMsisdnNum();
+//		}
 		this.increaseMsgNum();
 	}
 	/**
@@ -45,18 +45,18 @@ public abstract class AbstractSRStatisHandler {
 	 * @param sendRecord
 	 * @return
 	 */
-	protected abstract boolean isExistMsisdn(SendRecord sendRecord) throws HandlerException;
+//	protected abstract boolean isExistMsisdn(SendRecord sendRecord) throws HandlerException;
 	/**
 	 * 新增号码记录
 	 * @param sendRecord
 	 * @return
 	 */
-	protected abstract void addMsisdnRecord(SendRecord sendRecord) throws HandlerException;
+//	protected abstract void addMsisdnRecord(SendRecord sendRecord) throws HandlerException;
 	/**
 	 * 增加统计记录的用户数
 	 * @param num
 	 */
-	protected abstract void increaseMsisdnNum() throws HandlerException;
+//	protected abstract void increaseMsisdnNum() throws HandlerException;
 	/**
 	 * 增加统计记录的消息数
 	 * @param num

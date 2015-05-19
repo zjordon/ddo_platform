@@ -24,7 +24,7 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 			.getLogger(SRFullStatisDayHandler.class);
 
 	private FullStatisticsDay fsdRecord;
-	private FullStatisticsMsisdn fsMsisdn;
+//	private FullStatisticsMsisdn fsMsisdn;
 
 	/*
 	 * (non-Javadoc)
@@ -35,24 +35,26 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
-			if (this.fsMsisdn != null) {
-
-				DaoManager
-						.getInstance()
-						.getFullStatisticsDayDao()
-						.saveMsisdn(this.fsMsisdn.getMsisdn(),
-								this.fsMsisdn.getSumDate());
-
-			} else {
-				DaoManager.getInstance().getFullStatisticsDayDao()
-						.addMsgNum(fsdRecord.getId(), 1);
-			}
+//			if (this.fsMsisdn != null) {
+//
+//				DaoManager
+//						.getInstance()
+//						.getFullStatisticsDayDao()
+//						.saveMsisdn(this.fsMsisdn.getMsisdn(),
+//								this.fsMsisdn.getSumDate());
+//
+//			} else {
+//				DaoManager.getInstance().getFullStatisticsDayDao()
+//						.addMsgNum(fsdRecord.getId(), 1);
+//			}
+			DaoManager.getInstance().getFullStatisticsDayDao()
+			.addMsgNum(fsdRecord.getId(), 1);
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
 		this.fsdRecord = null;
-		this.fsMsisdn = null;
+//		this.fsMsisdn = null;
 
 	}
 
@@ -96,22 +98,22 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	 * com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#isExistMsisdn
 	 * (com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected boolean isExistMsisdn(SendRecord sendRecord)
-			throws HandlerException {
-		boolean exist = false;
-		try {
-			exist = DaoManager
-					.getInstance()
-					.getFullStatisticsDayDao()
-					.isMsisdnExist(sendRecord.getSendDate(),
-							sendRecord.getMsisdn());
-		} catch (DaoException e) {
-			logger.error("exception when isExistFSMsisdn", e);
-			throw new HandlerException(e.getMessage());
-		}
-		return exist;
-	}
+//	@Override
+//	protected boolean isExistMsisdn(SendRecord sendRecord)
+//			throws HandlerException {
+//		boolean exist = false;
+//		try {
+//			exist = DaoManager
+//					.getInstance()
+//					.getFullStatisticsDayDao()
+//					.isMsisdnExist(sendRecord.getSendDate(),
+//							sendRecord.getMsisdn());
+//		} catch (DaoException e) {
+//			logger.error("exception when isExistFSMsisdn", e);
+//			throw new HandlerException(e.getMessage());
+//		}
+//		return exist;
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -120,14 +122,14 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	 * com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#addMsisdnRecord
 	 * (com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected void addMsisdnRecord(SendRecord sendRecord)
-			throws HandlerException {
-		this.fsMsisdn = new FullStatisticsMsisdn();
-		this.fsMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
-		this.fsMsisdn.setSumDate(sendRecord.getSendDate().intValue());
-
-	}
+//	@Override
+//	protected void addMsisdnRecord(SendRecord sendRecord)
+//			throws HandlerException {
+//		this.fsMsisdn = new FullStatisticsMsisdn();
+//		this.fsMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+//		this.fsMsisdn.setSumDate(sendRecord.getSendDate().intValue());
+//
+//	}
 
 	/*
 	 * (non-Javadoc)
@@ -135,11 +137,11 @@ public class SRFullStatisDayHandler extends AbstractSRStatisHandler {
 	 * @see com.jason.ddoTimingTask.task.handler.AbstractSRStatisHandler#
 	 * increaseMsisdnNum()
 	 */
-	@Override
-	protected void increaseMsisdnNum() throws HandlerException {
-		this.fsdRecord.increaseMsisdnNum();
-
-	}
+//	@Override
+//	protected void increaseMsisdnNum() throws HandlerException {
+//		this.fsdRecord.increaseMsisdnNum();
+//
+//	}
 
 	/*
 	 * (non-Javadoc)

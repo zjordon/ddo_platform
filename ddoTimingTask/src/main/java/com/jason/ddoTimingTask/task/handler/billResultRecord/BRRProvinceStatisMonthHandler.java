@@ -6,6 +6,7 @@ package com.jason.ddoTimingTask.task.handler.billResultRecord;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoTimingTask.bean.BillResultRecord;
+import com.jason.ddoTimingTask.bean.PSMsisdnMonth;
 import com.jason.ddoTimingTask.bean.ProvinceStatisticsMonth;
 import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
@@ -21,9 +22,10 @@ public class BRRProvinceStatisMonthHandler extends AbstractBRRStatisHandler {
 	private static final Logger logger = Logger
 			.getLogger(BRRProvinceStatisMonthHandler.class);
 
-	private ProvinceStatisticsMonth csmRecord;
+	private ProvinceStatisticsMonth psmRecord;
 	private boolean isFail;
 	private String billBusinessId;
+	private PSMsisdnMonth psMsisdn;
 
 	/*
 	 * (non-Javadoc)
@@ -34,19 +36,36 @@ public class BRRProvinceStatisMonthHandler extends AbstractBRRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
+			if (this.psMsisdn != null) {
+				DaoManager.getInstance().getProvinceStatisticsMonthDao().saveMsisdn(this.psMsisdn.getMsisdn(), this.psMsisdn.getSumMonth(), this.psMsisdn.getProvinceCode());
+			}
 			if (this.isFail) {
-				DaoManager.getInstance().getProvinceStatisticsMonthDao()
-						.addBillFailNum(this.csmRecord.getId(), 1);
+				if (this.psMsisdn != null) {
+					DaoManager.getInstance().getProvinceStatisticsMonthDao()
+					.addBillFailAndMsisdnNum(this.psmRecord.getId(), 1, 1);
+				} else {
+					DaoManager.getInstance().getProvinceStatisticsMonthDao()
+					.addBillFailNum(this.psmRecord.getId(), 1);
+				}
+				
 			} else {
 				double price = DaoManager.getInstance().getBillBusinessDao()
 						.getPrice(this.billBusinessId);
-				DaoManager.getInstance().getProvinceStatisticsMonthDao()
-						.addBillSuccessNum(this.csmRecord.getId(), 1, price);
+				if (this.psMsisdn != null) {
+					DaoManager.getInstance().getProvinceStatisticsMonthDao()
+					.addBillSuccessAndMsisdnNum(this.psmRecord.getId(), 1, price, 1);
+				} else {
+					DaoManager.getInstance().getProvinceStatisticsMonthDao()
+					.addBillSuccessNum(this.psmRecord.getId(), 1, price);
+				}
+				
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
+		this.psmRecord = null;
+		this.psMsisdn = null;
 	}
 
 	/*
@@ -60,8 +79,8 @@ public class BRRProvinceStatisMonthHandler extends AbstractBRRStatisHandler {
 	protected boolean isExistStatisRecord(SendRecord sendRecord)
 			throws HandlerException {
 		this.billBusinessId = sendRecord.getBillingBusinessId();
-		this.csmRecord = this.getProvinceStatisticsMonth(sendRecord.getSendMonth(), sendRecord.getProvinceCode());
-		return this.csmRecord != null;
+		this.psmRecord = this.getProvinceStatisticsMonth(sendRecord.getSendMonth(), sendRecord.getProvinceCode());
+		return this.psmRecord != null;
 	}
 
 	/*
@@ -112,6 +131,35 @@ public class BRRProvinceStatisMonthHandler extends AbstractBRRStatisHandler {
 			throw new HandlerException(e.getMessage());
 		}
 		return record;
+	}
+
+	@Override
+	protected boolean isExistMsisdn(SendRecord sendRecord)
+			throws HandlerException {
+		boolean exist = false;
+		try {
+			exist = DaoManager.getInstance().getProvinceStatisticsMonthDao().isMsisdnExist(sendRecord.getSendMonth().intValue(), sendRecord.getMsisdn().longValue(), sendRecord.getProvinceCode());
+		} catch (DaoException e) {
+			logger.error("exception when isExistMsisdn", e);
+			throw new HandlerException(e.getMessage());
+		}
+		return exist;
+	}
+
+	@Override
+	protected void addMsisdnRecord(SendRecord sendRecord)
+			throws HandlerException {
+		this.psMsisdn = new PSMsisdnMonth();
+		this.psMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+		this.psMsisdn.setProvinceCode(sendRecord.getProvinceCode());
+		this.psMsisdn.setSumMonth(sendRecord.getSendMonth().intValue());
+		
+	}
+
+	@Override
+	protected void increaseMsisdnNum() throws HandlerException {
+		this.psmRecord.increaseMsisdnNum();
+		
 	}
 
 }

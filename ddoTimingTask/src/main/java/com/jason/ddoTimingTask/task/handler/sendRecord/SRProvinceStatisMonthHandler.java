@@ -5,7 +5,7 @@ package com.jason.ddoTimingTask.task.handler.sendRecord;
 
 import org.apache.log4j.Logger;
 
-import com.jason.ddoTimingTask.bean.PSMsisdnMonth;
+//import com.jason.ddoTimingTask.bean.PSMsisdnMonth;
 import com.jason.ddoTimingTask.bean.ProvinceStatisticsMonth;
 import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
@@ -24,7 +24,7 @@ public class SRProvinceStatisMonthHandler extends AbstractSRStatisHandler {
 			.getLogger(SRProvinceStatisMonthHandler.class);
 	
 	private ProvinceStatisticsMonth psmRecord;
-	private PSMsisdnMonth psMsisdn;
+//	private PSMsisdnMonth psMsisdn;
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.sendRecord.AbstractSRStatisHandler#commit()
@@ -32,22 +32,28 @@ public class SRProvinceStatisMonthHandler extends AbstractSRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
-			if (this.psMsisdn != null) {
-				DaoManager.getInstance().getProvinceStatisticsMonthDao().saveMsisdn(this.psMsisdn.getMsisdn(), this.psMsisdn.getSumMonth(), this.psMsisdn.getProvinceCode());
-			}
+//			if (this.psMsisdn != null) {
+//				DaoManager.getInstance().getProvinceStatisticsMonthDao().saveMsisdn(this.psMsisdn.getMsisdn(), this.psMsisdn.getSumMonth(), this.psMsisdn.getProvinceCode());
+//			}
+//			if (this.psmRecord.getPersistenceState() == 0) {
+//				DaoManager.getInstance().getProvinceStatisticsMonthDao().saveProvinceStatisticsMonth(this.psmRecord);
+//			} else if (this.psMsisdn == null){
+//				DaoManager.getInstance().getProvinceStatisticsMonthDao().addMsgNum(this.psmRecord.getId(), 1);
+//			} else if (this.psMsisdn != null) {
+//				DaoManager.getInstance().getProvinceStatisticsMonthDao().addMsgAndMsisdnNum(this.psmRecord.getId(), 1, 1);
+//			}
+			
 			if (this.psmRecord.getPersistenceState() == 0) {
 				DaoManager.getInstance().getProvinceStatisticsMonthDao().saveProvinceStatisticsMonth(this.psmRecord);
-			} else if (this.psMsisdn == null){
+			} else {
 				DaoManager.getInstance().getProvinceStatisticsMonthDao().addMsgNum(this.psmRecord.getId(), 1);
-			} else if (this.psMsisdn != null) {
-				DaoManager.getInstance().getProvinceStatisticsMonthDao().addMsgAndMsisdnNum(this.psmRecord.getId(), 1, 1);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
 		this.psmRecord = null;
-		this.psMsisdn = null;
+//		this.psMsisdn = null;
 
 	}
 
@@ -77,40 +83,40 @@ public class SRProvinceStatisMonthHandler extends AbstractSRStatisHandler {
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.sendRecord.AbstractSRStatisHandler#isExistMsisdn(com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected boolean isExistMsisdn(SendRecord sendRecord)
-			throws HandlerException {
-		boolean exist = false;
-		try {
-			exist = DaoManager.getInstance().getProvinceStatisticsMonthDao().isMsisdnExist(sendRecord.getSendMonth().intValue(), sendRecord.getMsisdn().longValue(), sendRecord.getProvinceCode());
-		} catch (DaoException e) {
-			logger.error("exception when isExistMsisdn", e);
-			throw new HandlerException(e.getMessage());
-		}
-		return exist;
-	}
+//	@Override
+//	protected boolean isExistMsisdn(SendRecord sendRecord)
+//			throws HandlerException {
+//		boolean exist = false;
+//		try {
+//			exist = DaoManager.getInstance().getProvinceStatisticsMonthDao().isMsisdnExist(sendRecord.getSendMonth().intValue(), sendRecord.getMsisdn().longValue(), sendRecord.getProvinceCode());
+//		} catch (DaoException e) {
+//			logger.error("exception when isExistMsisdn", e);
+//			throw new HandlerException(e.getMessage());
+//		}
+//		return exist;
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.sendRecord.AbstractSRStatisHandler#addMsisdnRecord(com.jason.ddoTimingTask.bean.SendRecord)
 	 */
-	@Override
-	protected void addMsisdnRecord(SendRecord sendRecord)
-			throws HandlerException {
-		this.psMsisdn = new PSMsisdnMonth();
-		this.psMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
-		this.psMsisdn.setProvinceCode(sendRecord.getProvinceCode());
-		this.psMsisdn.setSumMonth(sendRecord.getSendMonth().intValue());
-
-	}
+//	@Override
+//	protected void addMsisdnRecord(SendRecord sendRecord)
+//			throws HandlerException {
+//		this.psMsisdn = new PSMsisdnMonth();
+//		this.psMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+//		this.psMsisdn.setProvinceCode(sendRecord.getProvinceCode());
+//		this.psMsisdn.setSumMonth(sendRecord.getSendMonth().intValue());
+//
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.sendRecord.AbstractSRStatisHandler#increaseMsisdnNum()
 	 */
-	@Override
-	protected void increaseMsisdnNum() throws HandlerException {
-		this.psmRecord.increaseMsisdnNum();
-
-	}
+//	@Override
+//	protected void increaseMsisdnNum() throws HandlerException {
+//		this.psmRecord.increaseMsisdnNum();
+//
+//	}
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoTimingTask.task.handler.sendRecord.AbstractSRStatisHandler#increaseMsgNum()

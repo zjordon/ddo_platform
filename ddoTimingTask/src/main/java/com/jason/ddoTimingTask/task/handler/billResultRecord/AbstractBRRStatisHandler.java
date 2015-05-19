@@ -21,6 +21,10 @@ public abstract class AbstractBRRStatisHandler {
 			} else {
 				this.increaseFailNum();
 			}
+			if (!this.isExistMsisdn(sendRecord)) {
+				this.addMsisdnRecord(sendRecord);
+				this.increaseMsisdnNum();
+			}
 		} else {
 			return false;
 		}
@@ -48,4 +52,22 @@ public abstract class AbstractBRRStatisHandler {
 	protected abstract void increaseFailNum();
 	
 	protected abstract void increaseSuccessNum();
+	
+	/**
+	 * 号码是否被统计过
+	 * @param sendRecord
+	 * @return
+	 */
+	protected abstract boolean isExistMsisdn(SendRecord sendRecord) throws HandlerException;
+	/**
+	 * 新增号码记录
+	 * @param sendRecord
+	 * @return
+	 */
+	protected abstract void addMsisdnRecord(SendRecord sendRecord) throws HandlerException;
+	/**
+	 * 增加统计记录的用户数
+	 * @param num
+	 */
+	protected abstract void increaseMsisdnNum() throws HandlerException;
 }
