@@ -105,7 +105,7 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 	}
 	
 	private void createEventToSm(EventEntity event) {
-		DynamicDBUtil.update("dataSource_sm", INSERT_EVENT, event.getId(), event.getEventId(), event.getCreateDate(), event.getParam());
+		DynamicDBUtil.update("SM_DB", INSERT_EVENT, event.getId(), event.getEventId(), event.getCreateDate(), event.getParam());
 	}
 
 }
