@@ -1,0 +1,3 @@
+ALTER TABLE `t_s_data_source`
+MODIFY COLUMN `url`  varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL AFTER `driver_class`;
+INSERT INTO `t_s_data_source` (`id`, `db_key`, `description`, `driver_class`, `url`, `db_user`, `db_password`, `db_type`) VALUES ('1', 'SM_DB', 'sm_db', 'com.mysql.jdbc.Driver', 'jdbc:mysql://localhost:3306/sm?useUnicode=true&characterEncoding=UTF-8', 'sm', 'sm', 'mysql');

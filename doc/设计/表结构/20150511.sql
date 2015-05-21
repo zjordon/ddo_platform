@@ -38,7 +38,7 @@ CREATE TABLE ddo_province_statistics_month(
     send_success_num    INT              NOT NULL COMMENT '发送成功数',
     send_fail_num       INT              NOT NULL COMMENT '发送失败数',
     bill_success_num    INT              NOT NULL COMMENT '计费成功数',
-    bill_fail_num       INT, COMMENT '计费失败数'
+    bill_fail_num       INT COMMENT '计费失败数',
     PRIMARY KEY (id)
 )ENGINE=INNODB CHARSET=utf8 COLLATE=utf8_unicode_ci
 COMMENT='分省统计'

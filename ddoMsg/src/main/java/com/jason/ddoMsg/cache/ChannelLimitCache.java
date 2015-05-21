@@ -191,14 +191,16 @@ public class ChannelLimitCache {
 	 * @throws CacheException
 	 */
 	public void addDayLimit(String channelId, long dayLimit) throws CacheException {
-		if (this.getChannelDayLimit(channelId) != null) {
+		if (this.dayLimitMap.get(channelId) != null) {
 			throw new ElementExistsException("the day limit is exists with channelId " + channelId + " and dayLimit " + dayLimit);
 		}
+		
 		ChannelDayLimit channelDayLimit = new ChannelDayLimit();
 		channelDayLimit.setId((new UUIDGenerator()).generate());
 		channelDayLimit.setDay(this.currentDate);
 		channelDayLimit.setChannelId(channelId);
 		channelDayLimit.setLimitAmount(dayLimit);
+		this.dayLimitMap.put(channelId, channelDayLimit);
 		try {
 			this.channelLimitDao.addChannelDayLimit(channelDayLimit);
 		} catch (DaoException e) {
@@ -214,14 +216,15 @@ public class ChannelLimitCache {
 	 * @throws CacheException
 	 */
 	public void addMonthLimit(String channelId, long monthLimit) throws CacheException {
-		if (this.getChannelMonthLimit(channelId) != null) {
-			throw new ElementExistsException("the month limit is exists with channelId " + channelId + " and dayLimit " + monthLimit);
+		if (this.monthLimitMap.get(channelId) != null) {
+			throw new ElementExistsException("the month limit is exists with channelId " + channelId + " and monthLimit " + monthLimit);
 		}
 		ChannelMonthLimit channelMonthLimit = new ChannelMonthLimit();
 		channelMonthLimit.setId((new UUIDGenerator()).generate());
 		channelMonthLimit.setMonth(this.currentMonth);
 		channelMonthLimit.setChannelId(channelId);
 		channelMonthLimit.setLimitAmount(monthLimit);
+		this.monthLimitMap.put(channelId, channelMonthLimit);
 		try {
 			this.channelLimitDao.addChannelMonthLimit(channelMonthLimit);
 		} catch (DaoException e) {

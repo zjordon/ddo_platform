@@ -32,7 +32,7 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 		event.setEventId("AddChannelUserEvent");
 		StringBuilder builder = new StringBuilder();
 		builder.append("id:").append(channelUser.getId()).append(",username:")
-				.append(channelUser.getPassword());
+				.append(channelUser.getUsername());
 		builder.append(",password:").append(channelUser.getPassword())
 				.append(",msisdn:").append(channelUser.getMsisdn());
 		builder.append(",state:").append(channelUser.getState())
