@@ -36,13 +36,11 @@ public class SRRChannelStatisDayHandler extends AbstractSRRStatisHandler {
 	public void commit() throws HandlerException {
 		try {
 			if (this.isFail) {
-
 				DaoManager.getInstance().getChannelStatisticsDayDao()
-						.addSendSuccessNum(this.csdRecord.getId(), 1);
-
+				.addSendFailNum(this.csdRecord.getId(), 1);
 			} else {
 				DaoManager.getInstance().getChannelStatisticsDayDao()
-						.addSendFailNum(this.csdRecord.getId(), 1);
+				.addSendSuccessNum(this.csdRecord.getId(), 1);
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);

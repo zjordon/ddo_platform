@@ -31,7 +31,9 @@ public class ChannelStatisticsDayDao extends BaseDao {
 	private static String ADD_SEND_SUCCESS_NUM = "update ddo_channel_statistics_day set send_success_num = send_success_num + ? where id = ?";
 	private static String ADD_SEND_FAIL_NUM = "update ddo_channel_statistics_day set send_fail_num = send_fail_num + ? where id = ?";
 	private static String ADD_BILL_SUCCESS_NUM = "update ddo_channel_statistics_day set bill_success_num = bill_success_num + ?, sum_amount = sum_amount + ? where id = ?";
+	private static String ADD_BILL_SUCCESS_AND_MSISDN_NUM = "update ddo_channel_statistics_day set bill_success_num = bill_success_num + ?, sum_amount = sum_amount + ?, msisdn_num = msisdn_num + ? where id = ?";
 	private static String ADD_BILL_FAIL_NUM = "update ddo_channel_statistics_day set bill_fail_num = bill_fail_num + ? where id = ?";
+	private static String ADD_BILL_FAIL_AND_MSISDN_NUM = "update ddo_channel_statistics_day set bill_fail_num = bill_fail_num + ?, msisdn_num = msisdn_num + ? where id = ?";
 	private static String COUNT_EXIST_CHANNEL_MSISDN = "select count(*) from ddo_exist_channel_msisdn where msisdn = ? and sum_date = ? and channel_id = ?";
 	private static String INSERT_EXIST_CHANNEL_MSISDN = "insert into ddo_exist_channel_msisdn(msisdn, sum_date, channel_id) values(?, ?, ?)";
 
@@ -79,7 +81,7 @@ public class ChannelStatisticsDayDao extends BaseDao {
 					.prepareStatement(INSERT_CHANNEL_STATISTICS_DAY);
 			pstmt.setString(1, record.getId());
 			pstmt.setInt(2, record.getSumDate().intValue());
-			pstmt.setInt(3, record.getMsgNum().intValue());
+			pstmt.setInt(3, record.getMsisdnNum().intValue());
 			pstmt.setDouble(4, record.getSumAmount().doubleValue());
 			pstmt.setInt(5, record.getMsgNum().intValue());
 			pstmt.setInt(6, record.getSendSuccessNum().intValue());
@@ -151,7 +153,7 @@ public class ChannelStatisticsDayDao extends BaseDao {
 	}
 
 	/**
-	 * 增加全量统计计费失败消息数
+	 * 增加计费失败消息数
 	 * 
 	 * @param id
 	 * @param num
@@ -159,6 +161,34 @@ public class ChannelStatisticsDayDao extends BaseDao {
 	 */
 	public void addBillFailNum(String id, int num) throws DaoException {
 		this.updateOnlyNum(ADD_BILL_FAIL_NUM, num, id);
+	}
+	
+	/**
+	 * 增加计费失败消息数和用户数
+	 * 
+	 * @param id
+	 * @param num
+	 * @throws DaoException
+	 */
+	public void addBillFailAndMsisdnNum(String id, int num, int msisdnNum) throws DaoException {
+		Connection conn = null;
+		try {
+			conn = super.getConnection();
+			PreparedStatement pstmt = conn
+					.prepareStatement(ADD_BILL_FAIL_AND_MSISDN_NUM);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2, msisdnNum);
+			pstmt.setString(3, id);
+			pstmt.executeUpdate();
+			super.closePstmt(pstmt);
+			conn.commit();
+		} catch (SQLException e) {
+			super.rollbackConnection(conn);
+			logger.error("exception when addBillFailAndMsisdnNum", e);
+			throw new DaoException(e.getMessage());
+		} finally {
+			super.closeConnction(conn);
+		}
 	}
 
 	/**
@@ -173,7 +203,7 @@ public class ChannelStatisticsDayDao extends BaseDao {
 	}
 
 	/**
-	 * 增加全量统计成功消息数
+	 * 增加统计成功消息数
 	 * 
 	 * @param id
 	 * @param num
@@ -195,6 +225,36 @@ public class ChannelStatisticsDayDao extends BaseDao {
 		} catch (SQLException e) {
 			super.rollbackConnection(conn);
 			logger.error("exception when addBillSuccessNum", e);
+			throw new DaoException(e.getMessage());
+		} finally {
+			super.closeConnction(conn);
+		}
+	}
+	
+	/**
+	 * 增加统计成功消息数和用户数
+	 * 
+	 * @param id
+	 * @param num
+	 * @throws DaoException
+	 */
+	public void addBillSuccessAndMsisdnNum(String id, int num, double price, int msisdnNum)
+			throws DaoException {
+		Connection conn = null;
+		try {
+			conn = super.getConnection();
+			PreparedStatement pstmt = conn
+					.prepareStatement(ADD_BILL_SUCCESS_AND_MSISDN_NUM);
+			pstmt.setInt(1, num);
+			pstmt.setDouble(2, price);
+			pstmt.setInt(3, msisdnNum);
+			pstmt.setString(4, id);
+			pstmt.executeUpdate();
+			super.closePstmt(pstmt);
+			conn.commit();
+		} catch (SQLException e) {
+			super.rollbackConnection(conn);
+			logger.error("exception when addBillSuccessAndMsisdnNum", e);
 			throw new DaoException(e.getMessage());
 		} finally {
 			super.closeConnction(conn);

@@ -14,6 +14,7 @@ import com.jason.ddoTimingTask.bean.SendResultRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
 import com.jason.ddoTimingTask.task.handler.billResultRecord.AbstractBRRStatisHandler;
+import com.jason.ddoTimingTask.task.handler.billResultRecord.BRRChannelStatisDayHandler;
 import com.jason.ddoTimingTask.task.handler.billResultRecord.BRRChannelStatisMonthHandler;
 import com.jason.ddoTimingTask.task.handler.billResultRecord.BRRFullStatisMonthHandler;
 import com.jason.ddoTimingTask.task.handler.billResultRecord.BRRProvinceStatisMonthHandler;
@@ -38,10 +39,11 @@ public class BRRSHandlerChain {
 	private List<AbstractBRRStatisHandler> handlerList;
 
 	private BRRSHandlerChain() {
-		this.handlerList = new ArrayList<AbstractBRRStatisHandler>(2);
+		this.handlerList = new ArrayList<AbstractBRRStatisHandler>(4);
 		this.handlerList.add(new BRRFullStatisMonthHandler());
 		this.handlerList.add(new BRRChannelStatisMonthHandler());
 		this.handlerList.add(new BRRProvinceStatisMonthHandler());
+		this.handlerList.add(new BRRChannelStatisDayHandler());
 	}
 	
 	public void doHandler(BillResultRecord resultRecord) throws HandlerException {

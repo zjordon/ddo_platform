@@ -6,7 +6,6 @@ package com.jason.ddoTimingTask.task.handler.sendRecord;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoTimingTask.bean.ChannelStatisticsDay;
-import com.jason.ddoTimingTask.bean.ChannelStatisticsMsisdn;
 import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
@@ -36,7 +35,12 @@ public class SRChannelStatisDayHandler extends AbstractSRStatisHandler {
 //			} else {
 //				DaoManager.getInstance().getChannelStatisticsDayDao().addMsgNum(this.csdRecord.getId(), 1);
 //			}
-			DaoManager.getInstance().getChannelStatisticsDayDao().addMsgNum(this.csdRecord.getId(), 1);
+			if (this.csdRecord.getPersistenceState() == 0) {
+				DaoManager.getInstance().getChannelStatisticsDayDao().saveChannelStatisticsDay(this.csdRecord);
+			} else {
+				DaoManager.getInstance().getChannelStatisticsDayDao().addMsgNum(this.csdRecord.getId(), 1);
+			}
+			
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
@@ -55,6 +59,7 @@ public class SRChannelStatisDayHandler extends AbstractSRStatisHandler {
 		ChannelStatisticsDay record = this.getChannelStatisticsDay(sendRecord.getSendDate(), sendRecord.getChannelId());
 		if (record != null) {
 			this.csdRecord = record;
+			this.csdRecord.setPersistenceState((short)1);
 		}
 		return record != null;
 	}

@@ -13,6 +13,7 @@ import com.jason.ddoTimingTask.bean.SendResultRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
 import com.jason.ddoTimingTask.task.handler.sendResultRecord.AbstractSRRStatisHandler;
+import com.jason.ddoTimingTask.task.handler.sendResultRecord.SRRChannelStatisDayHandler;
 import com.jason.ddoTimingTask.task.handler.sendResultRecord.SRRChannelStatisMonthHandler;
 import com.jason.ddoTimingTask.task.handler.sendResultRecord.SRRFullStatisMonthHandler;
 import com.jason.ddoTimingTask.task.handler.sendResultRecord.SRRProvinceStatisMonthHandler;
@@ -36,10 +37,11 @@ public class SRRSHandlerChain {
 	private List<AbstractSRRStatisHandler> handlerList;
 	
 	private SRRSHandlerChain() {
-		this.handlerList = new ArrayList<AbstractSRRStatisHandler>(3);
+		this.handlerList = new ArrayList<AbstractSRRStatisHandler>(4);
 		this.handlerList.add(new SRRFullStatisMonthHandler());
 		this.handlerList.add(new SRRChannelStatisMonthHandler());
 		this.handlerList.add(new SRRProvinceStatisMonthHandler());
+		this.handlerList.add(new SRRChannelStatisDayHandler());
 	}
 	
 	public void doHandler(SendResultRecord resultRecord) throws HandlerException {

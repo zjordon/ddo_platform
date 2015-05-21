@@ -192,10 +192,18 @@ public class ChannelStatisticsDay implements java.io.Serializable {
 	}
 	
 	public void increaseMsisdnNum() {
-		this.msisdnNum = new Integer(this.msisdnNum + 1);
+		if (this.msisdnNum != null) {
+			this.msisdnNum =  new Integer(this.msisdnNum + 1); 
+		} else {
+			this.msisdnNum = new Integer(1);
+		}
 	}
 	
 	public void increaseMsgNum() {
-		this.msgNum = new Integer(this.msgNum + 1);
+		if (this.msgNum != null) {
+			this.msgNum = new Integer(this.msgNum + 1);
+		} else {
+			this.msgNum = new Integer(1);
+		}
 	}
 }

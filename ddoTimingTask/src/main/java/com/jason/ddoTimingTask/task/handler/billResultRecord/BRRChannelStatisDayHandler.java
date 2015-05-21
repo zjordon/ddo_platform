@@ -6,7 +6,9 @@ package com.jason.ddoTimingTask.task.handler.billResultRecord;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoTimingTask.bean.BillResultRecord;
+import com.jason.ddoTimingTask.bean.CSMsisdnMonth;
 import com.jason.ddoTimingTask.bean.ChannelStatisticsDay;
+import com.jason.ddoTimingTask.bean.ChannelStatisticsMsisdn;
 import com.jason.ddoTimingTask.bean.SendRecord;
 import com.jason.ddoTimingTask.dao.DaoException;
 import com.jason.ddoTimingTask.dao.DaoManager;
@@ -26,6 +28,7 @@ public class BRRChannelStatisDayHandler extends AbstractBRRStatisHandler {
 	private ChannelStatisticsDay csdRecord;
 	private boolean isFail;
 	private String billBusinessId;
+	private ChannelStatisticsMsisdn csMsisdn;
 
 	/*
 	 * (non-Javadoc)
@@ -36,16 +39,30 @@ public class BRRChannelStatisDayHandler extends AbstractBRRStatisHandler {
 	@Override
 	public void commit() throws HandlerException {
 		try {
+			if (this.csMsisdn != null) {
+				DaoManager.getInstance().getChannelStatisticsDayDao().saveMsisdn(this.csMsisdn.getMsisdn(), this.csMsisdn.getSumDate(), this.csMsisdn.getChannelId());
+			}
 			if (this.isFail) {
-
-				DaoManager.getInstance().getChannelStatisticsDayDao()
-						.addBillFailNum(this.csdRecord.getId(), 1);
+				if (this.csMsisdn != null) {
+					DaoManager.getInstance().getChannelStatisticsDayDao()
+					.addBillFailAndMsisdnNum(this.csdRecord.getId(), 1, 1);
+				} else {
+					DaoManager.getInstance().getChannelStatisticsDayDao()
+					.addBillFailNum(this.csdRecord.getId(), 1);
+				}
+				
 
 			} else {
 				double price = DaoManager.getInstance().getBillBusinessDao()
 						.getPrice(this.billBusinessId);
-				DaoManager.getInstance().getChannelStatisticsDayDao()
-						.addBillSuccessNum(this.csdRecord.getId(), 1, price);
+				if (this.csMsisdn != null) {
+					DaoManager.getInstance().getChannelStatisticsDayDao()
+					.addBillSuccessAndMsisdnNum(this.csdRecord.getId(), 1, price, 1);
+				} else {
+					DaoManager.getInstance().getChannelStatisticsDayDao()
+					.addBillSuccessNum(this.csdRecord.getId(), 1, price);
+				}
+				
 			}
 		} catch (DaoException e) {
 			logger.error("exception when commit", e);
@@ -123,20 +140,29 @@ public class BRRChannelStatisDayHandler extends AbstractBRRStatisHandler {
 	@Override
 	protected boolean isExistMsisdn(SendRecord sendRecord)
 			throws HandlerException {
-		// TODO Auto-generated method stub
-		return false;
+			boolean exist = false;
+			try {
+				exist = DaoManager.getInstance().getChannelStatisticsDayDao().isMsisdnExist(sendRecord.getSendDate(), sendRecord.getMsisdn(), sendRecord.getChannelId());
+			} catch (DaoException e) {
+				logger.error("exception when isExistCSMsisdn", e);
+				throw new HandlerException(e.getMessage());
+			}
+			return exist;
 	}
 
 	@Override
 	protected void addMsisdnRecord(SendRecord sendRecord)
 			throws HandlerException {
-		// TODO Auto-generated method stub
+		this.csMsisdn = new ChannelStatisticsMsisdn();
+		this.csMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
+		this.csMsisdn.setSumDate(sendRecord.getSendMonth());
+		this.csMsisdn.setChannelId(sendRecord.getChannelId());
 		
 	}
 
 	@Override
 	protected void increaseMsisdnNum() throws HandlerException {
-		// TODO Auto-generated method stub
+		this.csdRecord.increaseMsisdnNum();
 		
 	}
 
