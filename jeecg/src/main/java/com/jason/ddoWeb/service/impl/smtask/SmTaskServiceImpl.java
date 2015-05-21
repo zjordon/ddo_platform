@@ -8,12 +8,15 @@ import java.util.List;
 
 import jodd.util.StringUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jason.ddoWeb.entity.channel.ChannelUserEntity;
 import com.jason.ddoWeb.entity.smtask.SmMsisdnListEntity;
 import com.jason.ddoWeb.entity.smtask.SmTaskEntity;
+import com.jason.ddoWeb.service.smtask.SmMsisdnListServiceI;
+import com.jason.ddoWeb.service.smtask.SmRequestServiceI;
 import com.jason.ddoWeb.service.smtask.SmTaskServiceI;
 
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
@@ -24,6 +27,11 @@ public class SmTaskServiceImpl extends CommonServiceImpl implements
 		SmTaskServiceI {
 	private final static String FIND_ENABLE_CHANNEL_USER = "from ChannelUserEntity where channelId = ? and state = 1";
 
+	@Autowired
+	private SmRequestServiceI smRequestService;
+	@Autowired
+	private SmMsisdnListServiceI smMsisdnListService;
+	
 	@Override
 	public <T> Serializable save(T entity) {
 		this.setTaskUserAndPass((SmTaskEntity)entity);
@@ -152,6 +160,19 @@ public class SmTaskServiceImpl extends CommonServiceImpl implements
 				smTask.setChannelUserName(channelUser.getUsername());
 				smTask.setChannelUserPass(channelUser.getPassword());
 			}
+		}
+		
+	}
+
+	@Override
+	public void deleteByChannelId(String channelId) {
+		List<SmTaskEntity> list = super.findByProperty(SmTaskEntity.class, "channelId", channelId);
+		for (SmTaskEntity entity : list) {
+			//删除对应的号码清单
+			this.smMsisdnListService.deleteByTaskId(entity.getId());
+			//删除对应的短信请求
+			this.smRequestService.deleteByTaskId(entity.getId());
+			super.delete(entity);
 		}
 		
 	}

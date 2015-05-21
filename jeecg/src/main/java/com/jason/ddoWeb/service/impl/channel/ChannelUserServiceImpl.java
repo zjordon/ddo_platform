@@ -61,14 +61,7 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 	@Override
 	public <T> void delete(T entity) {
 		// 创建删除渠道用户事件
-		EventEntity event = new EventEntity();
-		event.setEventId("DeleteChannelUserEvent");
-		StringBuilder builder = new StringBuilder();
-		builder.append("id:").append(((ChannelUserEntity) entity).getId());
-		event.setParam(builder.toString());
-		super.save(event);
-		//创建到短信平台的事件
-		this.createEventToSm(event);
+		this.createDeleteEvent((ChannelUserEntity)entity);
 		super.delete(entity);
 	}
 
@@ -106,6 +99,27 @@ public class ChannelUserServiceImpl extends CommonServiceImpl implements
 	
 	private void createEventToSm(EventEntity event) {
 		DynamicDBUtil.update("SM_DB", INSERT_EVENT, event.getId(), event.getEventId(), event.getCreateDate(), event.getParam());
+	}
+
+	@Override
+	public void deleteByChannelId(String channelId) {
+		List<ChannelUserEntity> list = super.findByProperty(ChannelUserEntity.class, "channelId", channelId);
+		for (ChannelUserEntity entity : list) {
+			super.delete(entity);
+			this.createDeleteEvent(entity);
+		}
+		
+	}
+	
+	private void createDeleteEvent(ChannelUserEntity entity) {
+		EventEntity event = new EventEntity();
+		event.setEventId("DeleteChannelUserEvent");
+		StringBuilder builder = new StringBuilder();
+		builder.append("id:").append(entity.getId());
+		event.setParam(builder.toString());
+		super.save(event);
+		//创建到短信平台的事件
+		this.createEventToSm(event);
 	}
 
 }

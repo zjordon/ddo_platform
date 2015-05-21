@@ -13,4 +13,6 @@ public interface SmTaskServiceI extends CommonService{
 	String save(SmTaskEntity smTask, InputStream in);
 	
 	String saveFile(String taskId, InputStream in);
+	
+	void deleteByChannelId(String channelId);
 }

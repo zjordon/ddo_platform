@@ -49,7 +49,7 @@ public class DdoMsgEntity implements java.io.Serializable {
 	/**发送时间*/
 	private java.util.Date sendTime;
 	/**计费状态编码*/
-	@Excel(name="计费状态",replace = {"成功_00000000","版本不匹配_00530001","未授权的接口调用_00530002","时间戳已经过期_00530004","非法的连接源IP地址_00530005","请求消息格式错误_00530012","系统内部错误_00539999"})
+	@Excel(name="计费状态",replace = {"成功_00000000","版本不匹配_00530001","未授权的接口调用_00530002","时间戳已经过期_00530004","非法的连接源IP地址_00530005","请求消息格式错误_00530012","系统内部错误_00539999","未返_-1"})
 	private java.lang.String billStateCode;
 	/**计费状态返回时间*/
 	private java.util.Date billStateTime;

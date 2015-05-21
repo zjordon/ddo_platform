@@ -1,23 +1,20 @@
 package com.jason.ddoWeb.entity.channel;
 
 
-import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.type.Type;
-
-import com.jason.ddoWeb.entity.FlushDirtyEventI;
-import com.jason.ddoWeb.entity.SaveEventI;
-import com.jason.ddoWeb.util.NumberUtils;
 
 /**   
  * @Title: Entity
@@ -55,6 +52,10 @@ public class ChannelEntity implements java.io.Serializable {
 	
 	private Double dayLimitDouble;
 	private Double monthLimitDouble;
+	
+	private List<ChannelDayLimitEntity> chanelDayLimits;
+	private List<ChannelMonthLimitEntity> chanelMonthLimits;
+//	private List<SmTaskEntity> smTasks;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -227,6 +228,43 @@ public class ChannelEntity implements java.io.Serializable {
 	public void setMonthLimitDouble(Double monthLimitDouble) {
 		this.monthLimitDouble = monthLimitDouble;
 	}
+
+	//@OneToMany(cascade=CascadeType.REMOVE, orphanRemoval=true)
+	@OneToMany(mappedBy="channel", cascade=CascadeType.REMOVE,orphanRemoval=true)
+	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE)
+	//@JoinColumn(name="channel_id")
+	public List<ChannelDayLimitEntity> getChanelDayLimits() {
+		return chanelDayLimits;
+	}
+
+	public void setChanelDayLimits(List<ChannelDayLimitEntity> chanelDayLimits) {
+		this.chanelDayLimits = chanelDayLimits;
+	}
+
+	//@OneToMany(cascade=CascadeType.REMOVE, orphanRemoval=true)
+	@OneToMany(mappedBy="channel", cascade=CascadeType.REMOVE,orphanRemoval=true)
+	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE)
+	//@JoinColumn(name="channel_id")
+	public List<ChannelMonthLimitEntity> getChanelMonthLimits() {
+		return chanelMonthLimits;
+	}
+
+	public void setChanelMonthLimits(List<ChannelMonthLimitEntity> chanelMonthLimits) {
+		this.chanelMonthLimits = chanelMonthLimits;
+	}
+
+//	@OneToMany(mappedBy="channel", cascade=CascadeType.REMOVE,orphanRemoval=true)
+	//@org.hibernate.annotations.Cascade(org.hibernate.annotations.CascadeType.DELETE)
+	//@JoinColumn(name="channel_id")
+//	public List<SmTaskEntity> getSmTasks() {
+//		return smTasks;
+//	}
+//
+//	public void setSmTasks(List<SmTaskEntity> smTasks) {
+//		this.smTasks = smTasks;
+//	}
+	
+	
 
 //	@Override
 //	public void onSave(Serializable id, Object[] state,

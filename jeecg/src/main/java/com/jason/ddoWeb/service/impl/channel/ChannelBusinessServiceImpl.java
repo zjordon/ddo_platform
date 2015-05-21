@@ -153,18 +153,32 @@ public class ChannelBusinessServiceImpl extends CommonServiceImpl implements
 	@Override
 	public <T> void delete(T entity) {
 		//产生删除渠道业务事件
-		EventEntity event = new EventEntity();
-		event.setEventId("DeleteChannelBusinessEvent");
-		StringBuilder builder = new StringBuilder();
-		builder.append("id:").append(((ChannelBusinessEntity)entity).getId());
-		event.setParam(builder.toString());
-		super.save(event);
-		this.createEventToSm(event);
+		this.createDeleteEvent((ChannelBusinessEntity)entity);
 		super.delete(entity);
 	}
 	
 	private void createEventToSm(EventEntity event) {
 		DynamicDBUtil.update("SM_DB", INSERT_EVENT, event.getId(), event.getEventId(), event.getCreateDate(), event.getParam());
+	}
+	
+	private void createDeleteEvent(ChannelBusinessEntity entity) {
+		EventEntity event = new EventEntity();
+		event.setEventId("DeleteChannelBusinessEvent");
+		StringBuilder builder = new StringBuilder();
+		builder.append("id:").append(entity.getId());
+		event.setParam(builder.toString());
+		super.save(event);
+		this.createEventToSm(event);
+	}
+
+	@Override
+	public void deleteByChannelId(String channelId) {
+		List<ChannelBusinessEntity> list = super.findByProperty(ChannelBusinessEntity.class, "channelId", channelId);
+		for (ChannelBusinessEntity entity : list) {
+			super.delete(entity);
+			this.createDeleteEvent(entity);
+		}
+		
 	}
 
 }

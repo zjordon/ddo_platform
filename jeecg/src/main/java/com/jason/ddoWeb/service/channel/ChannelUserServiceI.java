@@ -9,4 +9,6 @@ public interface ChannelUserServiceI extends CommonService{
 	public void updatePassword(String id, String password);
 	
 	public ChannelUserEntity checkUserExits(ChannelUserEntity channelUser);
+	
+	public void deleteByChannelId(String channelId);
 }

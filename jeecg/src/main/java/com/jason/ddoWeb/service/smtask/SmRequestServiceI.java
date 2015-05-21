@@ -4,4 +4,5 @@ import org.jeecgframework.core.common.service.CommonService;
 
 public interface SmRequestServiceI extends CommonService{
 
+	void deleteByTaskId(String taskId);
 }

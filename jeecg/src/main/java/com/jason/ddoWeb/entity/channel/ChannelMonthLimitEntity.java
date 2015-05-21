@@ -1,15 +1,19 @@
 package com.jason.ddoWeb.entity.channel;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.SequenceGenerator;
 
 /**   
@@ -33,7 +37,8 @@ public class ChannelMonthLimitEntity implements java.io.Serializable {
 	/**限额*/
 	private Long limitAmount;
 	/**渠道id*/
-	private java.lang.String channelId;
+	//private java.lang.String channelId;
+	private ChannelEntity channel;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -91,16 +96,26 @@ public class ChannelMonthLimitEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  渠道id
 	 */
-	@Column(name ="CHANNEL_ID",nullable=false,length=32)
-	public java.lang.String getChannelId(){
-		return this.channelId;
-	}
+//	@Column(name ="CHANNEL_ID",nullable=false,length=32)
+//	public java.lang.String getChannelId(){
+//		return this.channelId;
+//	}
 
 	/**
 	 *方法: 设置java.lang.String
 	 *@param: java.lang.String  渠道id
 	 */
-	public void setChannelId(java.lang.String channelId){
-		this.channelId = channelId;
+//	public void setChannelId(java.lang.String channelId){
+//		this.channelId = channelId;
+//	}
+	
+	@ManyToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+    @JoinColumn(name = "channel_id")
+	public ChannelEntity getChannel() {
+		return channel;
+	}
+
+	public void setChannel(ChannelEntity channel) {
+		this.channel = channel;
 	}
 }

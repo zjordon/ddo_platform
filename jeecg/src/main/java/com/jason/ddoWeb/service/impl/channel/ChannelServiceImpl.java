@@ -13,7 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.jason.ddoWeb.entity.channel.ChannelEntity;
 import com.jason.ddoWeb.entity.event.EventEntity;
 import com.jason.ddoWeb.service.channel.ChannelBusinessServiceI;
+import com.jason.ddoWeb.service.channel.ChannelDayLimitServiceI;
+import com.jason.ddoWeb.service.channel.ChannelMonthLimitServiceI;
 import com.jason.ddoWeb.service.channel.ChannelServiceI;
+import com.jason.ddoWeb.service.channel.ChannelUserServiceI;
+import com.jason.ddoWeb.service.smtask.SmTaskServiceI;
 import com.jason.ddoWeb.util.NumberUtils;
 import com.jason.ddoWeb.util.StringUtils;
 
@@ -24,12 +28,21 @@ import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
 @Service("channelService")
 @Transactional
 public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServiceI {
+
 	private static final Logger logger = Logger.getLogger(ChannelServiceImpl.class);
 	
 	private final static String GET_CHANNEL_INFO = "select state, close_state, up_url, down_url, month_limit, day_limit from ddo_channel where id = ?";
 	
 	@Autowired
 	private ChannelBusinessServiceI channelBusinessService;
+	@Autowired
+	private ChannelUserServiceI channelUserService;
+	@Autowired
+	private SmTaskServiceI smTaskService;
+//	@Autowired
+//	private ChannelDayLimitServiceI channelDayLimitService;
+//	@Autowired
+//	private ChannelMonthLimitServiceI channelMonthLimitService;
 
 	@Override
 	public <T> Serializable save(T entity) {
@@ -133,6 +146,20 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 		return channelNameMap;
 	}
 	
-	
+	@Override
+	public <T> void delete(T entity) {
+		String channelId = ((ChannelEntity)entity).getId();
+		//删除对应的渠道用户
+		this.channelUserService.deleteByChannelId(channelId);
+		//删除对应的渠道业务
+		this.channelBusinessService.deleteByChannelId(channelId);
+		//删除对应的短信任务
+		this.smTaskService.deleteByChannelId(channelId);
+		//其它删除使用hibernate的一对多关系进行关联删除
+		//删除对应的日限额和月限额
+//		this.channelDayLimitService.deleteByChannelId(channelId);
+//		this.channelMonthLimitService.deleteByChannelId(channelId);
+		super.delete(entity);
+	}
 	
 }

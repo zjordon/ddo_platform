@@ -3,16 +3,20 @@ package com.jason.ddoWeb.entity.smtask;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.SequenceGenerator;
 
 /**   
@@ -35,6 +39,7 @@ public class SmMsisdnListEntity implements java.io.Serializable {
 	private java.lang.Long msisdn;
 	/**任务id*/
 	private java.lang.String smTaskId;
+//	private SmTaskEntity smTask;
 	/**请求id*/
 	private java.lang.String smRequestId;
 	
@@ -90,6 +95,16 @@ public class SmMsisdnListEntity implements java.io.Serializable {
 	public void setSmTaskId(java.lang.String smTaskId){
 		this.smTaskId = smTaskId;
 	}
+	
+//	@ManyToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+//    @JoinColumn(name = "sm_task_id")
+//	public SmTaskEntity getSmTask() {
+//		return smTask;
+//	}
+
+//	public void setSmTask(SmTaskEntity smTask) {
+//		this.smTask = smTask;
+//	}
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  请求id

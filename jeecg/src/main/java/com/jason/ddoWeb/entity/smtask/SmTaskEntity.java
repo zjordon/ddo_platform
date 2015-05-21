@@ -2,17 +2,24 @@ package com.jason.ddoWeb.entity.smtask;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
+import com.jason.ddoWeb.entity.channel.ChannelEntity;
 
 import javax.persistence.SequenceGenerator;
 
@@ -50,12 +57,16 @@ public class SmTaskEntity implements java.io.Serializable {
 	private java.lang.String createName;
 	/**渠道id*/
 	private java.lang.String channelId;
+	//private ChannelEntity channel;
 	/**计费业务id*/
 	private java.lang.String billBusinessId;
 	
 	private String channelUserName;
 	private String channelUserPass;
 	private String failMsg;
+	
+//	private List<SmRequestEntity> smRequests;
+//	private List<SmMsisdnListEntity> smMsisdnLists;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -221,6 +232,17 @@ public class SmTaskEntity implements java.io.Serializable {
 	public void setChannelId(java.lang.String channelId){
 		this.channelId = channelId;
 	}
+	
+//	@ManyToOne(cascade = { CascadeType.REFRESH, CascadeType.MERGE }, optional = true)
+//    @JoinColumn(name = "channel_id")
+//	public ChannelEntity getChannel() {
+//		return channel;
+//	}
+//
+//	public void setChannel(ChannelEntity channel) {
+//		this.channel = channel;
+//	}
+	
 	/**
 	 *方法: 取得java.lang.String
 	 *@return: java.lang.String  计费业务id
@@ -264,5 +286,27 @@ public class SmTaskEntity implements java.io.Serializable {
 	public void setFailMsg(String failMsg) {
 		this.failMsg = failMsg;
 	}
+
+	//@OneToMany(cascade=CascadeType.REMOVE)
+	//@JoinColumn(name="SM_TASK_ID")
+//	@OneToMany(mappedBy="channel", cascade=CascadeType.REMOVE,orphanRemoval=true)
+//	public List<SmRequestEntity> getSmRequests() {
+//		return smRequests;
+//	}
+//
+//	public void setSmRequests(List<SmRequestEntity> smRequests) {
+//		this.smRequests = smRequests;
+//	}
+
+	//@OneToMany(cascade=CascadeType.REMOVE)
+	//@JoinColumn(name="SM_TASK_ID")
+//	@OneToMany(mappedBy="channel", cascade=CascadeType.REMOVE,orphanRemoval=true)
+//	public List<SmMsisdnListEntity> getSmMsisdnLists() {
+//		return smMsisdnLists;
+//	}
+//
+//	public void setSmMsisdnLists(List<SmMsisdnListEntity> smMsisdnLists) {
+//		this.smMsisdnLists = smMsisdnLists;
+//	}
 
 }

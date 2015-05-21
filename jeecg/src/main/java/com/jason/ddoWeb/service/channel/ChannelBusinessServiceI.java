@@ -14,4 +14,6 @@ public interface ChannelBusinessServiceI extends CommonService{
 	 * @param channelId
 	 */
 	void saveChannelBusinessesByChannel(String channelId, Long channelNo);
+	
+	void deleteByChannelId(String channelId);
 }
