@@ -89,6 +89,7 @@ public class TaskScheduler {
 		//启动多个线程来处理请求
 		//for (int i=0;i<2;i++) {
 			Thread normalRequestTaskThreadWrapper = new Thread(normalRequestTaskThread);
+			normalRequestTaskThreadWrapper.setDaemon(true);
 			normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 			normalRequestTaskThreadWrapper.start();
 		//}
@@ -97,21 +98,25 @@ public class TaskScheduler {
 		
 		normalBillReportTaskThread.start();
 		Thread normalBillReportTaskThreadWrapper = new Thread(normalBillReportTaskThread);
+		normalBillReportTaskThreadWrapper.setDaemon(true);
 		normalBillReportTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		normalBillReportTaskThreadWrapper.start();
 		
 		otherRequestTaskThread.start();
 		Thread otherRequestTaskThreadWrapper = new Thread(otherRequestTaskThread);
+		otherRequestTaskThreadWrapper.setDaemon(true);
 		otherRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		otherRequestTaskThreadWrapper.start();
 		
 		repeatTaskThread.start();
 		Thread repeatTaskThreadWrapper = new Thread(repeatTaskThread);
+		repeatTaskThreadWrapper.setDaemon(true);
 		repeatTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		repeatTaskThreadWrapper.start();
 		
 		otherTaskThread.start();
 		Thread otherTaskThreadWrapper = new Thread(otherTaskThread);
+		otherTaskThreadWrapper.setDaemon(true);
 		otherTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		otherTaskThreadWrapper.start();
 	}
