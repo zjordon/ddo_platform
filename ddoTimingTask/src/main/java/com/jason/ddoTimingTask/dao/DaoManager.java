@@ -34,6 +34,7 @@ public class DaoManager {
 	private SmRequestDao smRequestDao;
 	private SmTaskDao smTaskDao;
 	private BillBusinessDao billBusinessDao;
+	private ConsumeDao consumeDao;
 	
 	public void init() {
 		DataSource dataSource = DataSourceUtil.getDataSource();
@@ -61,6 +62,8 @@ public class DaoManager {
 		this.smTaskDao.setDataSource(dataSource);
 		this.billBusinessDao = new BillBusinessDao();
 		this.billBusinessDao.setDataSource(dataSource);
+		this.consumeDao = new ConsumeDao();
+		this.consumeDao.setDataSource(dataSource);
 	}
 
 	public BillResultRecordDao getBillResultRecordDao() {
@@ -109,5 +112,9 @@ public class DaoManager {
 
 	public BillBusinessDao getBillBusinessDao() {
 		return billBusinessDao;
+	}
+
+	public ConsumeDao getConsumeDao() {
+		return consumeDao;
 	}
 }

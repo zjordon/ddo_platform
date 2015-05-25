@@ -6,7 +6,6 @@ package com.jason.ddoTimingTask.task.handler.billResultRecord;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoTimingTask.bean.BillResultRecord;
-import com.jason.ddoTimingTask.bean.CSMsisdnMonth;
 import com.jason.ddoTimingTask.bean.ChannelStatisticsDay;
 import com.jason.ddoTimingTask.bean.ChannelStatisticsMsisdn;
 import com.jason.ddoTimingTask.bean.SendRecord;

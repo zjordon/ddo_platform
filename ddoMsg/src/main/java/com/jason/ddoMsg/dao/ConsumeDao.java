@@ -28,7 +28,7 @@ public class ConsumeDao extends BaseDao {
 	private final static String INSERT_CONSUME_TRUNOVER = "insert into ddo_consume_turnover(id, msisdn, amount, record_date, state)"
 			+ " values(?, ?, ?, ?, 0)";
 	
-	public void saveConsumeTurnoverList(List<ConsumeTurnover> list)  throws DaoException {
+	public void saveConsumeTurnoverList(List<ConsumeTurnover> list) throws DaoException {
 		Connection conn = null;
 		try {
 			conn = super.getConnection();
