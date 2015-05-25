@@ -36,7 +36,7 @@
 		class="org.jeecgframework.core.timer.DataBaseSchedulerFactoryBean">
 		<property name="triggers">
 			<list>
-				<ref bean="taskDemoServiceTaskCronTrigger" />
+				<!--<ref bean="taskDemoServiceTaskCronTrigger" />-->
 			</list>
 		</property>
 	</bean>
