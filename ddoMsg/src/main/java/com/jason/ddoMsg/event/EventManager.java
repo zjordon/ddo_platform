@@ -34,6 +34,7 @@ import com.jason.ddoMsg.event.channelUser.AddChannelUserEvent;
 import com.jason.ddoMsg.event.channelUser.DeleteChannelUserEvent;
 import com.jason.ddoMsg.event.channelUser.UpdateCUPasswordEvent;
 import com.jason.ddoMsg.event.channelUser.UpdateChannelUserStateEvent;
+import com.jason.ddoMsg.event.consume.UpdateConsumeEvent;
 import com.jason.ddoMsg.event.proviceCloseState.AddProviceCloseStateEvent;
 import com.jason.ddoMsg.event.proviceCloseState.UpdateProviceCloseStateEvent;
 
@@ -91,6 +92,8 @@ public class EventManager {
 		eventMap.put("DeleteBlackListEvent", new DeleteBlackListEvent());
 		eventMap.put("AddBlackListEvent", new AddBlackListEvent());
 		eventMap.put("ReloadBlackListEvent", new ReloadBlackListEvent());
+		
+		eventMap.put("UpdateConsumeEvent", new UpdateConsumeEvent());
 		
 	}
 	

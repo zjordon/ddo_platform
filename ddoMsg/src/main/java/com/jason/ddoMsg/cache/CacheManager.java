@@ -13,6 +13,7 @@ import com.jason.ddoMsg.dao.ChannelDao;
 import com.jason.ddoMsg.dao.ChannelLimitDao;
 import com.jason.ddoMsg.dao.ChannelRequestDao;
 import com.jason.ddoMsg.dao.ChannelUserDao;
+import com.jason.ddoMsg.dao.ConsumeDao;
 import com.jason.ddoMsg.dao.DdoMsgDao;
 import com.jason.ddoMsg.dao.EventDao;
 import com.jason.ddoMsg.dao.ProviceCloseStateDao;
@@ -46,6 +47,7 @@ public class CacheManager {
 	private EventCache eventCache;
 	private DmMobileCache dmMobileCache;
 	private StatisticsCache statisticsCache;
+	private ConsumeCache consumeCache;
 	
 	private CacheManager(){}
 	
@@ -119,6 +121,11 @@ public class CacheManager {
 		 statisticsDao.setDataSource(dataSource);
 		 statisticsCache = new StatisticsCache();
 		 statisticsCache.setStatisticsDao(statisticsDao);
+		 this.consumeCache = new ConsumeCache();
+		 ConsumeDao consumeDao = new ConsumeDao();
+		 consumeDao.setDataSource(dataSource);
+		 this.consumeCache.setConsumeDao(consumeDao);
+		 this.consumeCache.init();
 	}
 
 	public ChannelUserCache getChannelUserCache() {
@@ -179,6 +186,10 @@ public class CacheManager {
 
 	public StatisticsCache getStatisticsCache() {
 		return statisticsCache;
+	}
+
+	public ConsumeCache getConsumeCache() {
+		return consumeCache;
 	}
 
 	public void destory() {

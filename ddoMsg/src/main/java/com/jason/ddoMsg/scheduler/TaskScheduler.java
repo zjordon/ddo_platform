@@ -4,6 +4,7 @@
 package com.jason.ddoMsg.scheduler;
 
 import com.jason.ddoMsg.cache.CacheManager;
+import com.jason.ddoMsg.task.ConsumeTurnoverTask;
 import com.jason.ddoMsg.task.EventTask;
 import com.jason.ddoMsg.task.NormalBillReportTask;
 import com.jason.ddoMsg.task.NormalRequestTask;
@@ -15,6 +16,7 @@ import com.jason.ddoMsg.task.RepeatUpChannelTask;
 import com.jason.ddoMsg.task.StatisticsTask;
 import com.jason.ddoMsg.task.TimingRequestTask;
 import com.jason.ddoMsg.task.UpdateChannelLimitTask;
+import com.jason.ddoMsg.task.UpdateConsumeRecordTask;
 
 /**
  * 任务调度类 处理任务的启动，停止，并行等逻揖
@@ -42,6 +44,8 @@ public class TaskScheduler {
 	private UpdateChannelLimitTask updateChannelLimitTask;
 	private EventTask eventTask;
 	private StatisticsTask statisticsTask;
+	private UpdateConsumeRecordTask updateConsumeRecordTask;
+	private ConsumeTurnoverTask consumeTurnoverTask;
 
 	private SingleTaskThread normalRequestTaskThread;
 	private SingleTaskThread normalBillReportTaskThread;
@@ -62,6 +66,9 @@ public class TaskScheduler {
 		updateChannelLimitTask = new UpdateChannelLimitTask();
 		eventTask = new EventTask();
 		statisticsTask = new StatisticsTask();
+		updateConsumeRecordTask = new UpdateConsumeRecordTask();
+		consumeTurnoverTask = new ConsumeTurnoverTask();
+		
 		normalRequestTaskThread = new SingleTaskThread(normalRequestTask);
 		normalBillReportTaskThread = new SingleTaskThread(normalBillReportTask);
 		otherRequestTaskThread = new MultileTaskThread();
@@ -76,6 +83,8 @@ public class TaskScheduler {
 		otherTaskThread.addTask(updateChannelLimitTask);
 		otherTaskThread.addTask(eventTask);
 		otherTaskThread.addTask(statisticsTask);
+		otherTaskThread.addTask(updateConsumeRecordTask);
+		otherTaskThread.addTask(consumeTurnoverTask);
 
 		if (!CacheManager.getInstance().getConfigCache().isStopAllTask()) {
 			//如果启动任务状态为不启动则不启动任务
@@ -166,6 +175,12 @@ public class TaskScheduler {
 		} else if ("statisticsTask".equals(taskName)) {
 			this.statisticsTask.start();
 			this.startOtherTaskThread();
+		} else if ("updateConsumeRecordTask".equals(taskName)) {
+			this.updateConsumeRecordTask.start();
+			this.startOtherTaskThread();
+		} else if ("consumeTurnoverTask".equals(taskName)) {
+			this.consumeTurnoverTask.start();
+			this.startOtherTaskThread();
 		}
 	}
 
@@ -190,6 +205,10 @@ public class TaskScheduler {
 			this.updateChannelLimitTask.stop();
 		}else if ("statisticsTask".equals(taskName)) {
 			this.statisticsTask.stop();
+		}else if ("updateConsumeRecordTask".equals(taskName)) {
+			this.updateConsumeRecordTask.stop();
+		} else if ("consumeTurnoverTask".equals(taskName)) {
+			this.consumeTurnoverTask.stop();
 		}
 	}
 

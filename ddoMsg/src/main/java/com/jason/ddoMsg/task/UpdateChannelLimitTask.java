@@ -17,20 +17,20 @@ import com.jason.ddoMsg.cache.CacheManager;
  *
  */
 public class UpdateChannelLimitTask extends AbstractTask {
-	private static final Logger logger = Logger.getLogger(TimingRequestTask.class);
+	private static final Logger logger = Logger.getLogger(UpdateChannelLimitTask.class);
 
 	/* (non-Javadoc)
 	 * @see com.jason.ddoMsg.task.Task#execute()
 	 */
 	@Override
 	protected int executeTask() {
-		logger.debug("start execute UpdateChannelLimitTask");
+		//logger.debug("start execute UpdateChannelLimitTask");
 		try {
 			CacheManager.getInstance().getChannelLimitCache().loadChannelLimitList();
 		} catch (CacheException e) {
 			logger.error("exception when execute UpdateChannelLimitTask", e);
 		}
-		logger.debug("end execute UpdateChannelLimitTask");
+		//logger.debug("end execute UpdateChannelLimitTask");
 		return 0;
 	}
 

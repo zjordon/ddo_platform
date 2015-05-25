@@ -35,6 +35,9 @@ public class ConfigCache {
 	
 	private String ddoAsyncNotifyURL;
 	
+	private int monthDeductionAmountLimit;
+	
+	private int monthDeductionNumLimit;
 	public void loadConfigParam() {
 		logger.info("start load config");
 		Properties props = PropertiesHelper.getInstance().loadProps("config/sys-config.properties", "sys-config.properties");
@@ -52,6 +55,12 @@ public class ConfigCache {
 			this.ddoPassword = props.getProperty("ddoPassword");
 			this.ddoSpId =  props.getProperty("ddoSpId");
 			this.ddoAsyncNotifyURL = props.getProperty("ddoAsyncNotifyURL");
+			if (props.get("monthDeductionAmountLimit") != null) {
+				this.monthDeductionAmountLimit = Integer.parseInt(props.getProperty("monthDeductionAmountLimit"));
+			}
+			if (props.get("monthDeductionNumLimit") != null) {
+				this.monthDeductionNumLimit = Integer.parseInt(props.getProperty("monthDeductionNumLimit"));
+			}
 		} else {
 			logger.error("can not load config!!!");
 		}
@@ -119,6 +128,24 @@ public class ConfigCache {
 	public void setDdoAsyncNotifyURL(String ddoAsyncNotifyURL) throws CacheException {
 		this.ddoAsyncNotifyURL = ddoAsyncNotifyURL;
 		this.syncFile("ddoAsyncNotifyURL", ddoAsyncNotifyURL);
+	}
+
+	public int getMonthDeductionAmountLimit() {
+		return monthDeductionAmountLimit;
+	}
+
+	public void setMonthDeductionAmountLimit(int monthDeductionAmountLimit) throws CacheException {
+		this.monthDeductionAmountLimit = monthDeductionAmountLimit;
+		this.syncFile("monthDeductionAmountLimit", Integer.toString(monthDeductionAmountLimit));
+	}
+
+	public int getMonthDeductionNumLimit() {
+		return monthDeductionNumLimit;
+	}
+
+	public void setMonthDeductionNumLimit(int monthDeductionNumLimit) throws CacheException {
+		this.monthDeductionNumLimit = monthDeductionNumLimit;
+		this.syncFile("monthDeductionNumLimit", Integer.toString(monthDeductionNumLimit));
 	}
 
 	private void syncFile(String key, String value) throws CacheException {
