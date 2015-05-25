@@ -248,7 +248,7 @@ public class DdoMsgHandler {
 		return (sourceType == 2 && channel.getUpUrl() != null);
 	}
 
-	public ConsumeRecord getConsumeRecord(long msisdn) {
+	private ConsumeRecord getConsumeRecord(long msisdn) {
 		return CacheManager.getInstance().getConsumeCache()
 				.getConsumeRecord(msisdn);
 	}

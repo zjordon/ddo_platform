@@ -150,7 +150,7 @@ public class ConfigCache {
 
 	private void syncFile(String key, String value) throws CacheException {
 		try {
-			PropertiesHelper.getInstance().writeProps("config/sys-config.properties", "sys-config.properties", "stopAll", Boolean.toString(stopAll));
+			PropertiesHelper.getInstance().writeProps("config/sys-config.properties", "sys-config.properties", key, value);
 		} catch (IOException e) {
 			logger.error("exception when syncFile", e);
 			throw new CacheException(e.getMessage());

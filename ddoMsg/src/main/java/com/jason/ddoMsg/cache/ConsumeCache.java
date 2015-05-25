@@ -57,6 +57,8 @@ public class ConsumeCache {
 				for (ConsumeRecord record : list) {
 					this.consumeMap.put(new Long(record.getMsisdn()), record);
 				}
+			} else {
+				this.consumeMap = new HashMap<Long, ConsumeRecord>();
 			}
 			this.currentMonth = month;
 		}
