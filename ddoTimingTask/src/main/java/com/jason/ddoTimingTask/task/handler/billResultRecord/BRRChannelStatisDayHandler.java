@@ -68,6 +68,8 @@ public class BRRChannelStatisDayHandler extends AbstractBRRStatisHandler {
 			logger.error("exception when commit", e);
 			throw new HandlerException(e.getMessage());
 		}
+		this.csdRecord = null;
+		this.csMsisdn = null;
 
 	}
 
@@ -155,7 +157,7 @@ public class BRRChannelStatisDayHandler extends AbstractBRRStatisHandler {
 			throws HandlerException {
 		this.csMsisdn = new ChannelStatisticsMsisdn();
 		this.csMsisdn.setMsisdn(sendRecord.getMsisdn().longValue());
-		this.csMsisdn.setSumDate(sendRecord.getSendMonth());
+		this.csMsisdn.setSumDate(sendRecord.getSendDate());
 		this.csMsisdn.setChannelId(sendRecord.getChannelId());
 		
 	}
