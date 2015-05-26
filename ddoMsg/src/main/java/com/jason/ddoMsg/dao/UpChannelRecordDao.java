@@ -27,7 +27,7 @@ public class UpChannelRecordDao extends BaseDao {
 	private static final Logger logger = Logger
 			.getLogger(UpChannelRecordDao.class);
 	private final static String INSERT_UP_CHANNEL_RECORD = "insert into ddo_up_channel_record(id, create_date, result_code, process_result, ddo_msg_id, repeat_flag, response_time, send_time)"
-			+ " values(?, ?, ?, ?, ?, ?, ?)";
+			+ " values(?, ?, ?, ?, ?, ?, ?, ?)";
 	private final static String UPDATE_UP_CHANNEL_RECORD = "update ddo_up_channel_record set result_code = ?, repeat_flag = ?, send_time = ?, response_time = ? where id = ?";
 	private final static String UPDATE_NOT_REPEAT = "update ddo_up_channel_record set repeat_flag = 0 where id = ?";
 	private final static String INSERT_REPEAT_UP_RECORD = "insert into ddo_repeat_up_record(id, create_date, record_id, result_code, response_time)"
