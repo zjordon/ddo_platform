@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
 
 import com.jason.ddoMsg.bean.channel.BillBusiness;
@@ -282,18 +283,31 @@ public class ChannelRequestInterface {
 		String[] msisdnArray = StringUtils.split(msisdnParam, ',');
 		BlackListCache blackListCache = CacheManager.getInstance().getBlackListCache();
 		long msisdn = 0L;
-		NumberFormatException expactException = null;
+//		NumberFormatException expactException = null;
 		for (String msisdnStr : msisdnArray) {
-			expactException = null;
-			try {
-				msisdn = Long.parseLong(msisdnStr.trim());
-			} catch (NumberFormatException e) {
-				expactException = e;
+			//检查手机号码的格式是否是数字，是否前面带有+86或86
+			msisdnStr = msisdnStr.trim();
+			if (msisdnStr.startsWith("+86")) {
+				msisdnStr = msisdnStr.substring(3);
+			} else if (msisdnStr.startsWith("86")) {
+				msisdnStr = msisdnStr.substring(2);
 			}
-			if (expactException != null) {
+			if (NumberUtils.isDigits(msisdnStr)) {
+				msisdn = Long.parseLong(msisdnStr);
+			} else {
 				logger.warn("the msisdn is not numberformat with " + msisdnStr);
 				continue;
 			}
+//			expactException = null;
+//			try {
+//				msisdn = Long.parseLong(msisdnStr.trim());
+//			} catch (NumberFormatException e) {
+//				expactException = e;
+//			}
+//			if (expactException != null) {
+//				logger.warn("the msisdn is not numberformat with " + msisdnStr);
+//				continue;
+//			}
 			if (!blackListCache.isExists(msisdn)) {
 				msisdnList.add(new Long(msisdn));
 			} else {
