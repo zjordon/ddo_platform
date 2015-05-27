@@ -172,11 +172,11 @@ public class ChannelStatisticsDayController extends BaseController {
 		map.put(NormalExcelConstants.CLASS, ChannelStatisticsDayEntity.class);
 		ExportParams exportParams = new ExportParams();
 		// 使用handler替换数据字典的值
-		DdoMsgHandler dataHandler = new DdoMsgHandler();
-		dataHandler.setNeedHandlerFields(new String[]{"渠道"});
+//		DdoMsgHandler dataHandler = new DdoMsgHandler();
+//		dataHandler.setNeedHandlerFields(new String[]{"渠道"});
 		// 初始化map
-		dataHandler.setChannelNameMap(this.channelService.getChannelNameMap());
-		exportParams.setDataHanlder(dataHandler);
+//		dataHandler.setChannelNameMap(this.channelService.getChannelNameMap());
+//		exportParams.setDataHanlder(dataHandler);
 		map.put(NormalExcelConstants.PARAMS, exportParams);
 		map.put(NormalExcelConstants.DATA_LIST, channelStatisticsDayList);
 		return NormalExcelConstants.JEECG_EXCEL_VIEW;

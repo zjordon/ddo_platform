@@ -1,8 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
-
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    var datagrid = $("#channelStatisticsMonthListtb");
+    datagrid.find("input[name='channelName']").after("模糊查询请用*号表示，如*福建*");
+});
+</script>
 <div class="easyui-layout" fit="true">
 	<div region="center" style="padding: 1px;">
 		<t:datagrid name="channelStatisticsMonthList" title="分渠道统计"
@@ -11,8 +16,7 @@
 			autoLoadData="false">
 			<t:dgCol title="编号" field="id" hidden="true"></t:dgCol>
 			<t:dgCol title="统计月份" field="sumMonth" query="true" queryMode="group"></t:dgCol>
-			<t:dgCol title="渠道" field="channelId"
-				dictionary="ddo_channel,id,name" query="true"></t:dgCol>
+			<t:dgCol title="渠道" field="channelName" query="true"></t:dgCol>
 			<t:dgCol title="用户数" field="msisdnNum"></t:dgCol>
 			<t:dgCol title="计费金额" field="sumAmount"></t:dgCol>
 			<t:dgCol title="短信条数" field="msgNum"></t:dgCol>
@@ -21,8 +25,10 @@
 			<t:dgCol title="计费成功数" field="billSuccessNum"></t:dgCol>
 			<t:dgCol title="计费失败数" field="billFailNum"></t:dgCol>
 			<t:dgCol title="操作" field="opt" width="100"></t:dgCol>
-			<t:dgFunOpt funname="viewDetail(channelId, sumMonth)" title="查看明细"></t:dgFunOpt>
+			<t:dgFunOpt funname="viewDetail(channelName, sumMonth)" title="查看明细"></t:dgFunOpt>
 			<%--
+			<t:dgCol title="渠道" field="channelId"
+				dictionary="ddo_channel,id,name" query="true"></t:dgCol>
    <t:dgDelOpt title="删除" url="channelStatisticsMonthController.do?del&id={id}" />
   
    <t:dgToolBar title="录入" icon="icon-add" url="channelStatisticsMonthController.do?addorupdate" funname="add"></t:dgToolBar>
@@ -95,7 +101,7 @@
 		}
 		channelStatisticsMonthListsearch();
 	}
-	function viewDetail(channelId, sumMonth) {
+	function viewDetail(channelName, sumMonth) {
 		//alert(channelId + "," + sumMonth);
 		//window.parent.addTab('流水统计','ddoMsgController.do?ddoMsg&amp;clickFunctionId=402848814ce57137014ce574685a0007','default');
 		//createwindow('查看明细', 'ddoMsgController.do?ddoMsg&channelId=' + channelId + '&sumMonth=' + sumMonth);
@@ -111,7 +117,7 @@
 		//var queryDate = year + "-" + toString(month) + "-" + toString(date);
 		//alert(queryDate);
 		var url = "ddoMsgController.do?ddoMsg&amp;selectedParams="
-				+ encodeURIComponent("{\"channelId\":\"" + channelId
+				+ encodeURIComponent("{\"channelName\":\"" + channelName
 						+ "\",\"createDate_begin\":\"" + queryDateBegin
 						+ "\",\"createDate_end\":\"" + queryDateEnd + "\"}");
 		window.parent.goToTab('流水统计', url, 'default')

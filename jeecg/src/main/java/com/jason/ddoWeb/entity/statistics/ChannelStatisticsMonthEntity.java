@@ -21,7 +21,7 @@ import org.jeecgframework.poi.excel.annotation.Excel;
  *
  */
 @Entity
-@Table(name = "ddo_channel_statistics_month", schema = "")
+@Table(name = "ddo_channel_statistics_month_view", schema = "")
 @DynamicUpdate(true)
 @DynamicInsert(true)
 @SuppressWarnings("serial")
@@ -32,7 +32,6 @@ public class ChannelStatisticsMonthEntity implements java.io.Serializable {
 	@Excel(name="统计月份")
 	private java.lang.Integer sumMonth;
 	/**channelId*/
-	@Excel(name="渠道")
 	private java.lang.String channelId;
 	/**msisdnNum*/
 	@Excel(name="用户数")
@@ -55,6 +54,9 @@ public class ChannelStatisticsMonthEntity implements java.io.Serializable {
 	/**计费失败数*/
 	@Excel(name="计费失败数")
 	private java.lang.Integer billFailNum;
+	/**渠道名称**/
+	@Excel(name="渠道")
+	private String channelName;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -219,5 +221,14 @@ public class ChannelStatisticsMonthEntity implements java.io.Serializable {
 	 */
 	public void setBillFailNum(java.lang.Integer billFailNum){
 		this.billFailNum = billFailNum;
+	}
+	
+	@Column(name ="channel_name",nullable=true)
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
 	}
 }

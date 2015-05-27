@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
-
 <t:base type="jquery,easyui,tools,DatePicker"></t:base>
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    var datagrid = $("#channelStatisticsDayListtb");
+    datagrid.find("input[name='channelName']").after("模糊查询请用*号表示，如*福建*");
+});
+</script>
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:1px;">
   <t:datagrid name="channelStatisticsDayList" title="分渠道统计"
@@ -9,7 +14,7 @@
    sortName="sumDate" sortOrder="desc" autoLoadData="false">
    <t:dgCol title="编号" field="id" hidden="true"></t:dgCol>
    <t:dgCol title="统计日期" field="sumDate" query="true" queryMode="group"></t:dgCol>
-   <t:dgCol title="渠道" field="channelId" dictionary="ddo_channel,id,name" query="true"></t:dgCol>
+   <t:dgCol title="渠道" field="channelName" query="true"></t:dgCol>
    <t:dgCol title="用户数" field="msisdnNum" ></t:dgCol>
    <t:dgCol title="计费金额" field="sumAmount" ></t:dgCol>
    <t:dgCol title="短信条数" field="msgNum" ></t:dgCol>
@@ -18,8 +23,9 @@
    <t:dgCol title="计费成功数" field="billSuccessNum" ></t:dgCol>
    <t:dgCol title="计费失败数" field="billFailNum" ></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
-   <t:dgFunOpt funname="viewDetail(channelId, sumDate)" title="查看明细"></t:dgFunOpt>
+   <t:dgFunOpt funname="viewDetail(channelName, sumDate)" title="查看明细"></t:dgFunOpt>
     <%--
+     <t:dgCol title="渠道" field="channelId" dictionary="ddo_channel,id,name" query="true"></t:dgCol>
    <t:dgDelOpt title="删除" url="channelStatisticsDayController.do?del&id={id}" />
   
    <t:dgToolBar title="录入" icon="icon-add" url="channelStatisticsDayController.do?addorupdate" funname="add"></t:dgToolBar>
@@ -73,7 +79,7 @@ function init() {
     }
    channelStatisticsDayListsearch();
 }
-function viewDetail(channelId, sumDate){
+function viewDetail(channelName, sumDate){
 	//alert(channelId + "," + sumDate);
 	//window.parent.addTab('流水统计','ddoMsgController.do?ddoMsg&amp;clickFunctionId=402848814ce57137014ce574685a0007','default');
 	//createwindow('查看明细', 'ddoMsgController.do?ddoMsg&channelId=' + channelId + '&sumDate=' + sumDate);
@@ -84,7 +90,7 @@ function viewDetail(channelId, sumDate){
 	//alert(date);
 	var queryDate = year + "-" + toString(month) + "-" + toString(date);
 	//alert(queryDate);
-	var url = "ddoMsgController.do?ddoMsg&amp;selectedParams=" + encodeURIComponent("{\"channelId\":\"" + channelId + "\",\"createDate_begin\":\"" + queryDate + "\",\"createDate_end\":\"" + queryDate + "\"}");
+	var url = "ddoMsgController.do?ddoMsg&amp;selectedParams=" + encodeURIComponent("{\"channelName\":\"" + channelName + "\",\"createDate_begin\":\"" + queryDate + "\",\"createDate_end\":\"" + queryDate + "\"}");
    window.parent.goToTab('流水统计',url,'default')
    //alert(window.parent.goToTabWithHref);
    //window.parent.goToTabWithHref('流水统计','ddoMsgController.do?ddoMsg&amp;clickFunctionId=402848814ce57137014ce574685a0007','default');

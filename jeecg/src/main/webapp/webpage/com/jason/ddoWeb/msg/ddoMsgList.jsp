@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/context/mytags.jsp"%>
+<t:base type="jquery,easyui,tools,DatePicker"></t:base>
 <script type="text/javascript" charset="utf-8">
 function ddoMsgListExportXls() {
 	JeecgExcelExport("ddoMsgController.do?exportXls","ddoMsgList");
 }
+$(function() {
+    var datagrid = $("#ddoMsgListtb");
+    datagrid.find("input[name='channelName']").after("模糊查询请用*号表示，如*福建*");
+});
 </script>
-<t:base type="jquery,easyui,tools,DatePicker"></t:base>
+
 <div class="easyui-layout" fit="true">
   <div region="center" style="padding:1px;">
   
@@ -16,16 +21,17 @@ function ddoMsgListExportXls() {
    <t:dgCol title="创建时间" field="createDate" formatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="group" extend="{class:{value:'easyui-datebox'}}"></t:dgCol>
    <t:dgCol title="创建时间" field="createDate" formatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="group" extend="{class:{value:'Wdate'}}"></t:dgCol>
    --%>
-    <t:dgCol title="创建时间" field="createDate" formatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="group"></t:dgCol>
+   <t:dgCol title="创建时间" field="createDate" formatter="yyyy-MM-dd hh:mm:ss" query="true" queryMode="group"></t:dgCol>
    <t:dgCol title="用户手机号码" field="msisdn" query="true"></t:dgCol>
    <t:dgCol title="号码归属省份" field="msisdnProvinceCode" dictionary="t_s_territory where territorylevel = 1,territorycode,territoryname" query="true"></t:dgCol>
    <t:dgCol title="号码归属地市" field="msisdnCityCode" dictionary="t_s_territory where territorylevel = 2,territorycode,territoryname"></t:dgCol>
    <t:dgCol title="价格" field="billingBusinessId" dictionary="ddo_bill_business,id,price" customFormatter="formatToDouble"></t:dgCol>
-  <t:dgCol title="发送结果" field="returnMsgCode" dictionary="retMsgCode"></t:dgCol>
+   <t:dgCol title="发送结果" field="returnMsgCode" dictionary="retMsgCode"></t:dgCol>
    <t:dgCol title="计费状态" field="billStateCode" dictionary="billState" query="true"></t:dgCol>
-    <t:dgCol title="渠道" field="channelId" dictionary="ddo_channel,id,name" query="true"></t:dgCol>
+   <t:dgCol title="渠道" field="channelName" query="true"></t:dgCol>
     
     <%--
+     <t:dgCol title="渠道" field="channelId" dictionary="ddo_channel,id,name" query="true"></t:dgCol>
      <t:dgCol title="发送结果" field="sendResult" dictionary="sendResult"></t:dgCol>
    <t:dgCol title="返回消息编码" field="returnMsgCode" ></t:dgCol>
    <t:dgCol title="事务ID" field="transationId" ></t:dgCol>

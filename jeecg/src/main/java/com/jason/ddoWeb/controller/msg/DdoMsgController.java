@@ -104,11 +104,27 @@ public class DdoMsgController extends BaseController {
 		if (StringUtil.isNotEmpty(channelId) && StringUtil.isNotEmpty(sumDate)) {
 			cq.eq("channelId", channelId);
 			cq.add();
-			//TODO 根据yyyymmdd的时间格式组装从yyyymmddhhmmss到yyyymmddhhmmss的查询条件
 		}
+		Map<String, String[]> parameterMap = request.getParameterMap();
+		//如果渠道名称不为空，则默认用模糊查询进行查询
+//		if (parameterMap.containsKey("channelName")) {
+//			String[] values = parameterMap.get("channelName");
+//			if (values != null) {
+//				for (int i=0; i<values.length; i++) {
+//					if (StringUtil.isNotEmpty(values[i])) {
+//						values[i] = "*" + values[i] + "*";
+//					}
+//				}
+//				Map<String, String[]> tempParamMap = new HashMap<String, String[]>();
+//				tempParamMap.putAll(parameterMap);
+//				//parameterMap.clear();
+//				parameterMap = tempParamMap;
+//				parameterMap.put("channelName", values);
+//			}
+//		}
 		// 查询条件组装器
 		org.jeecgframework.core.extend.hqlsearch.HqlGenerateUtil.installHql(cq,
-				ddoMsg, request.getParameterMap());
+				ddoMsg, parameterMap);
 		this.ddoMsgService.getDataGridReturn(cq, true);
 		TagUtil.datagrid(response, dataGrid);
 	}
@@ -201,6 +217,8 @@ public class DdoMsgController extends BaseController {
 		ExportParams exportParams = new ExportParams();
 		// 使用handler替换数据字典的值
 		DdoMsgHandler dataHandler = new DdoMsgHandler();
+		String[] needHandlerFields = new String[]{"价格", "号码归属省份", "号码归属地市"};
+		dataHandler.setNeedHandlerFields(needHandlerFields);
 		// 初始化map
 		dataHandler.setChannelNameMap(this.channelService.getChannelNameMap());
 		dataHandler.setPriceMap(this.billBusinessService.getPriceMap());

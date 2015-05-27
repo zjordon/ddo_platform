@@ -1,12 +1,9 @@
 package com.jason.ddoWeb.entity.msg;
 
-import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,8 +12,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.jeecgframework.poi.excel.annotation.Excel;
 import org.jeecgframework.poi.excel.annotation.ExcelTarget;
-
-import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
@@ -27,7 +22,7 @@ import javax.persistence.SequenceGenerator;
  *
  */
 @Entity
-@Table(name = "ddo_msg", schema = "")
+@Table(name = "ddo_msg_view", schema = "")
 @DynamicUpdate(true)
 @DynamicInsert(true)
 @SuppressWarnings("serial")
@@ -62,7 +57,6 @@ public class DdoMsgEntity implements java.io.Serializable {
 	@Excel(name="号码归属地市")
 	private java.lang.String msisdnCityCode;
 	/**渠道ID*/
-	@Excel(name="渠道")
 	private java.lang.String channelId;
 	/**请求id*/
 	private java.lang.String requestId;
@@ -73,6 +67,9 @@ public class DdoMsgEntity implements java.io.Serializable {
 	private java.util.Date createDate;
 	/**请求返回时间*/
 	private java.util.Date responseTime;
+	/**渠道名称**/
+	@Excel(name="渠道")
+	private String channelName;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -334,4 +331,14 @@ public class DdoMsgEntity implements java.io.Serializable {
 	public void setResponseTime(java.util.Date responseTime){
 		this.responseTime = responseTime;
 	}
+
+	@Column(name ="channel_name",nullable=true)
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+	
 }

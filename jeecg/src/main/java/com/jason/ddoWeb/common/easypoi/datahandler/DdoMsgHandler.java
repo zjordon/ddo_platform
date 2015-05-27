@@ -42,13 +42,13 @@ public class DdoMsgHandler implements IExcelDataHandler {
 	 */
 	@Override
 	public Object exportHandler(Object obj, String name, Object value) {
-		if ("价格".equals(name)) {
+		if ("价格".equals(name) && this.priceMap != null) {
 			return this.priceMap.get(value);
-		} else if ("号码归属省份".equals(name)) {
+		} else if ("号码归属省份".equals(name) && this.provinceCodeMap != null) {
 			return this.provinceCodeMap.get(value);
-		} else if ("号码归属地市".equals(name)) {
+		} else if ("号码归属地市".equals(name) && this.cityCodeMap != null) {
 			return this.cityCodeMap.get(value);
-		}else if ("渠道".equals(name)) {
+		}else if ("渠道".equals(name) && this.channelNameMap != null) {
 			return this.channelNameMap.get(value);
 		}
 		return value;
