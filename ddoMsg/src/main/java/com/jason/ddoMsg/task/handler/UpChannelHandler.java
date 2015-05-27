@@ -41,7 +41,7 @@ public class UpChannelHandler {
 		DeliverResponse response = ChannelUpInterface.getInstance().deliverMsg(ddoMsg.getRequestId(), ddoMsg.getMsisdn(),instruct, ddoMsg.getReturnMsgCode(), upUrl);
 		//判断是否上行成功
 		boolean needRepeat = false;
-		if (!"ok".equals(response.getMsg())) {
+		if (!"ok".equalsIgnoreCase(response.getMsg())) {
 			needRepeat = true;
 		}
 		Date responseTime = new Date();

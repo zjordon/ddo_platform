@@ -55,7 +55,7 @@ public class DeliverReportHandler {
 		if (resp.getStatusCode() == 200) {
 			// 下发成功
 			// 判断是否要重新下发
-			if ("ok".equals(resp.getMsg())) {
+			if ("ok".equalsIgnoreCase(resp.getMsg())) {
 				// 不需要重新下发
 				// 标记为下发成功
 			} else {

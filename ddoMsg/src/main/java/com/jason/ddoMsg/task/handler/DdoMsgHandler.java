@@ -245,7 +245,7 @@ public class DdoMsgHandler {
 	 * @return
 	 */
 	private boolean isNeedUpChannel(Channel channel, int sourceType) {
-		return (sourceType == 2 && channel.getUpUrl() != null);
+		return (sourceType == 2 && StringUtils.isNotBlank(channel.getUpUrl()));
 	}
 
 	private ConsumeRecord getConsumeRecord(long msisdn) {
