@@ -74,6 +74,8 @@ public class DdoMsgHandler {
 					ddoMsg.setSendTime(new Date());
 					DdoMsgResult result = DdoMsgInterface.getInstance()
 							.submitDdoMsg(ddoMsg);
+					ddoMsg.setReturnMsgCode(result.getReturnMsgCode());
+					ddoMsg.setSendResult(result.getSendResult());
 					// 判断是否提交成功
 					if (result.getSendResult() == 1) {
 						// 提交成功
@@ -130,7 +132,7 @@ public class DdoMsgHandler {
 						needRepeatSend = true;
 					}
 					Date responseDate = new Date();
-					if (!StringUtils.isNotBlank(result.getTransationId())) {
+					if (StringUtils.isBlank(result.getTransationId())) {
 
 						try {
 							CacheManager
@@ -160,15 +162,15 @@ public class DdoMsgHandler {
 							logger.error("excpetion when handle ddo msg", e);
 						}
 
-						// 判断是否需要上行到渠道
-						if (this.isNeedUpChannel(channel, sourceType)) {
-							// 需要上行到渠道
-							UpChannelHandler.getInstance().handle(ddoMsg,
-									instruct, channel.getUpUrl(), null);
-						}
+						
 					}
-					ddoMsg.setReturnMsgCode(result.getReturnMsgCode());
-					ddoMsg.setSendResult(result.getSendResult());
+					// 判断是否需要上行到渠道
+					if (this.isNeedUpChannel(channel, sourceType) && !this.isNeedRepeatSend(result.getReturnMsgCode())) {
+						// 需要上行到渠道
+						UpChannelHandler.getInstance().handle(ddoMsg,
+								instruct, channel.getUpUrl(), null);
+					}
+					
 				} else {
 					// 已经超过限额
 					this.updateSendResultFail(ddoMsg.getId(), 5);

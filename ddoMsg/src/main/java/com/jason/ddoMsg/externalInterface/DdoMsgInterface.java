@@ -53,7 +53,7 @@ public class DdoMsgInterface {
 			//logger.debug("serviceId is " + serviceId);
 			ConfigCache configCache = CacheManager.getInstance().getConfigCache();
 			String url = configCache.getDdoUrl();
-			System.out.println("url is " + url);
+			//System.out.println("url is " + url);
 			URL soapURL = null;;
 			try {
 				soapURL = new URL(url);
@@ -74,7 +74,7 @@ public class DdoMsgInterface {
 					String authenticatorSource = sourceDeviceCode + passwd + timestamp;
 					String spId = configCache.getDdoSpId();
 					String asyncNotifyURL = configCache.getDdoAsyncNotifyURL();
-					System.out.println("asyncNotifyURL is " + asyncNotifyURL);
+					//System.out.println("asyncNotifyURL is " + asyncNotifyURL);
 					String mobile = Long.toString(ddoMsg.getMsisdn().longValue());
 
 					authenticatorSource = DigestUtils.sha256Hex(authenticatorSource);
@@ -101,9 +101,9 @@ public class DdoMsgInterface {
 					byte[] encryptspid = AesUtils.encrypt3(spId, passwd);
 					req.setSpId(AesUtils.parseByte2HexStr(encryptspid));
 //					NamedParameter[] extensionInfo = rsp.getExtensionInfo();
-					logger.debug("start send ddo msg");
+					//logger.debug("start send ddo msg");
 					rsp = extendedService.ddoCharge(req);
-					logger.debug("end send ddo msg");
+					//logger.debug("end send ddo msg");
 					result = new DdoMsgResult();
 					result.setTransationId(rsp.getTransationId());
 					result.setReturnMsgCode(rsp.getResult().getResultCode());

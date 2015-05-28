@@ -45,7 +45,7 @@ public class ChannelUpInterface {
 		paramMap.put("msgid", msdId);
 		paramMap.put("mobile", Long.toString(msisdn));
 		paramMap.put("content", instruct);
-		paramMap.put("status", statusCode);
+		paramMap.put("status", "00000000".equals(statusCode) ? "1" : statusCode);
 		try {
 			ret = HttpHelper.getInstnace().get(upUrl, paramMap);
 		} catch (UnsupportedEncodingException e) {

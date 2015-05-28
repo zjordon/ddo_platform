@@ -35,18 +35,18 @@ public class DdoMsgDao extends BaseDao {
 	private final static String UPDATE_MSG_BILLING_CODE = "update ddo_msg set bill_state_code = ?, bill_state_time = ? where id = ?";
 	private final static String UPDATE_MSG_SEND_RESULT = "update ddo_msg set send_result = ?, repeat_flag = ? where id = ?";
 	private final static String GET_DDO_MSG_BY_TRANSID = "select id, msisdn, billing_business_id, send_result, msisdn_province_code, msisdn_city_code, "
-			+ "channel_id, request_id, transation_id, create_date from ddo_msg "
+			+ "channel_id, request_id, transation_id, create_date, return_msg_code from ddo_msg "
 			+ "where transation_id in($ids)";
 	private final static String GET_DDO_MSG_BY_REQID = "select id, msisdn, billing_business_id, send_result, msisdn_province_code, msisdn_city_code, "
-			+ "channel_id, request_id, transation_id, create_date from ddo_msg "
+			+ "channel_id, request_id, transation_id, create_date, return_msg_code from ddo_msg "
 			+ "where request_id = ?";
 	private final static String INSERT_REPEAT_MSG_RECORD = "insert into ddo_repeat_msg_record(id, create_date, return_msg_code, ddo_msg_id, response_time)"
 			+ " values(?, ?, ?, ?, ?)";
 	private final static String GET_DDO_MSG = "select id, msisdn, billing_business_id, send_result, msisdn_province_code, msisdn_city_code, "
-			+ "channel_id, request_id, transation_id, create_date from ddo_msg "
+			+ "channel_id, request_id, transation_id, create_date, return_msg_code from ddo_msg "
 			+ "where id = ?";
 	private final static String GET_NEED_REPEAT_MSG = "select id, msisdn, billing_business_id, send_result, msisdn_province_code, msisdn_city_code, "
-			+ "channel_id, request_id, transation_id, create_date from ddo_msg"
+			+ "channel_id, request_id, transation_id, create_date, return_msg_code from ddo_msg"
 			+ " where repeat_flag = 1 limit 0, ?";
 
 	/**
@@ -398,5 +398,6 @@ public class DdoMsgDao extends BaseDao {
 		ddoMsg.setRequestId(rs.getString(8));
 		ddoMsg.setTransationId(rs.getString(9));
 		ddoMsg.setCreateDate(rs.getDate(10));
+		ddoMsg.setReturnMsgCode(rs.getString(11));
 	}
 }

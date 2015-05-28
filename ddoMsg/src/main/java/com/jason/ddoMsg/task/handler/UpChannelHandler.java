@@ -43,6 +43,7 @@ public class UpChannelHandler {
 		boolean needRepeat = false;
 		if (!"ok".equalsIgnoreCase(response.getMsg())) {
 			needRepeat = true;
+			logger.info(response.getMsg());
 		}
 		Date responseTime = new Date();
 		if (channelRecordId == null) {

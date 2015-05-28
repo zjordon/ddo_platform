@@ -201,7 +201,7 @@ public class ChannelRequestHandler {
 		if (sourceType == 1) {
 			// 来自渠道，根据渠道id和产品id获取渠道计费业务
 			// 先根据产品id获取对应的计费业务
-			BillBusiness billBusiness;
+			BillBusiness billBusiness = null;
 			try {
 				billBusiness = CacheManager.getInstance()
 						.getBillBusinessCache().getByChannelBillCode(productId);
@@ -215,11 +215,19 @@ public class ChannelRequestHandler {
 			}
 
 		} else {
+			//处理指令带有#号的情况
+			String realInstruct = null;
+			int idx = instruct.indexOf('#');
+			if (idx > 0) {
+				realInstruct = instruct.substring(0, idx);
+			} else {
+				realInstruct = instruct;
+			}
 			// 来自特服号，直接根据指令获取对应的渠道计费业务
 			try {
 				chanelBusiness = CacheManager.getInstance()
 						.getChannelBusinessCache()
-						.getChannelBusinessByInstruct(instruct);
+						.getChannelBusinessByInstruct(realInstruct);
 			} catch (ElementNotFoundException e) {
 				logger.error("exception when getChannelBusiness", e);
 			}

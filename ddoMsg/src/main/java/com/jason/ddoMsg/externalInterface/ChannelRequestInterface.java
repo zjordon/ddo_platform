@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.log4j.Logger;
@@ -107,7 +106,15 @@ public class ChannelRequestInterface {
 										}
 									} else {
 										//来自特服号，从指令中获取计费业务
-										ChannelBusiness channelBusiness = this.getChannelBusiness(instruct);
+										//处理指令带有#号的情况
+										String realInstruct = null;
+										int idx = instruct.indexOf('#');
+										if (idx > 0) {
+											realInstruct = instruct.substring(0, idx);
+										} else {
+											realInstruct = instruct;
+										}
+										ChannelBusiness channelBusiness = this.getChannelBusiness(realInstruct);
 										if (channelBusiness == null) {
 											//发送指令无效
 											retState = 7;
