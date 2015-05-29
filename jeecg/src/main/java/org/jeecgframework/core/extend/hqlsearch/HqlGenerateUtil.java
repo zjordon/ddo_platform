@@ -158,7 +158,7 @@ public class HqlGenerateUtil {
 							cq.le(aliasName, time.parse(endValue));
 						} else if (endValue.length() == 10) {
 							// 对于"yyyy-MM-dd"格式日期，因时间默认为0，故此添加" 23:23:59"并使用time解析，以方便查询日期时间数据
-							cq.le(aliasName, time.parse(endValue + " 23:23:59"));
+							cq.le(aliasName, time.parse(endValue + " 23:59:59"));
 						}
 					}
 					if (isNotEmpty(value)) {
