@@ -38,7 +38,7 @@ public class SingleTaskThread extends AbstractTaskThread {
 				} else {
 					logger.info("execute nums is " + nums);
 					try {
-						Thread.sleep(50000);
+						Thread.sleep(5000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}

@@ -28,22 +28,23 @@ public class RepeatBillReportTask extends AbstractTask {
 		int nums = 0;
 		logger.debug("start execute RepeatBillReportTask");
 		BillReportCache billReportCache = CacheManager.getInstance().getBillReportCache();
-		List<BillReport> billReportList = new ArrayList<BillReport>(200);
+		List<BillReport> billReportList = null;
 		try {
-			List<BillReport> tempList = billReportCache.getMissTransIdRecord(100);
-			if (!tempList.isEmpty()) {
-				billReportList.addAll(tempList);
-			}
-			tempList.clear();
-			tempList = billReportCache.getUnexpectedEndReport(100);
-			if (!tempList.isEmpty()) {
-				billReportList.addAll(tempList);
-			}
-			tempList.clear();
+//			List<BillReport> tempList = billReportCache.getMissTransIdRecord(100);
+//			if (!tempList.isEmpty()) {
+//				billReportList.addAll(tempList);
+//			}
+//			tempList.clear();
+//			tempList = billReportCache.getUnexpectedEndReport(100);
+//			if (!tempList.isEmpty()) {
+//				billReportList.addAll(tempList);
+//			}
+//			tempList.clear();
+			billReportList = billReportCache.getUnexpectedEndReport(100);
 		} catch (CacheException e) {
 			logger.error("excpetion when execute bill RepeatBillReportTask", e);
 		}
-		if (!billReportList.isEmpty()) {
+		if (billReportList != null && !billReportList.isEmpty()) {
 			BillReportHandler.getInstance().handle(billReportList, true);
 			nums = billReportList.size();
 		}

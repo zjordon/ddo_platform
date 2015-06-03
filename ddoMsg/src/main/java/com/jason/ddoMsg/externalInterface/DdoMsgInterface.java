@@ -90,7 +90,7 @@ public class DdoMsgInterface {
 							+ String.format("%1$0" + (16 - passwd.length()) + "d", 0);// 密钥
 
 					DdoChargeReq req = new DdoChargeReq();
-					req.setChannelId("");
+					req.setChannelId("700000922");
 					if (StringUtils.isNotBlank(asyncNotifyURL)) {
 						req.setAsyncNotifyURL(asyncNotifyURL);
 					}
@@ -113,7 +113,7 @@ public class DdoMsgInterface {
 					e.printStackTrace();
 				}
 				if (result == null) {
-					//提交时有异常，把状态设置为提交ddo平台失几
+					//提交时有异常，把状态设置为提交ddo平台失败
 					result = new DdoMsgResult();
 					result.setSendResult(3);
 				}

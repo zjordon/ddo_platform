@@ -25,7 +25,7 @@ public class NormalRequestTask extends AbstractTask {
 	protected int executeTask() {
 		int nums = 0;
 		logger.debug("start execute NormalRequestTask");
-		List<ChannelRequest> requestList = ChannelRequestQueue.getInstance().getRequests(100);
+		List<ChannelRequest> requestList = ChannelRequestQueue.getInstance().getRequests(500);
 		if (!requestList.isEmpty()) {
 			try {
 				CacheManager.getInstance().getChannelRequestCache().saveChannelRequest(requestList);

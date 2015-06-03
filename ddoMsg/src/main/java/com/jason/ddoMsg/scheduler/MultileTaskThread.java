@@ -63,7 +63,7 @@ public class MultileTaskThread extends AbstractTaskThread {
 				} else {
 					logger.info("all execute nums is " + allExecuteNums);
 					try {
-						Thread.sleep(50000);
+						Thread.sleep(5000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
