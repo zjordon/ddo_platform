@@ -3,6 +3,7 @@
  */
 package com.jason.ddoTimingTask.scheduler;
 
+import com.jason.ddoTimingTask.task.ConsumeTurnoverTask;
 import com.jason.ddoTimingTask.task.SendMessageTask;
 import com.jason.ddoTimingTask.task.StatisticsTask;
 
@@ -23,16 +24,19 @@ private final static TaskScheduler instance = new TaskScheduler();
 	
 	private SendMessageTask sendMessageTask;
 	private StatisticsTask statisticsTask;
+	private ConsumeTurnoverTask consumeTurnoverTask;
 	
 	private MultileTaskThread multileTaskThrea;
 	public void init() {
 		this.sendMessageTask = new SendMessageTask();
 		this.statisticsTask = new StatisticsTask();
+		this.consumeTurnoverTask = new ConsumeTurnoverTask();
 		
 		this.multileTaskThrea = new MultileTaskThread();
 		
 		this.multileTaskThrea.addTask(sendMessageTask);
 		this.multileTaskThrea.addTask(statisticsTask);
+		this.multileTaskThrea.addTask(consumeTurnoverTask);
 		this.startAllTask();
 		
 	}
