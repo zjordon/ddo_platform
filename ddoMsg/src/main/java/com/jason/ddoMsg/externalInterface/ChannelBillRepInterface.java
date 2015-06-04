@@ -52,11 +52,16 @@ public class ChannelBillRepInterface {
 			logger.error("exception when deliverReport", e);
 		} catch (IOException e) {
 			//TODO 异常处理
+			logger.info("reportUrl is " + reportUrl);
 			logger.error("exception when deliverReport", e);
+			ret = new DeliverResponse();
+			ret.setStatusCode(501);
+			ret.setMsg(e.getMessage());
 		}
 		if (ret == null) {
 			ret = new DeliverResponse();
 			ret.setStatusCode(5500);
+			ret.setMsg("timeout");
 		}
 		return ret;
 	}

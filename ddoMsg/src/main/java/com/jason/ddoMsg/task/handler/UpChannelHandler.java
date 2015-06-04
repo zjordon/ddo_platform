@@ -42,7 +42,11 @@ public class UpChannelHandler {
 		//判断是否上行成功
 		boolean needRepeat = false;
 		if (!"ok".equalsIgnoreCase(response.getMsg())) {
-			needRepeat = true;
+			if (response.getStatusCode() != 501) {
+				//如果是超时则不重发
+				needRepeat = true;
+			}
+			
 			logger.info(response.getMsg());
 		}
 		Date responseTime = new Date();

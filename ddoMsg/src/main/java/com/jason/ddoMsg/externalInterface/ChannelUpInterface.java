@@ -58,7 +58,11 @@ public class ChannelUpInterface {
 			logger.error("exception when deliverMsg", e);
 		} catch (IOException e) {
 			//TODO 异常处理
+			logger.info("upUrl is " + upUrl);
 			logger.error("exception when deliverMsg", e);
+			ret = new DeliverResponse();
+			ret.setStatusCode(501);
+			ret.setMsg(e.getMessage());
 		}
 		if (ret == null) {
 			ret = new DeliverResponse();

@@ -36,7 +36,7 @@ public class ChannelRequestQueue {
 	 * @param request 请求
 	 */
 	public void addRequest(ChannelRequest request) {
-		logger.info("add request to queue");
+		//logger.info("add request to queue");
 		this.queue.add(request);
 	}
 	/**

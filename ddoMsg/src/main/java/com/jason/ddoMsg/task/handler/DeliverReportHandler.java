@@ -59,21 +59,28 @@ public class DeliverReportHandler {
 				// 不需要重新下发
 				// 标记为下发成功
 			} else {
-				// 需要重新下发
-				// 标记为需要重新下发
-				needRepeat = true;
+					// 需要重新下发
+					// 标记为需要重新下发
+					needRepeat = true;
 			}
+
 		} else {
+			if (resp.getStatusCode() == 501) {
+				// 超时不需要重发
+				needRepeat = false;
+			} else {
 			// 下发失败
 			// 标记为需要重新下发
 			needRepeat = true;
+			}
 		}
 		Date responseDate = new Date();
 		try {
 			CacheManager
 					.getInstance()
 					.getBillReportCache()
-					.updateResultCode(recordId, 2, 1, resp.getMsg(), needRepeat, sendDate, responseDate);
+					.updateResultCode(recordId, 2, 1, resp.getMsg(),
+							needRepeat, sendDate, responseDate);
 		} catch (CacheException e) {
 			logger.error("excpetion when handle deliver report", e);
 		}

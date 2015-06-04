@@ -200,7 +200,10 @@ public class ChannelRequestInterface {
 			}
 			
 			channelRequest.setReturnState(new Integer(retState));
-			this.addRequestToQueue(channelRequest);
+			if (retState != 12) {
+				//参数不合法的请求不存入数据库
+				this.addRequestToQueue(channelRequest);
+			}
 		}
 		
 		return ret;
