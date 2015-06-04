@@ -5,6 +5,8 @@ package com.jason.ddoMsg.externalInterface;
 
 import java.util.Date;
 
+import org.apache.log4j.Logger;
+
 import com.jason.ddoMsg.bean.msg.BillReport;
 import com.jason.ddoMsg.cache.CacheManager;
 import com.jason.ddoMsg.queue.BillReportQueue;
@@ -16,6 +18,7 @@ import com.jason.ddoMsg.util.UUIDGenerator;
  *
  */
 public class BillReportInterface {
+	private static final Logger logger = Logger.getLogger(BillReportInterface.class);
 	private final static BillReportInterface instance = new BillReportInterface();
 	
 	private BillReportInterface(){}
@@ -31,6 +34,7 @@ public class BillReportInterface {
 	 * @return
 	 */
 	public String receiveBillReport(String transationId, String chargeResultCode) {
+		logger.info("transationId is " + transationId + ",resultCode is " + chargeResultCode);
 		String ret = "";
 		if (this.isStopReceiveRequest()) {
 			ret = "00539999";
