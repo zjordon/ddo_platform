@@ -76,6 +76,7 @@ public class DdoMsgInterface {
 					String asyncNotifyURL = configCache.getDdoAsyncNotifyURL();
 					//System.out.println("asyncNotifyURL is " + asyncNotifyURL);
 					String mobile = Long.toString(ddoMsg.getMsisdn().longValue());
+					String channelId = configCache.getDdoChannelId();
 
 					authenticatorSource = DigestUtils.sha256Hex(authenticatorSource);
 
@@ -90,7 +91,7 @@ public class DdoMsgInterface {
 							+ String.format("%1$0" + (16 - passwd.length()) + "d", 0);// 密钥
 
 					DdoChargeReq req = new DdoChargeReq();
-					req.setChannelId("700000922");
+					req.setChannelId(channelId);
 					if (StringUtils.isNotBlank(asyncNotifyURL)) {
 						req.setAsyncNotifyURL(asyncNotifyURL);
 					}

@@ -38,6 +38,8 @@ public class ConfigCache {
 	private int monthDeductionAmountLimit;
 	
 	private int monthDeductionNumLimit;
+	
+	private String ddoChannelId;
 	public void loadConfigParam() {
 		logger.info("start load config");
 		Properties props = PropertiesHelper.getInstance().loadProps("config/sys-config.properties", "sys-config.properties");
@@ -61,6 +63,7 @@ public class ConfigCache {
 			if (props.get("monthDeductionNumLimit") != null) {
 				this.monthDeductionNumLimit = Integer.parseInt(props.getProperty("monthDeductionNumLimit"));
 			}
+			this.ddoChannelId = props.getProperty("ddoChannelId");
 		} else {
 			logger.error("can not load config!!!");
 		}
@@ -146,6 +149,15 @@ public class ConfigCache {
 	public void setMonthDeductionNumLimit(int monthDeductionNumLimit) throws CacheException {
 		this.monthDeductionNumLimit = monthDeductionNumLimit;
 		this.syncFile("monthDeductionNumLimit", Integer.toString(monthDeductionNumLimit));
+	}
+
+	public String getDdoChannelId() {
+		return ddoChannelId;
+	}
+
+	public void setDdoChannelId(String ddoChannelId) throws CacheException {
+		this.ddoChannelId = ddoChannelId;
+		this.syncFile("ddoChannelId", this.ddoChannelId);
 	}
 
 	private void syncFile(String key, String value) throws CacheException {
