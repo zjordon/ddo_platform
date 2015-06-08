@@ -1,0 +1,55 @@
+--执行以下脚本清除数据
+truncate table ddo_channel_statistics_month;
+truncate table ddo_exist_cmsisdn_month;
+truncate table ddo_full_statistics_month;
+truncate table ddo_exist_fmsisdn_month;
+truncate table ddo_province_statistics_month;
+truncate table ddo_exist_pmsisdn_month;
+truncate table ddo_channel_statistics_day;
+truncate table ddo_exist_channel_msisdn;
+truncate table ddo_send_record;
+truncate table ddo_send_result_record;
+truncate table ddo_bill_result_record;
+
+delete from ddo_repeat_msg_record
+delete from ddo_repeat_up_record
+delete from ddo_up_channel_record
+delete from ddo_ddo_msg
+delete from ddo_request_msisdn;
+delete from ddo_channel_request;
+delete from ddo_repeat_report_record;
+delete from ddo_bill_report;
+delete from ddo_event;
+delete from ddo_black_list;
+delete from ddo_limit_use_log;
+delete from ddo_channel_month_limit;
+delete from ddo_channel_day_limit;
+delete from ddo_channel_user;
+delete from ddo_provice_close_state;
+delete from ddo_channel_business;
+delete from ddo_sm_msisdn_list;
+delete from ddo_sm_request;
+delete from ddo_sm_task;
+delete from ddo_bill_business
+delete from ddo_channel;
+delete from ddo_channel_request;
+
+truncate table ddo_exist_fmsisdn_month;
+truncate table ddo_full_statistics_month;
+truncate table ddo_exist_cmsisdn_month;
+truncate table ddo_exist_pmsisdn_month;
+truncate table ddo_channel_statistics_month;
+truncate table ddo_province_statistics_month;
+
+truncate table ddo_complaint_record;
+truncate table ddo_provice_complaint_month;
+truncate table ddo_full_complaint_month;
+truncate table ddo_channel_complaint_month;
+
+--从74数据库中导出以下表的信息
+ddo_channel;
+ddo_channel_user;
+ddo_bill_business;
+ddo_channel_business;
+ddo_provice_close_state;
+ddo_black_list;

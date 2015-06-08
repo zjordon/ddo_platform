@@ -1,0 +1,8 @@
+--清空所有表的数据
+delete from sm_repeat_request_record;
+delete from sm_bill_request;
+truncate table sm_deliver;
+truncate table sm_event;
+--从74导入以下表的数据
+sm_channel_user;
+sm_channel_instruct;
