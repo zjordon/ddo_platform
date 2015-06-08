@@ -113,7 +113,9 @@ public class DdoMsgInterface {
 				} catch (ServiceException e) {
 					e.printStackTrace();
 				} catch (RemoteException e) {
-					e.printStackTrace();
+					logger.error(e.getMessage());
+					result = new DdoMsgResult();
+					result.setSendResult(7);
 				}
 				if (result == null) {
 					//提交时有异常，把状态设置为提交ddo平台失败
