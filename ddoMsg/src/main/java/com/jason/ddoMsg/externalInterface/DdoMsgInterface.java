@@ -87,6 +87,8 @@ public class DdoMsgInterface {
 					extendedService.setHeader("", "authenticatorSource",
 							authenticatorSource);
 					extendedService.setHeader("", "version", "1.0");
+					//设置超时时间为1秒
+					extendedService.setTimeout(1000);
 					passwd = passwd
 							+ String.format("%1$0" + (16 - passwd.length()) + "d", 0);// 密钥
 
