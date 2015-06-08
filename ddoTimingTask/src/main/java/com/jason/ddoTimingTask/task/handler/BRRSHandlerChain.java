@@ -49,8 +49,8 @@ public class BRRSHandlerChain {
 	public void doHandler(BillResultRecord resultRecord) throws HandlerException {
 		SendRecord sendRecord = this.getSendRecord(resultRecord.getDdoMsgId());
 		if (sendRecord != null && sendRecord.getState() == 1) {
-			SendResultRecord sendResultRecord = this.getSendResultRecord(resultRecord.getDdoMsgId());
-			if (sendResultRecord != null && sendResultRecord.getState() == 1) {
+//			SendResultRecord sendResultRecord = this.getSendResultRecord(resultRecord.getDdoMsgId());
+//			if (sendResultRecord != null && sendResultRecord.getState() == 1) {
 				boolean success = true;
 				for (AbstractBRRStatisHandler handler : this.handlerList) {
 					if (!handler.handle(sendRecord, resultRecord)) {
@@ -70,7 +70,7 @@ public class BRRSHandlerChain {
 						}
 					}
 				}
-			}
+//			}
 		}
 	}
 	
