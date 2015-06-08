@@ -24,6 +24,7 @@ import com.jason.ddoWeb.util.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
 import org.jeecgframework.core.common.service.impl.CommonServiceImpl;
+import org.jeecgframework.core.util.DynamicDBUtil;
 
 @Service("channelService")
 @Transactional
@@ -31,7 +32,8 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 
 	private static final Logger logger = Logger.getLogger(ChannelServiceImpl.class);
 	
-	private final static String GET_CHANNEL_INFO = "select state, close_state, up_url, down_url, month_limit, day_limit from ddo_channel where id = ?";
+	private final static String GET_CHANNEL_INFO = "select state, close_state, up_url, down_url, month_limit, day_limit, post_url from ddo_channel where id = ?";
+	private final static String INSERT_EVENT = "insert into sm_event(id, event_id, create_date, param) values(?, ?, ?, ?)";
 	
 	@Autowired
 	private ChannelBusinessServiceI channelBusinessService;
@@ -55,6 +57,7 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 		String param = this.buildAllParam((ChannelEntity)entity);
 		event.setParam(param);
 		super.save(event);
+		this.createEventToSm(event);
 		return id;
 	}
 
@@ -120,6 +123,18 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 				event.setParam(builder.toString());
 				super.save(event);
 			}
+			//检测posturl是否改变
+			String oldPostUrl = (String) map.get("post_url");
+			String newPostUrl = channel.getPostUrl();
+			if (!StringUtils.isEquals(oldPostUrl, newPostUrl)) {
+				//创建更新postUrl地址事件(只针对短信平台)
+				EventEntity event = new EventEntity();
+				event.setEventId("UpdatChannelPostUrlEvent");
+				StringBuilder builder = new StringBuilder();
+				builder.append("id:").append(channel.getId()).append(",postUrl:").append(channel.getPostUrl());
+				event.setParam(builder.toString());
+				this.createEventToSm(event);
+			}
 		}
 		//此处必须用merge来更新实体，不能用super.saveOrUpdate,否则会报org.hibernate.NonUniqueObjectException异常
 //		super.getSession().merge(channel);
@@ -132,7 +147,7 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 		builder.append("id:").append(channel.getId()).append(",upUrl:").append(channel.getUpUrl()).append(",downUrl:").append(channel.getDownUrl());
 		builder.append(",state:").append(channel.getState()).append(",closeState:").append(channel.getCloseState());
 		builder.append(",name:").append(channel.getName()).append(",no:").append(channel.getNo()).append(",dayLimit:").append(channel.getDayLimit());
-		builder.append(",monthLimit:").append(channel.getMonthLimit());
+		builder.append(",monthLimit:").append(channel.getMonthLimit()).append(",postUrl:").append(channel.getPostUrl());
 		return builder.toString();
 	}
 
@@ -160,6 +175,10 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 //		this.channelDayLimitService.deleteByChannelId(channelId);
 //		this.channelMonthLimitService.deleteByChannelId(channelId);
 		super.delete(entity);
+	}
+	
+	private void createEventToSm(EventEntity event) {
+		DynamicDBUtil.update("SM_DB", INSERT_EVENT, event.getId(), event.getEventId(), event.getCreateDate(), event.getParam());
 	}
 	
 }

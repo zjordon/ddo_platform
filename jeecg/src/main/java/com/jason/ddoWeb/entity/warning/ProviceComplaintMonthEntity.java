@@ -1,5 +1,6 @@
 package com.jason.ddoWeb.entity.warning;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,23 +13,23 @@ import org.hibernate.annotations.GenericGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 渠道投诉按月
+ * @Description: 分省预警
  * @author zhangdaihao
- * @date 2015-06-05 10:18:22
+ * @date 2015-06-05 09:30:28
  * @version V1.0   
  *
  */
 @Entity
-@Table(name = "ddo_channel_complaint_month", schema = "")
+@Table(name = "ddo_provice_complaint_month", schema = "")
 @DynamicUpdate(true)
 @DynamicInsert(true)
 @SuppressWarnings("serial")
-public class ChannelComplaintMonthEntity implements java.io.Serializable {
-	/**id*/
+public class ProviceComplaintMonthEntity implements java.io.Serializable {
+	/**唯一标识*/
 	private java.lang.String id;
-	/**channelId*/
-	private java.lang.String channelId;
-	/**sumMonth*/
+	/**省份编码*/
+	private java.lang.String proviceCode;
+	/**统计月份*/
 	private java.lang.Integer sumMonth;
 	/**投诉数*/
 	private java.lang.Integer num;
@@ -39,7 +40,7 @@ public class ChannelComplaintMonthEntity implements java.io.Serializable {
 	
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  id
+	 *@return: java.lang.String  唯一标识
 	 */
 	
 	@Id
@@ -52,30 +53,30 @@ public class ChannelComplaintMonthEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  id
+	 *@param: java.lang.String  唯一标识
 	 */
 	public void setId(java.lang.String id){
 		this.id = id;
 	}
 	/**
 	 *方法: 取得java.lang.String
-	 *@return: java.lang.String  channelId
+	 *@return: java.lang.String  省份编码
 	 */
-	@Column(name ="CHANNEL_ID",nullable=false,length=32)
-	public java.lang.String getChannelId(){
-		return this.channelId;
+	@Column(name ="PROVICE_CODE",nullable=false,length=32)
+	public java.lang.String getProviceCode(){
+		return this.proviceCode;
 	}
 
 	/**
 	 *方法: 设置java.lang.String
-	 *@param: java.lang.String  channelId
+	 *@param: java.lang.String  省份编码
 	 */
-	public void setChannelId(java.lang.String channelId){
-		this.channelId = channelId;
+	public void setProviceCode(java.lang.String proviceCode){
+		this.proviceCode = proviceCode;
 	}
 	/**
 	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  sumMonth
+	 *@return: java.lang.Integer  统计月份
 	 */
 	@Column(name ="SUM_MONTH",nullable=true,precision=10,scale=0)
 	public java.lang.Integer getSumMonth(){
@@ -84,14 +85,14 @@ public class ChannelComplaintMonthEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  sumMonth
+	 *@param: java.lang.Integer  统计月份
 	 */
 	public void setSumMonth(java.lang.Integer sumMonth){
 		this.sumMonth = sumMonth;
 	}
 	/**
 	 *方法: 取得java.lang.Integer
-	 *@return: java.lang.Integer  num
+	 *@return: java.lang.Integer  投诉数
 	 */
 	@Column(name ="NUM",nullable=true,precision=10,scale=0)
 	public java.lang.Integer getNum(){
@@ -100,7 +101,7 @@ public class ChannelComplaintMonthEntity implements java.io.Serializable {
 
 	/**
 	 *方法: 设置java.lang.Integer
-	 *@param: java.lang.Integer  num
+	 *@param: java.lang.Integer  投诉数
 	 */
 	public void setNum(java.lang.Integer num){
 		this.num = num;
@@ -125,7 +126,7 @@ public class ChannelComplaintMonthEntity implements java.io.Serializable {
 	 *方法: 取得java.lang.Double
 	 *@return: java.lang.Double  万投比阀值
 	 */
-	@Column(name ="RATIO_THRESHOLD",nullable=true,precision=11,scale=2)
+	@Column(name ="RATIO_THRESHOLD",nullable=true,precision=18,scale=0)
 	public java.lang.Double getRatioThreshold(){
 		return this.ratioThreshold;
 	}

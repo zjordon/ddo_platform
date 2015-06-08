@@ -14,6 +14,7 @@
    <t:dgCol title="关停状态" field="closeState" dictionary="closeState"></t:dgCol>
    <t:dgCol title="上行地址" field="upUrl" ></t:dgCol>
    <t:dgCol title="下行地址" field="downUrl" ></t:dgCol>
+   <t:dgCol title="对应ddo收发引擎接收地址" field="postUrl" ></t:dgCol>
    <t:dgCol title="操作" field="opt" width="100"></t:dgCol>
    <t:dgDelOpt title="删除" url="channelController.do?del&id={id}" />
    <t:dgToolBar title="录入" icon="icon-add" url="channelController.do?addorupdate" funname="add"></t:dgToolBar>

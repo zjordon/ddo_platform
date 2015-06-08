@@ -148,4 +148,22 @@ public class ChannelComplaintMonthController extends BaseController {
 		req.setAttribute("channelComplaintMonthPage", channelComplaintMonth);
 		return new ModelAndView("com/jason/ddoWeb/warning/channelComplaintMonth");
 	}
+	
+	@RequestMapping(params = "editNumThreshold")
+	public ModelAndView editNumThreshold(ChannelComplaintMonthEntity channelComplaintMonth, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(channelComplaintMonth.getId())) {
+			channelComplaintMonth = channelComplaintMonthService.getEntity(ChannelComplaintMonthEntity.class, channelComplaintMonth.getId());
+		}
+		req.setAttribute("channelComplaintMonthPage", channelComplaintMonth);
+		return new ModelAndView("com/jason/ddoWeb/warning/channelComplaintMonthENT");
+	}
+	
+	@RequestMapping(params = "editRatioThreshold")
+	public ModelAndView editRatioThreshold(ChannelComplaintMonthEntity channelComplaintMonth, HttpServletRequest req) {
+		if (StringUtil.isNotEmpty(channelComplaintMonth.getId())) {
+			channelComplaintMonth = channelComplaintMonthService.getEntity(ChannelComplaintMonthEntity.class, channelComplaintMonth.getId());
+		}
+		req.setAttribute("channelComplaintMonthPage", channelComplaintMonth);
+		return new ModelAndView("com/jason/ddoWeb/warning/channelComplaintMonthERT");
+	}
 }

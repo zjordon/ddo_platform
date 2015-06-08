@@ -118,6 +118,18 @@
 						<span class="Validform_checktip"></span>
 					</td>
 				</tr>
+				<tr>
+					<td align="right">
+						<label class="Validform_label">
+							对应ddo收发引擎接收地址:
+						</label>
+					</td>
+					<td class="value">
+						<input class="inputxt" id="postUrl" name="postUrl" ignore="ignore"
+							   value="${channelPage.postUrl}" datatype="url">
+						<span class="Validform_checktip"></span>
+					</td>
+				</tr>
 			</table>
 		</t:formvalid>
  </body>

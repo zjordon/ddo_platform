@@ -1,25 +1,21 @@
 package com.jason.ddoWeb.entity.warning;
 
-import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
-import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
  * @Description: 全量投诉按月
  * @author zhangdaihao
- * @date 2015-05-08 16:30:31
+ * @date 2015-06-05 09:57:40
  * @version V1.0   
  *
  */
@@ -35,6 +31,10 @@ public class FullComplaintMonthEntity implements java.io.Serializable {
 	private java.lang.Integer sumMonth;
 	/**num*/
 	private java.lang.Integer num;
+	/**投诉数阀值*/
+	private java.lang.Integer numThreshold;
+	/**万投比阀值*/
+	private java.lang.Double ratioThreshold;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -87,5 +87,37 @@ public class FullComplaintMonthEntity implements java.io.Serializable {
 	 */
 	public void setNum(java.lang.Integer num){
 		this.num = num;
+	}
+	/**
+	 *方法: 取得java.lang.Integer
+	 *@return: java.lang.Integer  投诉数阀值
+	 */
+	@Column(name ="NUM_THRESHOLD",nullable=true,precision=10,scale=0)
+	public java.lang.Integer getNumThreshold(){
+		return this.numThreshold;
+	}
+
+	/**
+	 *方法: 设置java.lang.Integer
+	 *@param: java.lang.Integer  投诉数阀值
+	 */
+	public void setNumThreshold(java.lang.Integer numThreshold){
+		this.numThreshold = numThreshold;
+	}
+	/**
+	 *方法: 取得java.lang.Double
+	 *@return: java.lang.Double  万投比阀值
+	 */
+	@Column(name ="RATIO_THRESHOLD",nullable=true,precision=11,scale=2)
+	public java.lang.Double getRatioThreshold(){
+		return this.ratioThreshold;
+	}
+
+	/**
+	 *方法: 设置java.lang.Double
+	 *@param: java.lang.Double  万投比阀值
+	 */
+	public void setRatioThreshold(java.lang.Double ratioThreshold){
+		this.ratioThreshold = ratioThreshold;
 	}
 }

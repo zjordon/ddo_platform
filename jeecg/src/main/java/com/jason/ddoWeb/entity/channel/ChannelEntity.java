@@ -53,6 +53,8 @@ public class ChannelEntity implements java.io.Serializable {
 	private Double dayLimitDouble;
 	private Double monthLimitDouble;
 	
+	private String postUrl;
+	
 	private List<ChannelDayLimitEntity> chanelDayLimits;
 	private List<ChannelMonthLimitEntity> chanelMonthLimits;
 //	private List<SmTaskEntity> smTasks;
@@ -211,6 +213,15 @@ public class ChannelEntity implements java.io.Serializable {
 	public void setDownUrl(java.lang.String downUrl){
 		this.downUrl = downUrl;
 	}
+	@Column(name ="POST_URL",nullable=true,length=128)
+	public String getPostUrl() {
+		return postUrl;
+	}
+
+	public void setPostUrl(String postUrl) {
+		this.postUrl = postUrl;
+	}
+	
     @Transient
 	public Double getDayLimitDouble() {
 		return dayLimitDouble;

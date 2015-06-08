@@ -34,7 +34,7 @@ public class SendRecordEntity implements java.io.Serializable {
 	/**ddo消息id*/
 	private java.lang.String ddoMsgId;
 	/**手机号码*/
-	private java.lang.Integer msisdn;
+	private java.lang.Long msisdn;
 	/**渠道id*/
 	private java.lang.String channelId;
 	/**计费业务id*/
@@ -83,7 +83,7 @@ public class SendRecordEntity implements java.io.Serializable {
 	 *@return: java.lang.Integer  手机号码
 	 */
 	@Column(name ="MSISDN",nullable=false,precision=19,scale=0)
-	public java.lang.Integer getMsisdn(){
+	public java.lang.Long getMsisdn(){
 		return this.msisdn;
 	}
 
@@ -91,7 +91,7 @@ public class SendRecordEntity implements java.io.Serializable {
 	 *方法: 设置java.lang.Integer
 	 *@param: java.lang.Integer  手机号码
 	 */
-	public void setMsisdn(java.lang.Integer msisdn){
+	public void setMsisdn(java.lang.Long msisdn){
 		this.msisdn = msisdn;
 	}
 	/**

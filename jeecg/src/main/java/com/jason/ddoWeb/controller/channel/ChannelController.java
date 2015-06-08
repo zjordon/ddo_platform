@@ -144,6 +144,32 @@ public class ChannelController extends BaseController {
 		j.setMsg(message);
 		return j;
 	}
+	
+	/**
+	 * 添加渠道组管理
+	 * 
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping(params = "updateState")
+	@ResponseBody
+	public AjaxJson updateState(ChannelEntity channel, HttpServletRequest request) {
+		AjaxJson j = new AjaxJson();
+		if (StringUtil.isNotEmpty(channel.getId())) {
+			message = "状态更新成功";
+			ChannelEntity t = channelService.get(ChannelEntity.class, channel.getId());
+			try {
+				MyBeanUtils.copyBeanNotNull2Bean(channel, t);
+				channelService.updateEntitie(t);
+				systemService.addLog(message, Globals.Log_Type_UPDATE, Globals.Log_Leavel_INFO);
+			} catch (Exception e) {
+				e.printStackTrace();
+				message = "状态更新失败";
+			}
+		}
+		j.setMsg(message);
+		return j;
+	}
 
 	/**
 	 * 渠道组管理列表页面跳转

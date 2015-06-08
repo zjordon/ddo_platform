@@ -1,7 +1,5 @@
 package com.jason.ddoWeb.entity.warning;
 
-import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 
 /**   
  * @Title: Entity
- * @Description: 全量预警按月
+ * @Description: 渠道预警按月
  * @author zhangdaihao
  * @date 2015-05-08 16:47:09
  * @version V1.0   
@@ -43,8 +41,16 @@ public class CComplaintMonthViewEntity implements java.io.Serializable {
 	private java.lang.Integer num;
 	/**channelComplaintId*/
 	private java.lang.String channelComplaintId;
-	/**scale*/
-	private BigDecimal scale;
+	/**万投比*/
+	private Double scale;
+	/**投诉数管控阀值*/
+	private Integer numThreshold;
+	/**万投比管控阀值*/
+	private Double ratioThreshold;
+	/**渠道名称*/
+	private String channelName;
+	/**状态*/
+	private Integer state;
 	
 	/**
 	 *方法: 取得java.lang.String
@@ -167,7 +173,7 @@ public class CComplaintMonthViewEntity implements java.io.Serializable {
 	 *@return: BigDecimal  scale
 	 */
 	@Column(name ="SCALE",nullable=true,precision=18,scale=2)
-	public BigDecimal getScale(){
+	public Double getScale(){
 		return this.scale;
 	}
 
@@ -175,7 +181,43 @@ public class CComplaintMonthViewEntity implements java.io.Serializable {
 	 *方法: 设置BigDecimal
 	 *@param: BigDecimal  scale
 	 */
-	public void setScale(BigDecimal scale){
+	public void setScale(Double scale){
 		this.scale = scale;
+	}
+
+	@Column(name ="NUM_THRESHOLD",nullable=true,precision=19,scale=0)
+	public Integer getNumThreshold() {
+		return numThreshold;
+	}
+
+	public void setNumThreshold(Integer numThreshold) {
+		this.numThreshold = numThreshold;
+	}
+
+	@Column(name ="ratio_threshold",nullable=true,precision=18,scale=2)
+	public Double getRatioThreshold() {
+		return ratioThreshold;
+	}
+
+	public void setRatioThreshold(Double ratioThreshold) {
+		this.ratioThreshold = ratioThreshold;
+	}
+
+	@Column(name ="channel_name",nullable=true,length=32)
+	public String getChannelName() {
+		return channelName;
+	}
+
+	public void setChannelName(String channelName) {
+		this.channelName = channelName;
+	}
+
+	@Column(name ="state",nullable=true,precision=19,scale=0)
+	public Integer getState() {
+		return state;
+	}
+
+	public void setState(Integer state) {
+		this.state = state;
 	}
 }
