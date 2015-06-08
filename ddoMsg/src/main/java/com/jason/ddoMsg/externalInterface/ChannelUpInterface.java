@@ -47,7 +47,8 @@ public class ChannelUpInterface {
 		paramMap.put("content", instruct);
 		paramMap.put("status", "00000000".equals(statusCode) ? "1" : statusCode);
 		try {
-			ret = HttpHelper.getInstnace().get(upUrl, paramMap);
+			//上行消息1秒超时
+			ret = HttpHelper.getInstnace().get(upUrl, paramMap, 1000);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (URISyntaxException e) {
@@ -59,7 +60,7 @@ public class ChannelUpInterface {
 		} catch (IOException e) {
 			//TODO 异常处理
 			logger.info("upUrl is " + upUrl);
-			logger.error("exception when deliverMsg", e);
+			logger.error(e.getMessage());
 			ret = new DeliverResponse();
 			ret.setStatusCode(501);
 			ret.setMsg(e.getMessage());

@@ -47,7 +47,7 @@ public class HttpHelper {
 		return instance;
 	}
 
-	public DeliverResponse post(String httpUrl, Map<String, String> paramMap)
+	public DeliverResponse post(String httpUrl, Map<String, String> paramMap, int timeout)
 			throws ClientProtocolException, IOException {
 		DeliverResponse deliverResponse = null;
 		// 打包将要传入的参数
@@ -60,7 +60,7 @@ public class HttpHelper {
 		}
 		HttpPost httppost = new HttpPost(httpUrl);
 		//设置超时时间为3秒
-		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(2000).setConnectTimeout(2000).setSocketTimeout(3000).build();
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout).setConnectTimeout(timeout).setSocketTimeout(timeout).build();
 		httppost.setConfig(requestConfig);
 		httppost.setEntity(new UrlEncodedFormEntity(params, "utf-8"));
 		CloseableHttpResponse response = null;
@@ -82,7 +82,7 @@ public class HttpHelper {
 		return deliverResponse;
 	}
 
-	public DeliverResponse get(String httpUrl, Map<String, String> paramMap)
+	public DeliverResponse get(String httpUrl, Map<String, String> paramMap, int timeout)
 			throws URISyntaxException, ClientProtocolException, IOException {
 		DeliverResponse deliverResponse = null;
 		URIBuilder urlBuilder = new URIBuilder(httpUrl);
@@ -94,7 +94,7 @@ public class HttpHelper {
 		}
 		HttpGet httpget = new HttpGet(urlBuilder.build());
 		//设置超时时间为3秒
-		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(2000).setConnectTimeout(2000).setSocketTimeout(3000).build();
+		RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout).setConnectTimeout(timeout).setSocketTimeout(timeout).build();
 		httpget.setConfig(requestConfig);
 		CloseableHttpResponse response = null;
 		try {

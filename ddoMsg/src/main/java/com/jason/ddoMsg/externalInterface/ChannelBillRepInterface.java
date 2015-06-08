@@ -43,7 +43,8 @@ public class ChannelBillRepInterface {
 		paramMap.put("mobile", Long.toString(msisdn));
 		paramMap.put("status", statusCode);
 		try {
-			ret = HttpHelper.getInstnace().get(reportUrl, paramMap);
+			//计费状态报告3秒超时
+			ret = HttpHelper.getInstnace().get(reportUrl, paramMap, 3000);
 		} catch (URISyntaxException e) {
 			//TODO 异常处理
 			logger.error("exception when deliverReport", e);
@@ -53,7 +54,7 @@ public class ChannelBillRepInterface {
 		} catch (IOException e) {
 			//TODO 异常处理
 			logger.info("reportUrl is " + reportUrl);
-			logger.error("exception when deliverReport", e);
+			logger.error(e.getMessage());
 			ret = new DeliverResponse();
 			ret.setStatusCode(501);
 			ret.setMsg(e.getMessage());

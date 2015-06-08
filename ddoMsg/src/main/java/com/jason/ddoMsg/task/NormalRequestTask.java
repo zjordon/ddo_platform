@@ -24,7 +24,7 @@ public class NormalRequestTask extends AbstractTask {
 
 	protected int executeTask() {
 		int nums = 0;
-		logger.debug("start execute NormalRequestTask");
+		logger.info("start execute NormalRequestTask");
 		List<ChannelRequest> requestList = ChannelRequestQueue.getInstance().getRequests(500);
 		if (!requestList.isEmpty()) {
 			try {
@@ -39,7 +39,7 @@ public class NormalRequestTask extends AbstractTask {
 			nums = requestList.size();
 		}
 		
-		logger.debug("end execute NormalRequestTask");
+		logger.info("end execute NormalRequestTask");
 		return nums;
 	}
 }

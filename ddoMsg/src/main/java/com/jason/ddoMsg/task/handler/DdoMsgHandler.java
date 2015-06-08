@@ -15,6 +15,7 @@ import com.jason.ddoMsg.bean.consumption.ConsumeRecord;
 import com.jason.ddoMsg.bean.consumption.ConsumeTurnover;
 import com.jason.ddoMsg.bean.msg.DdoMsg;
 import com.jason.ddoMsg.bean.msg.DdoMsgResult;
+import com.jason.ddoMsg.bean.msg.UpChannel;
 import com.jason.ddoMsg.bean.statistics.SendResultRecord;
 import com.jason.ddoMsg.cache.CacheException;
 import com.jason.ddoMsg.cache.CacheManager;
@@ -22,6 +23,7 @@ import com.jason.ddoMsg.cache.ElementNotFoundException;
 import com.jason.ddoMsg.externalInterface.DdoMsgInterface;
 import com.jason.ddoMsg.queue.ConsumeTurnoverQueue;
 import com.jason.ddoMsg.queue.StatisticsQueue;
+import com.jason.ddoMsg.queue.UpChannelQueue;
 import com.jason.ddoMsg.util.DateUtil;
 import com.jason.ddoMsg.util.UUIDGenerator;
 
@@ -167,8 +169,10 @@ public class DdoMsgHandler {
 					// 判断是否需要上行到渠道
 					if (this.isNeedUpChannel(channel, sourceType) && !this.isNeedRepeatSend(result.getReturnMsgCode())) {
 						// 需要上行到渠道
-						UpChannelHandler.getInstance().handle(ddoMsg,
-								instruct, channel.getUpUrl(), null);
+//						UpChannelHandler.getInstance().handle(ddoMsg,
+//								instruct, channel.getUpUrl(), null);
+						//加入到队列不直接同步到渠道，采用异步的方式同步到渠道 20150608
+						UpChannelQueue.getInstance().addUpChannel(new UpChannel(ddoMsg, instruct, channel.getUpUrl()));
 					}
 					
 				} else {

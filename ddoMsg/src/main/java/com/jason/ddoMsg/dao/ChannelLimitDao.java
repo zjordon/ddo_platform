@@ -385,15 +385,15 @@ public class ChannelLimitDao extends BaseDao {
 					pstmt.executeUpdate();
 					super.closePstmt(pstmt);
 					//插入流水
-					pstmt = conn.prepareStatement(INSERT_LIMIT_USE_LOG);
-					pstmt.setString(1, (new UUIDGenerator()).generate());
-					pstmt.setLong(2, amount);
-					pstmt.setLong(3, remainDayAmount);
-					pstmt.setLong(4, remainMonthAmount);
-					pstmt.setTimestamp(5, new java.sql.Timestamp(System.currentTimeMillis()));
-					pstmt.setString(6, requestId);
-					pstmt.executeUpdate();
-					super.closePstmt(pstmt);
+//					pstmt = conn.prepareStatement(INSERT_LIMIT_USE_LOG);
+//					pstmt.setString(1, (new UUIDGenerator()).generate());
+//					pstmt.setLong(2, amount);
+//					pstmt.setLong(3, remainDayAmount);
+//					pstmt.setLong(4, remainMonthAmount);
+//					pstmt.setTimestamp(5, new java.sql.Timestamp(System.currentTimeMillis()));
+//					pstmt.setString(6, requestId);
+//					pstmt.executeUpdate();
+//					super.closePstmt(pstmt);
 				} else {
 					throw new DaoException("could not find channel_month_limit with channelId " + channelId + " and month is " + month);
 				}

@@ -9,6 +9,7 @@ import com.jason.ddoMsg.task.EventTask;
 import com.jason.ddoMsg.task.NormalBillReportTask;
 import com.jason.ddoMsg.task.NormalRequestTask;
 import com.jason.ddoMsg.task.ExcepInterRequestTask;
+import com.jason.ddoMsg.task.NormalUpChannelTask;
 import com.jason.ddoMsg.task.ReDeliverReportTask;
 import com.jason.ddoMsg.task.RepeatBillReportTask;
 import com.jason.ddoMsg.task.RepeatSendDdoMsgTask;
@@ -35,6 +36,7 @@ public class TaskScheduler {
 
 	private NormalRequestTask normalRequestTask;
 	private NormalBillReportTask normalBillReportTask;
+	private NormalUpChannelTask normalUpChannelTask;
 	private ExcepInterRequestTask excepInterRequestTask;
 	private ReDeliverReportTask reDeliverReportTask;
 	private RepeatBillReportTask repeatBillReportTask;
@@ -49,6 +51,7 @@ public class TaskScheduler {
 
 	private SingleTaskThread normalRequestTaskThread;
 	private SingleTaskThread normalBillReportTaskThread;
+	private SingleTaskThread normalUpChannelTaskThread;
 
 	private MultileTaskThread otherRequestTaskThread;
 	private MultileTaskThread repeatTaskThread;
@@ -57,6 +60,7 @@ public class TaskScheduler {
 	public void init() {
 		normalRequestTask = new NormalRequestTask();
 		normalBillReportTask = new NormalBillReportTask();
+		this.normalUpChannelTask = new NormalUpChannelTask();
 		excepInterRequestTask = new ExcepInterRequestTask();
 		reDeliverReportTask = new ReDeliverReportTask();
 		repeatBillReportTask = new RepeatBillReportTask();
@@ -71,6 +75,7 @@ public class TaskScheduler {
 		
 		normalRequestTaskThread = new SingleTaskThread(normalRequestTask);
 		normalBillReportTaskThread = new SingleTaskThread(normalBillReportTask);
+		this.normalUpChannelTaskThread = new SingleTaskThread(this.normalUpChannelTask);
 		otherRequestTaskThread = new MultileTaskThread();
 		otherRequestTaskThread.addTask(excepInterRequestTask);
 		otherRequestTaskThread.addTask(timingRequestTask);
@@ -111,6 +116,12 @@ public class TaskScheduler {
 		normalBillReportTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
 		normalBillReportTaskThreadWrapper.start();
 		
+		this.normalUpChannelTaskThread.start();
+		Thread normalUpChannelTaskThreadWrapper = new Thread(normalUpChannelTaskThread);
+		normalUpChannelTaskThreadWrapper.setDaemon(true);
+		normalUpChannelTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
+		normalUpChannelTaskThreadWrapper.start();
+		
 		otherRequestTaskThread.start();
 		Thread otherRequestTaskThreadWrapper = new Thread(otherRequestTaskThread);
 		otherRequestTaskThreadWrapper.setDaemon(true);
@@ -133,6 +144,7 @@ public class TaskScheduler {
 	public void stopAllTask() {
 		this.normalRequestTaskThread.stop();
 		this.normalBillReportTaskThread.stop();
+		this.normalUpChannelTaskThread.stop();
 		this.otherRequestTaskThread.stop();
 		this.repeatTaskThread.stop();
 		this.otherTaskThread.stop();
@@ -181,6 +193,9 @@ public class TaskScheduler {
 		} else if ("consumeTurnoverTask".equals(taskName)) {
 			this.consumeTurnoverTask.start();
 			this.startOtherTaskThread();
+		} else if ("normalUpChannelTask".equals(taskName)) {
+			this.normalUpChannelTaskThread.start();
+			this.startNormalUpChannelTaskThread();
 		}
 	}
 
@@ -209,6 +224,8 @@ public class TaskScheduler {
 			this.updateConsumeRecordTask.stop();
 		} else if ("consumeTurnoverTask".equals(taskName)) {
 			this.consumeTurnoverTask.stop();
+		} else if ("normalUpChannelTask".equals(taskName)) {
+			this.normalUpChannelTaskThread.stop();
 		}
 	}
 
@@ -223,6 +240,14 @@ public class TaskScheduler {
 	private void startNormalBillReportTaskThread() {
 		if (this.normalBillReportTaskThread.isStop()) {
 			Thread thread = new Thread(normalBillReportTaskThread);
+			thread.setUncaughtExceptionHandler(new ThreadUCExceptionHandler());
+			thread.start();
+		}
+	}
+	
+	private void startNormalUpChannelTaskThread() {
+		if (this.normalUpChannelTaskThread.isStop()) {
+			Thread thread = new Thread(normalUpChannelTaskThread);
 			thread.setUncaughtExceptionHandler(new ThreadUCExceptionHandler());
 			thread.start();
 		}

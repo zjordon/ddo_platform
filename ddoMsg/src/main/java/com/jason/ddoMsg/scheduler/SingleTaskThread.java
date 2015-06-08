@@ -37,11 +37,11 @@ public class SingleTaskThread extends AbstractTaskThread {
 					}
 				} else {
 					logger.info("execute nums is " + nums);
-					try {
-						Thread.sleep(5000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+//					try {
+//						Thread.sleep(5000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
 				}
 			} else {
 				super.stop = true;
