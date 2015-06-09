@@ -65,6 +65,8 @@ public class ConfigCache {
 			}
 			if (StringUtils.isNotBlank(props.getProperty("ddoChannelId"))) {
 				this.ddoChannelId = props.getProperty("ddoChannelId");
+			} else {
+				this.ddoChannelId = "";
 			}
 			
 		} else {
