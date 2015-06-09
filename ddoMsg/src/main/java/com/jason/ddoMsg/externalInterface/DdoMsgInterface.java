@@ -77,8 +77,8 @@ public class DdoMsgInterface {
 					//System.out.println("asyncNotifyURL is " + asyncNotifyURL);
 					String mobile = Long.toString(ddoMsg.getMsisdn().longValue());
 					String channelId = configCache.getDdoChannelId();
-					//临时判断任广伟这个渠道，只有这个渠道才提交渠道id
-					if (!"ff8080814d9e79d8014d9edd8add00cc".equals(ddoMsg.getChannelId())) {
+					//临时判断任广伟这个渠道，只有这个渠道不提交渠道id
+					if ("ff8080814d9e79d8014d9edd8add00cc".equals(ddoMsg.getChannelId())) {
 						channelId = "";
 					}
 //					if (StringUtils.isBlank(channelId)) {
