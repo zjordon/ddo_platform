@@ -167,7 +167,7 @@ public class DdoMsgHandler {
 						
 					}
 					// 判断是否需要上行到渠道
-					if (this.isNeedUpChannel(channel, sourceType) && !this.isNeedRepeatSend(result.getReturnMsgCode())) {
+					if (this.isNeedUpChannel(channel, sourceType) && !this.isNeedRepeatSend(result.getReturnMsgCode()) && !needRepeatSend) {
 						// 需要上行到渠道
 //						UpChannelHandler.getInstance().handle(ddoMsg,
 //								instruct, channel.getUpUrl(), null);
