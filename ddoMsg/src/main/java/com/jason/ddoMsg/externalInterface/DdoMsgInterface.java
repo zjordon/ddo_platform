@@ -77,6 +77,9 @@ public class DdoMsgInterface {
 					//System.out.println("asyncNotifyURL is " + asyncNotifyURL);
 					String mobile = Long.toString(ddoMsg.getMsisdn().longValue());
 					String channelId = configCache.getDdoChannelId();
+					if (StringUtils.isBlank(channelId)) {
+						channelId = "";
+					}
 
 					authenticatorSource = DigestUtils.sha256Hex(authenticatorSource);
 

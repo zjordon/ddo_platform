@@ -63,7 +63,10 @@ public class ConfigCache {
 			if (props.get("monthDeductionNumLimit") != null) {
 				this.monthDeductionNumLimit = Integer.parseInt(props.getProperty("monthDeductionNumLimit"));
 			}
-			this.ddoChannelId = props.getProperty("ddoChannelId");
+			if (StringUtils.isNotBlank(props.getProperty("ddoChannelId"))) {
+				this.ddoChannelId = props.getProperty("ddoChannelId");
+			}
+			
 		} else {
 			logger.error("can not load config!!!");
 		}
