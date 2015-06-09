@@ -20,6 +20,7 @@ import com.jason.ddoWeb.service.channel.ChannelUserServiceI;
 import com.jason.ddoWeb.service.smtask.SmTaskServiceI;
 import com.jason.ddoWeb.util.NumberUtils;
 import com.jason.ddoWeb.util.StringUtils;
+import com.jason.ddoWeb.util.UUIDGenerator;
 
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.log4j.Logger;
@@ -129,10 +130,13 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 			if (!StringUtils.isEquals(oldPostUrl, newPostUrl)) {
 				//创建更新postUrl地址事件(只针对短信平台)
 				EventEntity event = new EventEntity();
+				//event.setId(id);
+				event.setId((new UUIDGenerator()).generate());
 				event.setEventId("UpdatChannelPostUrlEvent");
 				StringBuilder builder = new StringBuilder();
 				builder.append("id:").append(channel.getId()).append(",postUrl:").append(channel.getPostUrl());
 				event.setParam(builder.toString());
+				event.setCreateDate(new Date());
 				this.createEventToSm(event);
 			}
 		}
@@ -175,6 +179,13 @@ public class ChannelServiceImpl extends CommonServiceImpl implements ChannelServ
 //		this.channelDayLimitService.deleteByChannelId(channelId);
 //		this.channelMonthLimitService.deleteByChannelId(channelId);
 		super.delete(entity);
+		EventEntity event = new EventEntity();
+		event.setEventId("DeleteChannelEvent");
+		StringBuilder builder = new StringBuilder("id:");
+		builder.append(channelId);
+		event.setParam(builder.toString());
+		super.save(event);
+		this.createEventToSm(event);
 	}
 	
 	private void createEventToSm(EventEntity event) {

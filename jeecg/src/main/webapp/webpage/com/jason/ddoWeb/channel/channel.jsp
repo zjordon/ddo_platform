@@ -126,7 +126,7 @@
 					</td>
 					<td class="value">
 						<input class="inputxt" id="postUrl" name="postUrl" ignore="ignore"
-							   value="${channelPage.postUrl}" datatype="url">
+							   value="${channelPage.postUrl}" datatype="*10-128">
 						<span class="Validform_checktip"></span>
 					</td>
 				</tr>

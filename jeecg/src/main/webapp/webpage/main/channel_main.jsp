@@ -210,8 +210,10 @@ a:hover {
         <t:mutiLang langKey="common.copyright"/>
         <span class="tip">
             <a href="#" title="ddo渠道管理平台"> ddo渠道管理平台</a>
+            <%--
             <t:mutiLang langKey="common.copyright"/>:
             <a href="#" title="中科亚创">中科亚创</a>
+             --%>
         </span>
     </div>
 </div>
