@@ -21,11 +21,17 @@ import com.jason.ddoMsg.task.handler.ChannelRequestHandler;
  */
 public class NormalRequestTask extends AbstractTask {
 	private static final Logger logger = Logger.getLogger(NormalRequestTask.class);
+	
+	private int queueIdx = 0;
+	
+	public NormalRequestTask(int queueIdx) {
+		this.queueIdx = queueIdx;
+	}
 
 	protected int executeTask() {
 		int nums = 0;
 		logger.info("start execute NormalRequestTask");
-		List<ChannelRequest> requestList = ChannelRequestQueue.getInstance().getRequests(500);
+		List<ChannelRequest> requestList = ChannelRequestQueue.getInstance().getRequests(this.queueIdx, 100);
 		if (!requestList.isEmpty()) {
 			try {
 				CacheManager.getInstance().getChannelRequestCache().saveChannelRequest(requestList);

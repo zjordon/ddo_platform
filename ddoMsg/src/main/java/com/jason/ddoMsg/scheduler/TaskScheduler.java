@@ -34,7 +34,8 @@ public class TaskScheduler {
 		return instance;
 	}
 
-	private NormalRequestTask normalRequestTask;
+	private int normalRequestTaskNum;
+	private NormalRequestTask[] normalRequestTaskArray;
 	private NormalBillReportTask normalBillReportTask;
 	private NormalUpChannelTask normalUpChannelTask;
 	private ExcepInterRequestTask excepInterRequestTask;
@@ -49,7 +50,8 @@ public class TaskScheduler {
 	private UpdateConsumeRecordTask updateConsumeRecordTask;
 	private ConsumeTurnoverTask consumeTurnoverTask;
 
-	private SingleTaskThread normalRequestTaskThread;
+//	private SingleTaskThread normalRequestTaskThread;
+	private SingleTaskThread[] normalRequestTaskThreadArray;
 	private SingleTaskThread normalBillReportTaskThread;
 	private SingleTaskThread normalUpChannelTaskThread;
 
@@ -58,7 +60,11 @@ public class TaskScheduler {
 	private MultileTaskThread otherTaskThread;
 
 	public void init() {
-		normalRequestTask = new NormalRequestTask();
+		this.normalRequestTaskNum = 3;
+		this.normalRequestTaskArray = new NormalRequestTask[this.normalRequestTaskNum];
+		for (int i=0; i<this.normalRequestTaskNum;i++) {
+			this.normalRequestTaskArray[i] = new NormalRequestTask(i);
+		}
 		normalBillReportTask = new NormalBillReportTask();
 		this.normalUpChannelTask = new NormalUpChannelTask();
 		excepInterRequestTask = new ExcepInterRequestTask();
@@ -73,7 +79,11 @@ public class TaskScheduler {
 		updateConsumeRecordTask = new UpdateConsumeRecordTask();
 		consumeTurnoverTask = new ConsumeTurnoverTask();
 		
-		normalRequestTaskThread = new SingleTaskThread(normalRequestTask);
+//		normalRequestTaskThread = new SingleTaskThread(normalRequestTask);
+		this.normalRequestTaskThreadArray = new SingleTaskThread[this.normalRequestTaskNum];
+		for (int i=0; i<this.normalRequestTaskNum;i++) {
+			this.normalRequestTaskThreadArray[i] = new SingleTaskThread(this.normalRequestTaskArray[i]);
+		}
 		normalBillReportTaskThread = new SingleTaskThread(normalBillReportTask);
 		this.normalUpChannelTaskThread = new SingleTaskThread(this.normalUpChannelTask);
 		otherRequestTaskThread = new MultileTaskThread();
@@ -99,16 +109,16 @@ public class TaskScheduler {
 
     public void startAllTask() {
 		ThreadUCExceptionHandler exceptionHandler = new ThreadUCExceptionHandler();
-		normalRequestTaskThread.start();
-		//启动多个线程来处理请求
-		//for (int i=0;i<2;i++) {
-			Thread normalRequestTaskThreadWrapper = new Thread(normalRequestTaskThread);
-			normalRequestTaskThreadWrapper.setDaemon(true);
-			normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
-			normalRequestTaskThreadWrapper.start();
-		//}
 		
-		
+//		for (int i=0; i<this.normalRequestTaskNum; i++) {
+//			(this.normalRequestTaskThreadArray[i]).start();
+//			Thread normalRequestTaskThreadWrapper = new Thread(this.normalRequestTaskThreadArray[i]);
+//			normalRequestTaskThreadWrapper.setDaemon(true);
+//			normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
+//			normalRequestTaskThreadWrapper.start();
+//			
+//		}
+		this.startNormalRequestTaskThread();
 		
 		normalBillReportTaskThread.start();
 		Thread normalBillReportTaskThreadWrapper = new Thread(normalBillReportTaskThread);
@@ -142,7 +152,9 @@ public class TaskScheduler {
 	}
 
 	public void stopAllTask() {
-		this.normalRequestTaskThread.stop();
+		for (int i=0;i<this.normalRequestTaskNum;i++) {
+			(this.normalRequestTaskThreadArray[i]).stop();
+		}
 		this.normalBillReportTaskThread.stop();
 		this.normalUpChannelTaskThread.stop();
 		this.otherRequestTaskThread.stop();
@@ -158,8 +170,9 @@ public class TaskScheduler {
 
 	public void startTask(String taskName) {
 		if ("NormalRequestTask".equals(taskName)) {
-			this.normalRequestTask.start();
-			this.startNormalRequestTaskThread();
+//			this.normalRequestTask.start();
+//			this.startNormalRequestTaskThread();
+			this.startNormalBillReportTaskThread();
 		} else if ("NormalBillReportTask".equals(taskName)) {
 			this.normalBillReportTask.start();
 			this.startNormalBillReportTaskThread();
@@ -201,7 +214,10 @@ public class TaskScheduler {
 
 	public void stopTask(String taskName) {
 		if ("NormalRequestTask".equals(taskName)) {
-			this.normalRequestTask.stop();
+//			this.normalRequestTask.stop();
+			for (int i=0; i<this.normalRequestTaskNum; i++) {
+				(this.normalRequestTaskArray[i]).stop();
+			}
 		} else if ("NormalBillReportTask".equals(taskName)) {
 			this.normalBillReportTask.stop();
 		} else if ("ExcepInterRequestTask".equals(taskName)) {
@@ -230,10 +246,20 @@ public class TaskScheduler {
 	}
 
 	private void startNormalRequestTaskThread() {
-		if (this.normalRequestTaskThread.isStop()) {
-			Thread thread = new Thread(normalRequestTaskThread);
-			thread.setUncaughtExceptionHandler(new ThreadUCExceptionHandler());
-			thread.start();
+//		if (this.normalRequestTaskThread.isStop()) {
+//			Thread thread = new Thread(normalRequestTaskThread);
+//			thread.setUncaughtExceptionHandler(new ThreadUCExceptionHandler());
+//			thread.start();
+//		}
+		ThreadUCExceptionHandler exceptionHandler = new ThreadUCExceptionHandler();
+		for (int i=0; i<this.normalRequestTaskNum; i++) {
+			(this.normalRequestTaskArray[i]).start();
+			(this.normalRequestTaskThreadArray[i]).start();
+			Thread normalRequestTaskThreadWrapper = new Thread(this.normalRequestTaskThreadArray[i]);
+			normalRequestTaskThreadWrapper.setDaemon(true);
+			normalRequestTaskThreadWrapper.setUncaughtExceptionHandler(exceptionHandler);
+			normalRequestTaskThreadWrapper.start();
+			
 		}
 	}
 
