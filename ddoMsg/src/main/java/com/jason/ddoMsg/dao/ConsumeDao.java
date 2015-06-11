@@ -65,6 +65,7 @@ public class ConsumeDao extends BaseDao {
 				record.setAmount(rs.getInt(1));
 				record.setNum(rs.getInt(2));
 				record.setMsisdn(rs.getLong(3));
+				list.add(record);
 			}
 			super.closeResultSet(rs);
 			super.closePstmt(pstmt);
