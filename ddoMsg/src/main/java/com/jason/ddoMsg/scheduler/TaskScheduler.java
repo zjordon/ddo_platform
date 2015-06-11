@@ -171,8 +171,8 @@ public class TaskScheduler {
 	public void startTask(String taskName) {
 		if ("NormalRequestTask".equals(taskName)) {
 //			this.normalRequestTask.start();
-//			this.startNormalRequestTaskThread();
-			this.startNormalBillReportTaskThread();
+			this.startNormalRequestTaskThread();
+//			this.startNormalBillReportTaskThread();
 		} else if ("NormalBillReportTask".equals(taskName)) {
 			this.normalBillReportTask.start();
 			this.startNormalBillReportTaskThread();
