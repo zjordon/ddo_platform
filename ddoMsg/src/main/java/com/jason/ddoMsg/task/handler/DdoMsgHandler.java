@@ -61,17 +61,23 @@ public class DdoMsgHandler {
 				ConsumeRecord consumeRecord = this.getConsumeRecord(ddoMsg
 						.getMsisdn().longValue());
 				boolean isNewConsumeRecord = false;
+				int currentNum = 0;
+				int currentAmount = 0;
 				if (consumeRecord == null) {
 					consumeRecord = new ConsumeRecord();
 					consumeRecord.setMsisdn(ddoMsg.getMsisdn().longValue());
 					consumeRecord.setNum(1);
 					consumeRecord.setAmount(billBusiness.getPrice().intValue());
 					isNewConsumeRecord = true;
+					currentNum = 1;
+					currentAmount = consumeRecord.getAmount();
 				} else {
-					consumeRecord.increaseAmount(billBusiness.getPrice()
-							.intValue());
+//					consumeRecord.increaseAmount(billBusiness.getPrice()
+//							.intValue());
+					currentNum = consumeRecord.getNum() + 1;
+					currentAmount = consumeRecord.getAmount() + billBusiness.getPrice().intValue();
 				}
-				if (!this.isOverConsumeLimit(consumeRecord)) {
+				if (!this.isOverConsumeLimit(currentNum, currentAmount)) {
 					boolean needRepeatSend = false;
 					ddoMsg.setSendTime(new Date());
 					DdoMsgResult result = DdoMsgInterface.getInstance()
@@ -264,14 +270,14 @@ public class DdoMsgHandler {
 	 * 
 	 * @return
 	 */
-	private boolean isOverConsumeLimit(ConsumeRecord record) {
+	private boolean isOverConsumeLimit(int currentNum, int currentAmount) {
 		boolean flag = false;
 		if (CacheManager.getInstance().getConfigCache()
-				.getMonthDeductionAmountLimit() > 0 && record.getAmount() > CacheManager.getInstance().getConfigCache()
+				.getMonthDeductionAmountLimit() > 0 && currentAmount > CacheManager.getInstance().getConfigCache()
 				.getMonthDeductionAmountLimit()) {
 			flag = true;
 		} else if (CacheManager.getInstance()
-				.getConfigCache().getMonthDeductionNumLimit() > 0 && record.getNum() > CacheManager.getInstance()
+				.getConfigCache().getMonthDeductionNumLimit() > 0 && currentNum > CacheManager.getInstance()
 				.getConfigCache().getMonthDeductionNumLimit()) {
 			flag = true;
 		}
