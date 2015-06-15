@@ -8,7 +8,6 @@
 package com.huawei.sdp.ib.hrmsservices;
 
 
-import org.apache.log4j.Logger;
 
 import com.huawei.sdp.ib.hrmsservices.response.RdoChargeResultNotifyRsp;
 import com.huawei.sdp.ib.schema.Result;
@@ -16,7 +15,6 @@ import com.jason.ddoMsg.externalInterface.BillReportInterface;
 
 public class HrmsServicesBindingImpl implements
 		com.huawei.sdp.ib.hrmsservices.HrmsServices {
-	//private static final Logger logger = Logger.getLogger(HrmsServicesBindingImpl.class);
 	public com.huawei.sdp.ib.hrmsservices.response.RdoChargeResultNotifyRsp rdoChargeResultNotify(
 			com.huawei.sdp.ib.hrmsservices.request.RdoChargeResultNotifyReq parameters)
 			throws java.rmi.RemoteException {
