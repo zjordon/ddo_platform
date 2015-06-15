@@ -40,6 +40,11 @@ public class ConsumeCache {
 		int day = DateUtil.getDateIntNum(current);
 		int month = day/100;
 		if (month != currentMonth) {
+			if (this.consumeMap == null) {
+				this.consumeMap = new HashMap<Long, ConsumeRecord>();
+			} else {
+				this.consumeMap.clear();
+			}
 			//从数据库取当前月份的消费记录
 			List<ConsumeRecord> list = null;
 			try {
@@ -48,17 +53,12 @@ public class ConsumeCache {
 				logger.error("exception when init", e);
 				throw new CacheException(e.getMessage());
 			}
+			
 			if (list != null && !list.isEmpty()) {
-				if (this.consumeMap == null) {
-					this.consumeMap = new HashMap<Long, ConsumeRecord>();
-				} else {
-					this.consumeMap.clear();
-				}
+				
 				for (ConsumeRecord record : list) {
 					this.consumeMap.put(new Long(record.getMsisdn()), record);
 				}
-			} else {
-				this.consumeMap = new HashMap<Long, ConsumeRecord>();
 			}
 			this.currentMonth = month;
 		}
