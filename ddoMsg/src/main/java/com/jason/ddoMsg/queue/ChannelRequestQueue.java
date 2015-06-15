@@ -68,7 +68,7 @@ public class ChannelRequestQueue {
 		default:
 			break;
 		}
-		if (this.queueSize == Long.MAX_VALUE - 1) {
+		if (this.queueSize == Integer.MAX_VALUE - 1) {
 			this.queueSize = 0;
 		} else {
 			this.queueSize++;
