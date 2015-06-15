@@ -81,8 +81,7 @@ public class ChannelRequestQueue {
 	 */
 	private List<ChannelRequest> getRequests(ConcurrentLinkedQueue<ChannelRequest> queue, int nums) {
 		List<ChannelRequest> requestList = new ArrayList<ChannelRequest>(nums);
-		//些处加入多线程同步的控制
-		//synchronized(this) {
+		
 			for (int i=0; i<nums; i++) {
 				ChannelRequest request = queue.poll();
 				if (request != null) {
@@ -92,7 +91,6 @@ public class ChannelRequestQueue {
 				}
 				
 			}
-		//}
 		
 		return requestList;
 	}
