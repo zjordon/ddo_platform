@@ -72,8 +72,6 @@ public class DdoMsgHandler {
 					currentNum = 1;
 					currentAmount = consumeRecord.getAmount();
 				} else {
-//					consumeRecord.increaseAmount(billBusiness.getPrice()
-//							.intValue());
 					currentNum = consumeRecord.getNum() + 1;
 					currentAmount = consumeRecord.getAmount() + billBusiness.getPrice().intValue();
 				}
